@@ -8,13 +8,18 @@
     android:id="@+id/navigation_image">
 
 
-
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_launcher_background"
+            android:id="@+id/hgview"
+            android:layout_width="370dp"
+            android:layout_height="502dp"
             android:layout_margin="10dp"
-            android:id="@+id/hgview"/>
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.331" />
 
         <TextView
             android:id="@+id/textView"

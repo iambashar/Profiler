@@ -26,11 +26,19 @@
         android:id="@+id/navigation_camera"
         android:name="com.teamdui.profiler.ui.camera.CameraFragment"
         android:label="@string/camera"
-        tools:layout="@layout/fragment_camera"  />
+        tools:layout="@layout/fragment_camera"  >
+        <action
+            android:id="@+id/action_navigation_camera_to_navigation_image"
+            app:destination="@id/navigation_image" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_image"
         android:name="com.teamdui.profiler.ui.camera.ImageFragment"
         android:label="Image"
-        tools:layout="@layout/fragment_image"/>
+        tools:layout="@layout/fragment_image">
+        <action
+            android:id="@+id/action_navigation_image_to_navigation_camera"
+            app:destination="@id/navigation_camera" />
+    </fragment>
 </navigation>

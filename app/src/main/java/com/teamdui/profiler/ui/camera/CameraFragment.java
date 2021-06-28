@@ -1,7 +1,6 @@
 package com.teamdui.profiler.ui.camera;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -32,29 +31,24 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentCameraBinding;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class CameraFragment extends Fragment{
@@ -63,7 +57,7 @@ public class CameraFragment extends Fragment{
     private FragmentCameraBinding binding;
     private TextureView textureView;
     private FloatingActionButton button;
-    private byte[] bytes;
+    static public Bitmap bmp;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
@@ -83,8 +77,6 @@ public class CameraFragment extends Fragment{
     Handler mBackgroundHandler;
     HandlerThread mBackgroundThread;
     File file;
-
-    private MainActivity mainActivity;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -107,10 +99,8 @@ public class CameraFragment extends Fragment{
                 } catch (CameraAccessException e) {
                     e.printStackTrace();
                 }
-                getActivity().getFragmentManager().popBackStack();
-                onPause();
-                onDestroyView();
-                ((MainActivity) getActivity()).dynamicSwitch(bytes);
+
+                Navigation.findNavController(root).navigate(R.id.action_navigation_camera_to_navigation_image);
             }
         });
 
@@ -285,8 +275,9 @@ public class CameraFragment extends Fragment{
             public void onImageAvailable(ImageReader reader) {
                 Image image = reader.acquireLatestImage();
                     ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                    bytes = new byte[buffer.capacity()];
+                    byte[] bytes = new byte[buffer.capacity()];
                     buffer.get(bytes);
+                    bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
 //                OutputStream output = null;
 //                try {
