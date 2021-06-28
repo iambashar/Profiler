@@ -1,5 +1,7 @@
 package com.teamdui.profiler.ui.camera;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.teamdui.profiler.databinding.FragmentImageBinding;
-
-import static com.teamdui.profiler.ui.camera.CameraFragment.bmp;
 
 public class ImageFragment extends Fragment {
 
@@ -32,6 +32,9 @@ public class ImageFragment extends Fragment {
         imageView = binding.hgview;
         textView = binding.textView;
 
+        byte[] bytes = getArguments().getByteArray("img");
+
+        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         imageView.setImageBitmap(bmp);
         textView.setText("Food Name");
 

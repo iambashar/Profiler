@@ -48,6 +48,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -57,7 +58,6 @@ public class CameraFragment extends Fragment{
     private FragmentCameraBinding binding;
     private TextureView textureView;
     private FloatingActionButton button;
-    static public Bitmap bmp;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
@@ -76,7 +76,7 @@ public class CameraFragment extends Fragment{
     private Size imageDimensions;
     Handler mBackgroundHandler;
     HandlerThread mBackgroundThread;
-    File file;
+    private volatile byte[] bytes;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -100,7 +100,18 @@ public class CameraFragment extends Fragment{
                     e.printStackTrace();
                 }
 
-                Navigation.findNavController(root).navigate(R.id.action_navigation_camera_to_navigation_image);
+                while (bytes == null)
+                {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Bundle arg = new Bundle();
+                arg.putByteArray("img", bytes);
+                Navigation.findNavController(root).navigate(R.id.action_navigation_camera_to_navigation_image, arg);
             }
         });
 
@@ -265,19 +276,21 @@ public class CameraFragment extends Fragment{
         int rotation = requireActivity().getWindowManager().getDefaultDisplay().getRotation();
         captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
 
-        Long tslong = System.currentTimeMillis()/1000;
-        String ts = tslong.toString();
-
-        file = new File(Environment.getExternalStorageDirectory() + "/Documents" + File.separator  + "/" + ts + ".jpg");
+//        Long tslong = System.currentTimeMillis()/1000;
+//        String ts = tslong.toString();
+//
+//        file = new File(Environment.getExternalStorageDirectory() + "/Documents" + File.separator  + "/" + ts + ".jpg");
 
         ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
             @Override
             public void onImageAvailable(ImageReader reader) {
                 Image image = reader.acquireLatestImage();
                     ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                    byte[] bytes = new byte[buffer.capacity()];
+                    bytes = new byte[buffer.capacity()];
                     buffer.get(bytes);
-                    bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+
+
 
 //                OutputStream output = null;
 //                try {
@@ -360,8 +373,6 @@ public class CameraFragment extends Fragment{
             e.printStackTrace();
         }
         super.onPause();
-
-
     }
 
     protected void stopBackgroundThread() throws InterruptedException {
