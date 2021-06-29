@@ -8,6 +8,11 @@
         android:title="@string/title_home" />
 
     <item
+        android:id="@+id/navigation_camera"
+        android:icon="@drawable/icon_caloriecalculator"
+        android:title="@string/calorie_calculator" />
+
+    <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
@@ -17,9 +22,5 @@
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_notifications" />
 
-    <item
-        android:id="@+id/navigation_camera"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/camera" />
 
 </menu>

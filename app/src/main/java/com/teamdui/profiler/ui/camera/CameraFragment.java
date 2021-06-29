@@ -4,8 +4,6 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -21,7 +19,6 @@ import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Size;
@@ -43,12 +40,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentCameraBinding;
 
-import java.io.File;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -288,9 +283,6 @@ public class CameraFragment extends Fragment{
                     ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                     bytes = new byte[buffer.capacity()];
                     buffer.get(bytes);
-
-
-
 
 //                OutputStream output = null;
 //                try {

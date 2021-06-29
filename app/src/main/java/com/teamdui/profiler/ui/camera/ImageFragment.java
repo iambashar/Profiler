@@ -35,6 +35,8 @@ public class ImageFragment extends Fragment {
         byte[] bytes = getArguments().getByteArray("img");
 
         Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+        imageView.setRotation((float) 90);
         imageView.setImageBitmap(bmp);
         textView.setText("Food Name");
 
