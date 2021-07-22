@@ -256,7 +256,7 @@ public class CameraFragment extends Fragment{
             height = jpegSize[0].getHeight();
         }
 
-        System.out.println(width + "  " + height);
+        //System.out.println(width + "  " + height);
 
         ImageReader reader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 2);
         List<Surface> outputSurface = new ArrayList<>();
