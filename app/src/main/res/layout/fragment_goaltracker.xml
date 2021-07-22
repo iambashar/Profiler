@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginTop="230dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:background="@drawable/divborder"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        >
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Calorie:"
+        android:textColor="@color/navyBlue"
+        android:textSize="30dp"/>
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:id="@+id/calorieProgressBar"
+            />
+
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:background="@drawable/divborder"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Water:"
+            android:textColor="@color/navyBlue"
+            android:textSize="30dp"/>
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:id="@+id/waterProgressBar"
+            />
+
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:background="@drawable/divborder"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Exercise:"
+            android:textColor="@color/navyBlue"
+            android:textSize="30dp"/>
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:id="@+id/exerciseProgressBar"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

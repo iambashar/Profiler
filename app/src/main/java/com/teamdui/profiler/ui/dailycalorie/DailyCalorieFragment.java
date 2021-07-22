@@ -1,4 +1,4 @@
-package com.teamdui.profiler.ui.dashboard;
+package com.teamdui.profiler.ui.dailycalorie;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,34 +12,30 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.teamdui.profiler.databinding.FragmentDashboardBinding;
+import com.teamdui.profiler.databinding.FragmentDailycalorieBinding;
 
-public class DashboardFragment extends Fragment {
+public class DailyCalorieFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
-    private FragmentDashboardBinding binding;
+    private DailyCalorieViewModel dailyCalorieViewModel;
+    private FragmentDailycalorieBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        dailyCalorieViewModel =
+                new ViewModelProvider(this).get(DailyCalorieViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentDailycalorieBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textDailycalorie;
+
+        dailyCalorieViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
-        return root;
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        return root;
     }
 }

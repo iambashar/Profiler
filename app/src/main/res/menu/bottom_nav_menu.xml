@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_dailycalorie"
+        android:icon="@drawable/ic_daily"
+        android:title="@string/title_dailycalorie" />
 
     <item
         android:id="@+id/navigation_camera"
@@ -13,14 +13,15 @@
         android:title="@string/calorie_calculator" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_goaltracker"
+        android:icon="@drawable/ic_goal"
+        android:title="@string/title_goaltracker"
+        />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_bmi"
+        android:icon="@drawable/ic_bmi"
+        android:title="@string/title_bmi" />
 
 
 </menu>
