@@ -1,16 +1,16 @@
-package com.teamdui.profiler.ui.notifications;
+package com.teamdui.profiler.ui.bmicalculator;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class BMIViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public BMIViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is BMI Calculator fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Profiler</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dailycalorie">Daily Calorie</string>
+    <string name="title_goaltracker">Goal Tracker</string>
+    <string name="title_bmi">BMI Calculator</string>
     <string name="camera">Camera</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -19,5 +19,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="calorie_calculator">Calorie<br/>Calculator</string>
+    <string name="calorie_calculator">Calorie Calculator</string>
 </resources>

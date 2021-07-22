@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_dailycalorie">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.teamdui.profiler.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_dailycalorie"
+        android:name="com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment"
+        android:label="@string/title_dailycalorie"
+        tools:layout="@layout/fragment_dailycalorie" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.teamdui.profiler.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_goaltracker"
+        android:name="com.teamdui.profiler.ui.goaltracker.GoaltrackerFragment"
+        android:label="@string/title_goaltracker"
+        tools:layout="@layout/fragment_goaltracker" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.teamdui.profiler.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_bmi"
+        android:name="com.teamdui.profiler.ui.bmicalculator.BMIFragment"
+        android:label="@string/title_bmi"
+        tools:layout="@layout/fragment_bmicalculator" />
     <fragment
         android:id="@+id/navigation_camera"
         android:name="com.teamdui.profiler.ui.camera.CameraFragment"
