@@ -10,8 +10,8 @@
 
         <ImageView
             android:id="@+id/hgview"
-            android:layout_width="373dp"
-            android:layout_height="504dp"
+            android:layout_width="375dp"
+            android:layout_height="500dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
