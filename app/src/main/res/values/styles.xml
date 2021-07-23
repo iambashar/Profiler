@@ -3,7 +3,7 @@
 	<!-- login styles -->
 
 	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
+		<item name="android:fontFamily">@font/bitter</item>
 
 	</style>
 	<style name="button">

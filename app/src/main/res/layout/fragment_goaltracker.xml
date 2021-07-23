@@ -12,18 +12,20 @@
         android:id="@+id/texts"
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:padding="10dp"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="5dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/calorieEarninTracker"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total calorie earned: 0/"
+            android:text="Total calorie earned(cal): 0/"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="23dp"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,11 +33,12 @@
 
         <TextView
             android:id="@+id/waterTakeninTracker"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Water taken: 0/"
+            android:text="Water taken(glasses): 0/"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="23dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,11 +46,12 @@
 
         <TextView
             android:id="@+id/exerciseDoneinTracker"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Exercise Done: 0/"
+            android:text="Exercise done(min): 0/"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="23dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +83,7 @@
 
             <TextView
                 android:id="@+id/CalorieText"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:text="Calorie:"
                 android:textColor="@color/navyBlue"
@@ -131,7 +135,7 @@
 
             <TextView
                 android:id="@+id/WaterText"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:text="Water:"
                 android:textColor="@color/navyBlue"
@@ -184,7 +188,7 @@
 
             <TextView
                 android:id="@+id/ExerciseText"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:text="Exercise:"
                 android:textColor="@color/navyBlue"
