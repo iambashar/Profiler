@@ -10,5 +10,7 @@
     <color name="main">#485392</color>
     <color name="navyBlue">#485392</color>
     <color name="teal">#44BAC5</color>
-    <color name="ash">#817F7F</color>
+    <color name="ash">#707070</color>
+    <color name="shallow_ash">#A6A2A2</color>
+    <color name="pink">#E05668</color>
 </resources>

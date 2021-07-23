@@ -9,6 +9,51 @@
     tools:context=".ui.goaltracker.GoaltrackerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/texts"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:padding="10dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/calorieEarninTracker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total calorie earned: 0/"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/waterTakeninTracker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Water taken: 0/"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/calorieEarninTracker" />
+
+        <TextView
+            android:id="@+id/exerciseDoneinTracker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exercise Done: 0/"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/waterTakeninTracker" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,7 +61,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558">
+        app:layout_constraintVertical_bias="0.558"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout1"
@@ -25,15 +72,15 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/divborder"
             android:gravity="center"
-            android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/CalorieText"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:text="Calorie:"
                 android:textColor="@color/navyBlue"
                 android:textSize="25dp"
@@ -42,16 +89,32 @@
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/caloriePercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="@color/ash"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.439"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.283" />
 
             <ProgressBar
                 android:id="@+id/calorieProgressBar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="200dp"
-                android:layout_height="20dp"
+                android:layout_height="15dp"
+                android:progressBackgroundTint="@color/shallow_ash"
+                android:progressTint="@color/navyBlue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/CalorieText"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.646" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,16 +124,15 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/divborder"
             android:gravity="center"
-            android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
-            tools:layout_editor_absoluteX="0dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
             <TextView
                 android:id="@+id/WaterText"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:text="Water:"
                 android:textColor="@color/navyBlue"
                 android:textSize="25dp"
@@ -80,15 +142,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/waterPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="@color/ash"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.439"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.283" />
+
             <ProgressBar
                 android:id="@+id/waterProgressbar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="200dp"
-                android:layout_height="20dp"
+                android:layout_height="15dp"
+                android:progressBackgroundTint="@color/shallow_ash"
+                android:progressTint="@color/navyBlue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/WaterText"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.646" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -98,36 +177,68 @@
             android:layout_height="80dp"
             android:background="@drawable/divborder"
             android:gravity="center"
-            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
             <TextView
                 android:id="@+id/ExerciseText"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:text="Exercise:"
                 android:textColor="@color/navyBlue"
                 android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ExerciseProgreebar"
+                app:layout_constraintEnd_toStartOf="@+id/ExerciseProgressbar"
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/exercisePercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="@color/ash"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.439"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.283" />
 
             <ProgressBar
-                android:id="@+id/ExerciseProgreebar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:id="@+id/ExerciseProgressbar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="200dp"
-                android:layout_height="20dp"
+                android:layout_height="15dp"
+                android:progressBackgroundTint="@color/shallow_ash"
+                android:progressTint="@color/navyBlue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ExerciseText"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.646" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_blue"
+        android:padding="10dp"
+        android:text="Set Goal"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:id="@+id/setGoalButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.852" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
