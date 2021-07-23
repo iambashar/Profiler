@@ -23,7 +23,7 @@ public class GoaltrackerFragment extends Fragment {
     private GoaltrackerViewModel goaltrackerViewModel;
     private FragmentGoaltrackerBinding binding;
     public Button goalButton;
-    public GoalsaveFragment goalsaveFragment;
+    public GoalsaveFragment goalsaveFragment = new GoalsaveFragment();
 
     public static int calorieGoal = 0;
     public static int waterGoal = 0;

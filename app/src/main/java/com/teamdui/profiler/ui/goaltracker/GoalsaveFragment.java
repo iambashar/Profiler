@@ -1,5 +1,7 @@
 package com.teamdui.profiler.ui.goaltracker;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentGoalsaveBinding;
 import com.teamdui.profiler.databinding.FragmentGoaltrackerBinding;
@@ -45,7 +49,12 @@ public class GoalsaveFragment extends Fragment {
     public static boolean isSaved = false;
 
     private Button saveGoalbtn;
+    private Button resetbtn;
 
+    public GoalsaveFragment()
+    {
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +76,19 @@ public class GoalsaveFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 calorieGoal = progress;
                 calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
+
+                if(calorieGoal > 3000)
+                {
+                    calorieSlider.getProgressDrawable().setTint(Color.rgb(224, 86, 104));
+                    calorieSlider.getThumb().setTint(Color.rgb(224, 86, 104));
+                    //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
+
+                }
+                if(calorieGoal < 3000)
+                {
+                    calorieSlider.getProgressDrawable().setTint(Color.rgb(72, 83, 146));
+                    calorieSlider.getThumb().setTint(Color.rgb(72, 83, 146));
+                }
             }
 
             @Override
@@ -138,6 +160,13 @@ public class GoalsaveFragment extends Fragment {
             }
         });
 
+        resetbtn = binding.resetGoalButton;
+        resetbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetGoal();
+            }
+        });
 
         return root;
     }
@@ -391,6 +420,27 @@ public class GoalsaveFragment extends Fragment {
             return exerciseGoal;
         }
 
+        public void resetGoal()
+        {
+            calorieGoal = 0;
+            glassGoal = 0;
+            exerciseGoal = 0;
+            calorieSlider.setProgress(calorieGoal);
+            calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
+            setGlassInvisibility();
+            waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
+            binding.minText.setText(String.valueOf(exerciseGoal));
+            binding.hourInput.getText().clear();
+            binding.minuteInput.getText().clear();
+
+            String caloriestr = "Total calorie earned(cal): 0/0";
+            binding.calorieEarn.setText(caloriestr);
+            String waterstr = "Water taken(glasses): 0/0";
+            binding.waterTaken.setText(waterstr);
+            String exercisestr = "Exercise done(min): 0/0" ;
+            binding.exerciseDone.setText(exercisestr);
         }
+
+}
 
 
