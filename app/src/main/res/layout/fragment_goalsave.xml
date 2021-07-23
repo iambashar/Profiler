@@ -12,30 +12,31 @@
         android:id="@+id/texts"
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:padding="10dp"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/calorieEarn"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total calorie earned: 0/"
+            android:fontFamily="@font/bitter"
+            android:text="Total calorie earned(cal): 0/"
             android:textColor="@color/white"
-            android:textSize="25dp"
-            app:layout_constraintHorizontal_bias="0.473"
+            android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/waterTaken"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Water taken: 0/"
+            android:text="Water taken(glasses): 0/"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="23dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,11 +44,12 @@
 
         <TextView
             android:id="@+id/exerciseDone"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Exercise Done: 0/"
+            android:text="Exercise Done(min): 0/"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="23dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +60,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +109,7 @@
 
                         <TextView
                             android:id="@+id/CalorieText"
-                            android:layout_width="100dp"
+                            android:layout_width="110dp"
                             android:layout_height="wrap_content"
                             android:text="Calorie:"
                             android:textColor="@color/navyBlue"
@@ -120,11 +122,11 @@
                             app:layout_constraintVertical_bias="0.096" />
 
                         <EditText
-                            android:id="@+id/calorie_input"
+                            android:id="@+id/calorieInput"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:text="0"
+                            android:inputType="number"
+                            android:text=""
                             android:textColor="@color/navyBlue"
                             android:textSize="30dp"
                             android:textStyle="bold"
@@ -162,7 +164,7 @@
                             app:layout_constraintVertical_bias="0.7" />
 
                         <TextView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="4000 cal"
                             android:textSize="20dp"
@@ -203,7 +205,7 @@
 
                         <TextView
                             android:id="@+id/WaterText"
-                            android:layout_width="100dp"
+                            android:layout_width="110dp"
                             android:layout_height="wrap_content"
                             android:text="Water:"
                             android:textColor="@color/navyBlue"
@@ -216,11 +218,11 @@
                             app:layout_constraintVertical_bias="0.096" />
 
                         <EditText
-                            android:id="@+id/water_input"
+                            android:id="@+id/waterInput"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:text="0"
+                            android:inputType="number"
+                            android:text=""
                             android:textColor="@color/navyBlue"
                             android:textSize="25dp"
                             android:textStyle="bold"
@@ -249,7 +251,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/water_input"
+                            app:layout_constraintTop_toTopOf="@+id/waterInput"
                             app:layout_constraintVertical_bias="0.35"
                             android:padding="5dp">
                             <ImageView
@@ -364,7 +366,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/water_input"
+                            app:layout_constraintTop_toTopOf="@+id/waterInput"
                             app:layout_constraintVertical_bias="0.70" >
                             <ImageView
                                 android:id="@+id/glass9"
@@ -477,7 +479,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/water_input"
+                            app:layout_constraintTop_toTopOf="@+id/waterInput"
                             app:layout_constraintVertical_bias="0.90">
                             <ImageView
                                 android:id="@+id/addWater"
@@ -516,14 +518,14 @@
                         android:background="@drawable/divborder"
                         android:gravity="center"
                         android:layout_marginBottom="20dp"
-                        app:layout_constraintBottom_toTopOf="@id/setGoalButton"
+                        app:layout_constraintBottom_toTopOf="@id/saveGoalButton"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/constraintLayout2">
 
                         <TextView
                             android:id="@+id/ExerciseText"
-                            android:layout_width="100dp"
+                            android:layout_width="110dp"
                             android:layout_height="wrap_content"
                             android:text="Exercise:"
                             android:textColor="@color/navyBlue"
@@ -532,6 +534,33 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.058"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.096" />
+                        <TextView
+                            android:id="@+id/minText"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/navyBlue"
+                            android:textStyle="bold"
+                            android:textSize="25dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.58"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.096" />
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="min"
+                            android:textColor="@color/navyBlue"
+                            android:textSize="25dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.941"
+                            app:layout_constraintStart_toEndOf="@+id/minText"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.096" />
 
@@ -547,10 +576,10 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.5"/>
                         <EditText
-                            android:id="@+id/hour_input"
+                            android:id="@+id/hourInput"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="number"
                             android:text=""
                             android:hint="HH"
                             android:textAlignment="center"
@@ -575,10 +604,10 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.5"/>
                         <EditText
-                            android:id="@+id/minute_input"
+                            android:id="@+id/minuteInput"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="number"
                             android:text=""
                             android:hint="MM"
                             android:textAlignment="center"
@@ -604,19 +633,20 @@
                         android:text="Save"
                         android:textColor="@color/white"
                         android:textSize="20dp"
-                        android:id="@+id/setGoalButton"
+                        android:id="@+id/saveGoalButton"
                         app:layout_constraintTop_toBottomOf="@id/constraintLayout3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.946"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/blank"
-                        app:layout_constraintVertical_bias="0.096" />
+                        app:layout_constraintVertical_bias="0.096"
+                        />
 
                     <TextView
                         android:id="@+id/blank"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        app:layout_constraintTop_toBottomOf="@id/setGoalButton"
+                        app:layout_constraintTop_toBottomOf="@id/saveGoalButton"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.058"
                         app:layout_constraintStart_toStartOf="parent"
