@@ -16,6 +16,14 @@
         android:name="com.teamdui.profiler.ui.goaltracker.GoaltrackerFragment"
         android:label="@string/title_goaltracker"
         tools:layout="@layout/fragment_goaltracker" />
+    <action
+        android:id="@+id/action_navigation_goaltracker_to_navigation_goalsave"
+        app:destination="@id/navigation_goalsave" />
+    <fragment
+        android:id="@+id/navigation_goalsave"
+        android:name="com.teamdui.profiler.ui.goaltracker.GoalsaveFragment"
+        android:label="Goal Save"
+        tools:layout="@layout/fragment_goalsave" />
 
     <fragment
         android:id="@+id/navigation_bmi"

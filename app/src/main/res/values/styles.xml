@@ -3,8 +3,15 @@
 	<!-- login styles -->
 
 	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
+		<item name="android:fontFamily">@font/bitter</item>
 
 	</style>
+	<style name="button">
 
+	</style>
+	<style name="MySeekBar" parent="Widget.AppCompat.SeekBar">
+		<item name="android:progressBackgroundTint">@color/shallow_ash</item>
+		<item name="android:progressTint">@color/navyBlue</item>
+		<item name="height">20dp</item>
+	</style>
 </resources>
