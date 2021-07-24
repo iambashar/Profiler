@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "567034059592",
+    "project_id": "profiler-280f7",
+    "storage_bucket": "profiler-280f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567034059592:android:8406e0921cf03b7a21317d",
+        "android_client_info": {
+          "package_name": "com.teamdui.profiler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567034059592-co6eiob3sj6t74fn6viur8h7u4ipr09p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfEoNw1xlpR66UnfNwnEs6bGEfnBu0ln4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567034059592-co6eiob3sj6t74fn6viur8h7u4ipr09p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

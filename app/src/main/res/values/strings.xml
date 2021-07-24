@@ -20,4 +20,11 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="calorie_calculator">Calorie Calculator</string>
+
+    <string name="logout_button_text">LOGOUT</string>
+<!-- Login form -->
+    <string name="login_button_text">LOGIN</string>
+
+    <string name="email_hint">example@gmail.com</string>
+    <string name="password_hint">password</string>
 </resources>
