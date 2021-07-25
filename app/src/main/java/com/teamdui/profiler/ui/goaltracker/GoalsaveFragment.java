@@ -1,5 +1,7 @@
 package com.teamdui.profiler.ui.goaltracker;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -129,6 +132,7 @@ public class GoalsaveFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 String waterText = waterEditText.getText().toString();
                 int noOfGlass = Integer.parseInt(waterText);
+                hideKeyboard(v);
                 if(noOfGlass > glassGoal)
                 {
                     glassGoal = noOfGlass;
@@ -148,6 +152,58 @@ public class GoalsaveFragment extends Fragment {
         totalMinute = binding.minText;
         isSaved = false;
         totalMinute.setText(String.valueOf(exerciseGoal));
+        hourInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
+                int hour = 0;
+                int minute = 0;
+                if (hourInput.getText().toString().length() == 0)
+                {
+                    hour = 0;
+                }
+                else
+                {
+                    hour = Integer.parseInt(hourInput.getText().toString());
+                }
+                if(minuteInput.getText().toString().length() == 0)
+                {
+                    minute = 0;
+                }
+                else
+                {
+                    minute = Integer.parseInt(minuteInput.getText().toString());
+                }
+                exerciseGoal = hour * 60 + minute;
+                totalMinute.setText(String.valueOf(exerciseGoal));
+            }
+        });
+        minuteInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
+                int hour = 0;
+                int minute = 0;
+                if (hourInput.getText().toString().length() == 0)
+                {
+                    hour = 0;
+                }
+                else
+                {
+                    hour = Integer.parseInt(hourInput.getText().toString());
+                }
+                if(minuteInput.getText().toString().length() == 0)
+                {
+                    minute = 0;
+                }
+                else
+                {
+                    minute = Integer.parseInt(minuteInput.getText().toString());
+                }
+                exerciseGoal = hour * 60 + minute;
+                totalMinute.setText(String.valueOf(exerciseGoal));
+            }
+        });
 
 
         saveGoalbtn = binding.saveGoalButton;
@@ -441,6 +497,11 @@ public class GoalsaveFragment extends Fragment {
             binding.exerciseDone.setText(exercisestr);
         }
 
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }
 
 

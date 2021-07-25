@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="goalsave_fragment"
-    tools:context=".ui.goaltracker.GoalsaveFragment">
+    tools:context=".ui.goaltracker.GoalsaveFragment"
+    android:clickable="true"
+    android:focusableInTouchMode="true" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/texts"
@@ -80,6 +82,8 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:tag="goalsave_fragment"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -201,7 +205,9 @@
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true">
 
                         <TextView
                             android:id="@+id/WaterText"
