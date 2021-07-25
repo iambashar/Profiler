@@ -2,33 +2,34 @@ package com.teamdui.profiler.ui.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.teamdui.profiler.databinding.FragmentImageBinding;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.ArrayList;
+
 
 public class ImageFragment extends Fragment {
 
@@ -36,17 +37,20 @@ public class ImageFragment extends Fragment {
     TextView textView;
     private FragmentImageBinding binding;
     private ImageViewModel imageViewModel;
+    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        StrictMode.setThreadPolicy(policy);
         imageViewModel =
                 new ViewModelProvider(this).get(ImageViewModel.class);
         binding = FragmentImageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         imageView = binding.hgview;
-        textView = binding.textView;
+        textView = binding.calorieinfo;
 
         byte[] bytes = getArguments().getByteArray("img");
 
@@ -55,8 +59,8 @@ public class ImageFragment extends Fragment {
         imageView.setRotation((float) 90);
         imageView.setImageBitmap(bitmap);
 
-        String attachmentName = "bitmap";
-        String attachmentFileName = "bitmap.bmp";
+        String attachmentName = "file";
+        String attachmentFileName = "file.bmp";
         String crlf = "\r\n";
         String twoHyphens = "--";
         String boundary =  "*****";
@@ -64,14 +68,14 @@ public class ImageFragment extends Fragment {
         HttpURLConnection conn = null;
         URL url;
         try {
-            url = new URL("http://391fedae4670.ngrok.io/predict");
+            url = new URL("http://acd55c2dee48.ngrok.io/predict"); //changed every time
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
         conn.setUseCaches(false);
         conn.setDoOutput(true);
-
+        conn.setDoInput(true);
         try {
             conn.setRequestMethod("POST");
         } catch (ProtocolException e) {
@@ -80,7 +84,7 @@ public class ImageFragment extends Fragment {
         conn.setRequestProperty("Connection", "Keep-Alive");
         conn.setRequestProperty("Cache-Control", "no-cache");
         conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-
+        conn.setRequestProperty("Accept","application/json");
         DataOutputStream request = null;
         try {
             request = new DataOutputStream(conn.getOutputStream());
@@ -89,26 +93,57 @@ public class ImageFragment extends Fragment {
                     attachmentName + "\";filename=\"" +
                     attachmentFileName + "\"" + crlf);
             request.writeBytes(crlf);
+            while (bytes == null)
+            {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             request.write(bytes);
             request.writeBytes(crlf);
-            request.writeBytes(twoHyphens + boundary +
-                    twoHyphens + crlf);
-
+            request.writeBytes(twoHyphens + boundary + twoHyphens + crlf);
+            conn.connect();
             request.flush();
             request.close();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line+"\n");
+            }
+            br.close();
+
+            JSONObject js = new JSONObject(sb.toString());
+            JSONArray jsonArray = js.getJSONArray("calorie");
+            int len = jsonArray.length();
+            ArrayList<String> calories = new ArrayList<String>();
+            for (int i=0;i<len;i++) {
+                calories.add(jsonArray.get(i).toString());
+            }
+
+            jsonArray = js.getJSONArray("class_name");
+            ArrayList<String> classes = new ArrayList<String>();
+            for (int i=0;i<len;i++) {
+                classes.add(jsonArray.get(i).toString());
+            }
+
+            String show = "";
+            for (int i=0; i<len; i++) {
+                show += "           " + classes.get(i) + " : " + calories.get(i) + " calorie\n";
+            }
+            textView.setText("Food Info: \n" + show);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(String.valueOf(new InputStreamReader(conn.getInputStream())));
-            textView.setText("Food Name: "+ jsonObject.getString("class_name"));
-        } catch (IOException | JSONException e) {
+        }catch (JSONException e){
             e.printStackTrace();
         }
-        conn.disconnect();
 
+        conn.disconnect();
         return root;
     }
+
+
 
 }

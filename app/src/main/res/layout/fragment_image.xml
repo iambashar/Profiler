@@ -6,26 +6,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.camera.ImageFragment"
     android:id="@+id/navigation_image">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#485392"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/bottom_nav_menu">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
         <ImageView
             android:id="@+id/hgview"
             android:layout_width="375dp"
             android:layout_height="500dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/calorieinfo"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.303" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/textView"
-            android:text="@string/food_name"
-            android:layout_width="379dp"
-            android:layout_height="71dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/calorieinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bitter"
+            android:padding="5dp"
+            android:paddingStart="10dp"
+            android:text="Food Info:"
+            android:textColor="@color/main"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@id/nav_view"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hgview"
-            app:layout_constraintVertical_bias="0.253" />
+            app:layout_constraintTop_toBottomOf="@id/hgview"
+            />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
