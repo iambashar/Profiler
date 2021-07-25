@@ -3,6 +3,7 @@ package com.teamdui.profiler.ui.camera;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +39,13 @@ public class ImageFragment extends Fragment {
     private FragmentImageBinding binding;
     private ImageViewModel imageViewModel;
 
+    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        StrictMode.setThreadPolicy(policy);
         imageViewModel =
                 new ViewModelProvider(this).get(ImageViewModel.class);
         binding = FragmentImageBinding.inflate(inflater, container, false);
@@ -50,12 +56,12 @@ public class ImageFragment extends Fragment {
 
         byte[] bytes = getArguments().getByteArray("img");
 
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        //Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
         imageView.setRotation((float) 90);
-        imageView.setImageBitmap(bitmap);
+        //imageView.setImageBitmap(bitmap);
 
-        String attachmentName = "bitmap";
+        String attachmentName = "file";
         String attachmentFileName = "bitmap.bmp";
         String crlf = "\r\n";
         String twoHyphens = "--";
@@ -64,13 +70,14 @@ public class ImageFragment extends Fragment {
         HttpURLConnection conn = null;
         URL url;
         try {
-            url = new URL("http://391fedae4670.ngrok.io/predict");
+            url = new URL("http://92c576957878.ngrok.io/predict");
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
         conn.setUseCaches(false);
         conn.setDoOutput(true);
+        conn.setDoInput(true);
 
         try {
             conn.setRequestMethod("POST");
@@ -80,6 +87,7 @@ public class ImageFragment extends Fragment {
         conn.setRequestProperty("Connection", "Keep-Alive");
         conn.setRequestProperty("Cache-Control", "no-cache");
         conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+        conn.setRequestProperty("Accept","application/json");
 
         DataOutputStream request = null;
         try {
@@ -94,6 +102,7 @@ public class ImageFragment extends Fragment {
             request.writeBytes(twoHyphens + boundary +
                     twoHyphens + crlf);
 
+            conn.connect();
             request.flush();
             request.close();
         } catch (IOException e) {
