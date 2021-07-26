@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,54 +157,42 @@ public class GoalsaveFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 hideKeyboard(v);
-                int hour = 0;
-                int minute = 0;
-                if (hourInput.getText().toString().length() == 0)
-                {
-                    hour = 0;
-                }
-                else
-                {
-                    hour = Integer.parseInt(hourInput.getText().toString());
-                }
-                if(minuteInput.getText().toString().length() == 0)
-                {
-                    minute = 0;
-                }
-                else
-                {
-                    minute = Integer.parseInt(minuteInput.getText().toString());
-                }
-                exerciseGoal = hour * 60 + minute;
-                totalMinute.setText(String.valueOf(exerciseGoal));
+               calculateExercise();
             }
         });
+
+        hourInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getKeyCode() == 66) {
+                    // Do your thing.
+                    calculateExercise();
+                    return false;  // So it is not propagated.
+                }
+                return false;
+            }
+        });
+
+
         minuteInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 hideKeyboard(v);
-                int hour = 0;
-                int minute = 0;
-                if (hourInput.getText().toString().length() == 0)
-                {
-                    hour = 0;
-                }
-                else
-                {
-                    hour = Integer.parseInt(hourInput.getText().toString());
-                }
-                if(minuteInput.getText().toString().length() == 0)
-                {
-                    minute = 0;
-                }
-                else
-                {
-                    minute = Integer.parseInt(minuteInput.getText().toString());
-                }
-                exerciseGoal = hour * 60 + minute;
-                totalMinute.setText(String.valueOf(exerciseGoal));
+                calculateExercise();
             }
         });
+        minuteInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getKeyCode() == 66) {
+                    // Do your thing.
+                    calculateExercise();
+                    return false;  // So it is not propagated.
+                }
+                return false;
+            }
+        });
+
 
 
         saveGoalbtn = binding.saveGoalButton;
@@ -423,13 +412,14 @@ public class GoalsaveFragment extends Fragment {
             binding.waterTaken.setText(waterstr);
 
 
-            calculateExercise();
+            passExerciseToSaveGoal();
+            exerciseGoal = Integer.parseInt(binding.minText.getText().toString());
             String exercisestr = binding.exerciseDone.getText().toString();
             exercisestr = "Exercise done(min): 0/" + String.valueOf(exerciseGoal) ;
             binding.exerciseDone.setText(exercisestr);
             binding.minText.setText(String.valueOf(exerciseGoal));
         }
-        public void calculateExercise()
+        public void passExerciseToSaveGoal()
         {
             if(hourInput.getText().toString().length() == 0 && minuteInput.getText().toString().length() == 0)
             {
@@ -437,31 +427,36 @@ public class GoalsaveFragment extends Fragment {
             }
             if(isSaved)
             {
-                int hour = 0;
-                int minute = 0;
-                if (hourInput.getText().toString().length() == 0)
-                {
-                    hour = 0;
-                }
-                else
-                {
-                    hour = Integer.parseInt(hourInput.getText().toString());
-                }
-                if(minuteInput.getText().toString().length() == 0)
-                {
-                    minute = 0;
-                }
-                else
-                {
-                    minute = Integer.parseInt(minuteInput.getText().toString());
-                }
-                exerciseGoal = hour * 60 + minute;
+                calculateExercise();
             }
             else
             {
                 binding.minText.setText(String.valueOf(exerciseGoal));
             }
 
+        }
+        public void calculateExercise()
+        {
+            int hour = 0;
+            int minute = 0;
+            if (hourInput.getText().toString().length() == 0)
+            {
+                hour = 0;
+            }
+            else
+            {
+                hour = Integer.parseInt(hourInput.getText().toString());
+            }
+            if(minuteInput.getText().toString().length() == 0)
+            {
+                minute = 0;
+            }
+            else
+            {
+                minute = Integer.parseInt(minuteInput.getText().toString());
+            }
+            int goal = hour * 60 + minute;
+            totalMinute.setText(String.valueOf(goal));
         }
         int getCalorieGoal()
         {

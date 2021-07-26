@@ -132,11 +132,11 @@
                             android:inputType="number"
                             android:text=""
                             android:textColor="@color/navyBlue"
-                            android:textSize="30dp"
+                            android:textSize="25dp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.65"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.035" />
@@ -225,7 +225,7 @@
 
                         <EditText
                             android:id="@+id/waterInput"
-                            android:layout_width="70dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:inputType="number"
                             android:text=""
@@ -236,6 +236,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
@@ -373,7 +374,8 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/waterInput"
-                            app:layout_constraintVertical_bias="0.70" >
+                            app:layout_constraintVertical_bias="0.70"
+                            android:padding="5dp">
                             <ImageView
                                 android:id="@+id/glass9"
                                 android:visibility="gone"
@@ -544,7 +546,7 @@
                             app:layout_constraintVertical_bias="0.096" />
                         <TextView
                             android:id="@+id/minText"
-                            android:layout_width="60dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/navyBlue"
@@ -561,7 +563,7 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="min"
-                            android:textColor="@color/navyBlue"
+                            android:textColor="@color/ash"
                             android:textSize="25dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
