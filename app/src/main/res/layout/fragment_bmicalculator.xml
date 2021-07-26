@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.bmicalculator.BMIFragment"
-    android:background="@drawable/bg_bmi">
+    android:background="@drawable/bg_bmi"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:layout_width="100dp"
@@ -24,6 +26,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textColor="@color/navyBlue"
+        android:text=""
         android:textSize="25dp"
         android:hint="(in kg)"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,6 +57,7 @@
         android:textSize="25dp"
         android:layout_height="wrap_content"
         android:textColor="@color/navyBlue"
+        android:text=""
         android:hint="(in meter)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,6 +68,19 @@
         android:singleLine="true"
         android:inputType="numberDecimal"
         />
+
+   <!-- <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_arrow_left_24"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.994"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
+
     <TextView
         android:id="@+id/bmiText"
         android:layout_width="wrap_content"
@@ -78,6 +95,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6"
         />
+    <TextView
+        android:id="@+id/rangeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/navyBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.72"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/getBMIButton"
@@ -91,30 +121,45 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733"
+        app:layout_constraintVertical_bias="0.846"
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/resetBMIButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="260dp"
-        tools:layout_editor_absoluteY="497dp"
-        android:text="Reset"
         android:background="@drawable/button_blue"
+        android:padding="10dp"
+        android:text="Reset"
         android:textColor="@color/white"
         android:textSize="20dp"
-        android:padding="10dp"
-        tools:ignore="MissingConstraints"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733"/>
+        app:layout_constraintVertical_bias="0.846"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/againButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_blue"
+        android:padding="10dp"
+        android:text="Calculate Again"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.86"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.846"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
