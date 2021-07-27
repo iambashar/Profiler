@@ -33,12 +33,4 @@
         app:menu="@menu/bottom_nav_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/logout_button_text"
-        tools:layout_editor_absoluteX="291dp"
-        tools:layout_editor_absoluteY="29dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

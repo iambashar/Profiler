@@ -27,4 +27,5 @@
 
     <string name="email_hint">example@gmail.com</string>
     <string name="password_hint">password</string>
+    <string name="giveinput">You must input weight and height..</string>
 </resources>

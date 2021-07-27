@@ -1,5 +1,6 @@
 package com.teamdui.profiler.ui.bmicalculator;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentBmicalculatorBinding;
 
 public class BMIFragment extends Fragment {
@@ -39,7 +41,6 @@ public class BMIFragment extends Fragment {
     public TextView rangeText;
     public Button getBMIbtn;
     public Button resetbtn;
-    public Button againbtn;
     private boolean kg, lb, ft, met;
     public float bmi;
 
@@ -64,7 +65,6 @@ public class BMIFragment extends Fragment {
         BMIText = binding.bmiText;
         getBMIbtn = binding.getBMIButton;
         resetbtn = binding.resetBMIButton;
-        againbtn = binding.againButton;
         rangeText = binding.rangeText;
         kg = true;
         ft = true;
@@ -73,13 +73,11 @@ public class BMIFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(weightInput.getText().toString() .isEmpty()|| (heightRadioButtonFeet.isChecked() &&
-                    (heightInputFeet.getText().toString().isEmpty() || heightInputInch.getText().toString().isEmpty()))
+                        (heightInputFeet.getText().toString().isEmpty()&& heightInputInch.getText().toString().isEmpty()))
                    || (heightRadioButtonMeter.isChecked() && heightRadioButtonFeet.getText().toString().isEmpty()))
                         {
-                    rangeText.setText("You must input weight and height..");
+                    rangeText.setText(R.string.giveinput);
                     rangeText.setTextColor(Color.parseColor("#E05668"));
-                    getBMIbtn.setVisibility(View.INVISIBLE);
-                    againbtn.setVisibility(View.VISIBLE);
                 }
                 else
                 {
@@ -87,15 +85,35 @@ public class BMIFragment extends Fragment {
                     float height = 1, feet, inch;
 
                     if (kg && ft){
-                        feet = Float.parseFloat(heightInputFeet.getText().toString());
-                        inch = Float.parseFloat(heightInputInch.getText().toString());
+                        if (heightInputFeet.getText().toString().isEmpty()) {
+                            feet = 0;
+                        }
+                        else {
+                            feet = Float.parseFloat(heightInputFeet.getText().toString());
+                        }
+                        if (heightInputInch.getText().toString().isEmpty()) {
+                            inch = 0;
+                        }
+                        else {
+                            inch = Float.parseFloat(heightInputInch.getText().toString());
+                        }
                         height = (float) ((feet * 12.0 + inch) * 0.0254);
                     }else if (kg && met){
                         height = Float.parseFloat(heightInputFeet.getText().toString());
                     }else if (lb && ft){
                         weight = (float) (weight * 0.453592);
-                        feet = Float.parseFloat(heightInputFeet.getText().toString());
-                        inch = Float.parseFloat(heightInputInch.getText().toString());
+                        if (heightInputFeet.getText().toString().isEmpty()) {
+                            feet = 0;
+                        }
+                        else {
+                            feet = Float.parseFloat(heightInputFeet.getText().toString());
+                        }
+                        if (heightInputInch.getText().toString().isEmpty()) {
+                            inch = 0;
+                        }
+                        else {
+                            inch = Float.parseFloat(heightInputInch.getText().toString());
+                        }
                         height = (float) ((feet * 12.0 + inch) * 0.0254);
                     }else if (lb && met){
                         weight = (float) (weight * 0.453592);
@@ -108,6 +126,7 @@ public class BMIFragment extends Fragment {
                     BMIText.setText("BMI: " + String.valueOf(bmi));
                     resetbtn.setVisibility(View.VISIBLE);
                     getBMIbtn.setVisibility(View.INVISIBLE);
+                    rangeText.setTextColor(Color.parseColor("#485392"));
                     showRange();
                 }
             }
@@ -172,12 +191,6 @@ public class BMIFragment extends Fragment {
 
             }
         });
-        againbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetBMI();
-            }
-        });
         return root;
     }
 
@@ -190,23 +203,23 @@ public class BMIFragment extends Fragment {
     {
         if(bmi < 18.5)
         {
-            binding.rangeText.setText("Underweight!!");
+            rangeText.setText("Underweight!!");
         }
         else if(bmi >= 18.5 && bmi <= 24.99)
         {
-            binding.rangeText.setText("Healthy Weight..");
+            rangeText.setText("Healthy Weight..");
         }
         else if(bmi >= 25 && bmi <= 29.99)
         {
-            binding.rangeText.setText("Overweight..");
+            rangeText.setText("Overweight..");
         }
          else if(bmi >= 30 )
         {
-            binding.rangeText.setText("Obesity!!");
+            rangeText.setText("Obesity!!");
         }
          else
         {
-            binding.rangeText.setText("Wrong Weight/Height");
+            rangeText.setText("Wrong Weight/Height");
         }
     }
     public void resetBMI()
@@ -216,7 +229,6 @@ public class BMIFragment extends Fragment {
         heightInputInch.getText().clear();
         getBMIbtn.setVisibility(View.VISIBLE);
         resetbtn.setVisibility(View.INVISIBLE);
-        againbtn.setVisibility(View.INVISIBLE);
         BMIText.setText("");
         rangeText.setText("");
     }

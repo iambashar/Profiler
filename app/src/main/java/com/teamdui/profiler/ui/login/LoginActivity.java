@@ -3,12 +3,14 @@ package com.teamdui.profiler.ui.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Debug;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -24,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
+import com.teamdui.profiler.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,14 +48,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        emailText = findViewById(R.id.editTextTextEmailAddress);
-        passwordText = findViewById(R.id.editTextTextPassword);
-        loginButton = findViewById(R.id.loginButton);
-
-        loginProgressBar = findViewById(R.id.loginProgressBar);
-
+        emailText = binding.editTextTextEmailAddress;
+        passwordText = binding.editTextTextPassword;
+        loginButton = binding.loginButton;
+        loginProgressBar = binding.loginProgressBar;
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -104,10 +106,20 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
+        emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        });
+        passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        });
     }
 
     private void updateUI(FirebaseUser user) {
@@ -119,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             Intent loginSuccessIntent = new Intent(this, MainActivity.class);
             startActivity(loginSuccessIntent);
+            finish();
         }
     }
 
