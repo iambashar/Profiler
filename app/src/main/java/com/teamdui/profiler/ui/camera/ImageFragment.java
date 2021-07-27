@@ -30,7 +30,6 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
-
 public class ImageFragment extends Fragment {
 
     ImageView imageView;
