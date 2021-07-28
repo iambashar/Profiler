@@ -2,6 +2,7 @@ package com.teamdui.profiler.ui.goaltracker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +69,11 @@ public class GoalsaveFragment extends Fragment {
         binding = FragmentGoalsaveBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor myEditor = myPreferences.edit();
+        calorieGoal = myPreferences.getInt("Calorie", 0);
+        glassGoal = myPreferences.getInt("Glass", 0);
+        exerciseGoal = myPreferences.getInt("Exercise", 0);
 
         //to set calorie goal
         calorieSlider = binding.calorieSlideBar;
@@ -418,6 +424,13 @@ public class GoalsaveFragment extends Fragment {
             exercisestr = "Exercise done(min): 0/" + String.valueOf(exerciseGoal) ;
             binding.exerciseDone.setText(exercisestr);
             binding.minText.setText(String.valueOf(exerciseGoal));
+
+            SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            SharedPreferences.Editor myEditor = myPreferences.edit();
+            myEditor.putInt("Calorie", calorieGoal);
+            myEditor.putInt("Glass", glassGoal);
+            myEditor.putInt("Exercise", exerciseGoal);
+            myEditor.commit();
         }
         public void passExerciseToSaveGoal()
         {
@@ -490,6 +503,13 @@ public class GoalsaveFragment extends Fragment {
             binding.waterTaken.setText(waterstr);
             String exercisestr = "Exercise done(min): 0/0" ;
             binding.exerciseDone.setText(exercisestr);
+
+            SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            SharedPreferences.Editor myEditor = myPreferences.edit();
+            myEditor.putInt("Calorie", calorieGoal);
+            myEditor.putInt("Glass", glassGoal);
+            myEditor.putInt("Exercise", exerciseGoal);
+            myEditor.commit();
         }
 
 
