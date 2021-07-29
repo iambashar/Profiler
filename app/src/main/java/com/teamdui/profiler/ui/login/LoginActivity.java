@@ -1,14 +1,9 @@
 package com.teamdui.profiler.ui.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -16,31 +11,27 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.teamdui.profiler.MainActivity;
-import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
-import com.teamdui.profiler.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Console;
-import java.io.FileInputStream;
-
 public class LoginActivity extends AppCompatActivity {
 
-    EditText emailText;
-    EditText passwordText;
-    Button loginButton;
-    ProgressBar loginProgressBar;
+    private EditText emailText;
+    private EditText passwordText;
+    private Button loginButton;
+    private ProgressBar loginProgressBar;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     private ActivityLoginBinding binding;
 
@@ -91,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if(task.isSuccessful())
                                 {
                                     FirebaseUser user = mAuth.getCurrentUser();
+
                                     updateUI(user);
                                 }
                                 else
@@ -129,11 +121,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
+            MainActivity.uid = user.getUid();
             Intent loginSuccessIntent = new Intent(this, MainActivity.class);
             startActivity(loginSuccessIntent);
             finish();
         }
     }
-
-
 }

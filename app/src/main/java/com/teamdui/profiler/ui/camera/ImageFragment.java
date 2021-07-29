@@ -67,7 +67,7 @@ public class ImageFragment extends Fragment {
         HttpURLConnection conn = null;
         URL url;
         try {
-            url = new URL("http://6d76c93e81f1.ngrok.io/predict"); //changed every time
+            url = new URL("http://68e94549aa2e.ngrok.io/predict"); //changed every time
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();

@@ -425,6 +425,8 @@ public class GoalsaveFragment extends Fragment {
             binding.exerciseDone.setText(exercisestr);
             binding.minText.setText(String.valueOf(exerciseGoal));
 
+
+
             SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             SharedPreferences.Editor myEditor = myPreferences.edit();
             myEditor.putInt("Calorie", calorieGoal);
