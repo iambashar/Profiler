@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
+import com.teamdui.profiler.ui.register.RegisterActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordText;
     private Button loginButton;
     private ProgressBar loginProgressBar;
+    private Button registerButton;
 
     private FirebaseAuth mAuth;
 
@@ -46,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = binding.editTextTextPassword;
         loginButton = binding.loginButton;
         loginProgressBar = binding.loginProgressBar;
+        registerButton = binding.goToRegisterButton;
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -112,6 +116,14 @@ public class LoginActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
+
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToRegisterPage();
+            }
+        });
     }
 
     private void updateUI(FirebaseUser user) {
@@ -126,5 +138,11 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(loginSuccessIntent);
             finish();
         }
+    }
+
+    private void GoToRegisterPage()
+    {
+        Intent registerIntent = new Intent( this, RegisterActivity.class);
+        startActivity(registerIntent);
     }
 }
