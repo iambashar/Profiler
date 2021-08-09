@@ -88,11 +88,9 @@ public class CameraFragment extends Fragment{
     private Size imageDimensions;
     Handler mBackgroundHandler;
     HandlerThread mBackgroundThread;
-    private volatile byte[] bytes;
+    private volatile byte[] bytes = null;
     public static volatile String uri;
     DatabaseReference myRef;
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -110,7 +108,6 @@ public class CameraFragment extends Fragment{
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 uri = (String) snapshot.getValue();
-                Toast.makeText(getContext(), uri, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -137,7 +134,7 @@ public class CameraFragment extends Fragment{
                         e.printStackTrace();
                     }
                 }
-
+                Toast.makeText(getContext(), uri, Toast.LENGTH_SHORT).show();
                 Bundle arg = new Bundle();
                 arg.putByteArray("img", bytes);
                 Navigation.findNavController(root).navigate(R.id.action_navigation_camera_to_navigation_image, arg);
@@ -338,9 +335,6 @@ public class CameraFragment extends Fragment{
             @Override
             public void onCaptureCompleted(CameraCaptureSession session,CaptureRequest request,TotalCaptureResult result) {
                 super.onCaptureCompleted(session, request, result);
-
-                Toast.makeText(getContext(), "Saved", Toast.LENGTH_LONG).show();
-
                 try {
                     createCameraPreview();
                 } catch (CameraAccessException e) {

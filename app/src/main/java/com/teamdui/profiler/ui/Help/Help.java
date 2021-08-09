@@ -1,4 +1,4 @@
-package com.teamdui.profiler.ui.home;
+package com.teamdui.profiler.ui.Help;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,28 +12,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.teamdui.profiler.databinding.HomeFragmentBinding;
+import com.teamdui.profiler.databinding.HelpFragmentBinding;
 
-public class HomeFragment extends Fragment {
+public class Help extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private HomeFragmentBinding binding;
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
+    private HelpViewModel mViewModel;
+    private HelpFragmentBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        mViewModel =
+                new ViewModelProvider(this).get(HelpViewModel.class);
 
-        binding = HomeFragmentBinding.inflate(inflater, container, false);
+        binding = HelpFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        final TextView textView = binding.textHelp;
 
-        final TextView textView = binding.textDailycalorie;
-
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        mViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

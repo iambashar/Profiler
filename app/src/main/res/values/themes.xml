@@ -16,13 +16,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-
-    <style name="Theme.Profiler.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">false</item>
-    </style>
-
-    <style name="Theme.Profiler.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Profiler.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
