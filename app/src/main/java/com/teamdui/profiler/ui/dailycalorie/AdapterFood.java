@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,31 +17,49 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> {
+public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> implements AdapterView.OnItemClickListener {
 
     private List<Food>foodList;
+    public DailyMealFragment dailyMealFragment = new DailyMealFragment();
     public AdapterFood(List<Food>foodList)
     {
         this.foodList = foodList;
     }
     @NonNull
     @Override
-    public AdapterFood.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_food, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_food, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull AdapterFood.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterFood.ViewHolder holder, int position) {
         String foodName = foodList.get(position).getFoodName();
-        String calorieEach = foodList.get(position).getCalorieEach();
+        String calorieEach = foodList.get(position).getCalorieEach() + "cal";
         int deleteIcon = foodList.get(position).getDeleteIcon();
-        holder.setData(foodName, calorieEach, deleteIcon);
+        holder.foodNameView.setText(foodName);
+        holder.calorieEachView.setText(calorieEach);
+        holder.deleteIconView.setImageResource(deleteIcon);
+
+        holder.deleteIconView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                foodList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, foodList.size());
+                dailyMealFragment.reduceCalorie(calorieEach);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return foodList.size();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
 
@@ -56,10 +75,6 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> {
             deleteIconView = itemView.findViewById(R.id.deleteIconInList);
         }
 
-        public void setData(String foodName, String calorieEach, int deleteIcon) {
-            foodNameView.setText(foodName);
-            calorieEachView.setText(calorieEach);
-            deleteIconView.setImageResource(deleteIcon);
-        }
+
     }
 }

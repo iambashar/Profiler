@@ -34,6 +34,9 @@
         android:name="com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment"
         android:label="Daily Exercise"
         tools:layout="@layout/fragment_daily_exercise"/>
+    <action
+        android:id="@+id/action_navigation_dailycalorie_to_navigation_dailyexercise"
+        app:destination="@id/navigation_dailyexercise" />
 
     <fragment
         android:id="@+id/navigation_goaltracker"
