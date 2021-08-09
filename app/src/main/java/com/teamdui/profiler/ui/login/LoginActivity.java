@@ -130,6 +130,8 @@ public class LoginActivity extends AppCompatActivity {
         if(user == null)
         {
             Toast.makeText(getApplicationContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
+            emailText.getText().clear();
+            passwordText.getText().clear();
         }
         else
         {

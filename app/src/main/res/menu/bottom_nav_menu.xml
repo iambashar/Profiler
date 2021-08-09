@@ -8,15 +8,20 @@
         android:title="@string/title_dailycalorie" />
 
     <item
-        android:id="@+id/navigation_camera"
-        android:icon="@drawable/icon_caloriecalculator"
-        android:title="@string/calorie_calculator" />
-
-    <item
         android:id="@+id/navigation_goaltracker"
         android:icon="@drawable/ic_goal"
         android:title="@string/title_goaltracker"
         />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_house"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_camera"
+        android:icon="@drawable/icon_caloriecalculator"
+        android:title="@string/calorie_calculator" />
 
     <item
         android:id="@+id/navigation_bmi"

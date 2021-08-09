@@ -132,7 +132,7 @@ public class GoalsaveFragment extends Fragment {
             }
         });
 
-        waterEditText = binding.waterInput;
+        waterEditText = binding.waterInputGlass;
         waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
         waterEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -230,7 +230,7 @@ public class GoalsaveFragment extends Fragment {
 
     public void setGlassVisibility()
     {
-        waterEditText = binding.waterInput;
+        waterEditText = binding.waterInputGlass;
         waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
         switch (glassGoal)
         {
@@ -319,7 +319,7 @@ public class GoalsaveFragment extends Fragment {
 
     public void setGlassInvisibility()
     {
-        waterEditText = binding.waterInput;
+        waterEditText = binding.waterInputGlass;
         waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
         switch (glassGoal)
         {

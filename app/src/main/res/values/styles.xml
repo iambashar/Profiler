@@ -2,7 +2,7 @@
 <resources xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 	<!-- login styles -->
 
-	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+	<style name="AppTheme" parent="Theme.MaterialComponents.Light">
 		<item name="android:fontFamily">@font/bitter</item>
 
 	</style>

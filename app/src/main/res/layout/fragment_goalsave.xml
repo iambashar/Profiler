@@ -63,7 +63,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="220dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -224,34 +224,56 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.096" />
 
+
                         <EditText
-                            android:id="@+id/waterInput"
-                            android:layout_width="100dp"
+                            android:id="@+id/waterInputGlass"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
+                            android:hint="glasses"
+                            android:gravity="center"
                             android:inputType="number"
                             android:text=""
                             android:textColor="@color/navyBlue"
-                            android:textSize="25dp"
+                            android:textColorHint="@color/shallow_ash"
+                            android:textSize="18dp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.426"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintVertical_bias="0.0" />
-
+                            app:layout_constraintVertical_bias="0.043" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="glasses"
+                            android:text="/"
                             android:textSize="25dp"
-                            android:textColor="@color/ash"
+                            android:textColor="@color/navyBlue"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.867"
+                            app:layout_constraintHorizontal_bias="0.62"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.096" />
+                            app:layout_constraintVertical_bias="0.09"
+                            />
+                        <EditText
+                            android:id="@+id/waterInputMl"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:hint="ml"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:text=""
+                            android:textColor="@color/navyBlue"
+                            android:textColorHint="@color/shallow_ash"
+                            android:textSize="18dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.9"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.043" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"

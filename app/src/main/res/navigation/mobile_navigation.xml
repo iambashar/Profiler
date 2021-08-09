@@ -3,13 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_dailycalorie">
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.teamdui.profiler.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/home_fragment" />
 
     <fragment
         android:id="@+id/navigation_dailycalorie"
         android:name="com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment"
         android:label="@string/title_dailycalorie"
         tools:layout="@layout/fragment_dailycalorie" />
+    <action
+        android:id="@+id/action_navigation_dailycalorie_to_navigation_dailymeal"
+        app:destination="@id/navigation_dailymeal" />
+
+    <fragment
+        android:id="@+id/navigation_dailymeal"
+        android:name="com.teamdui.profiler.ui.dailycalorie.DailyMealFragment"
+        android:label="Daily Meal"
+        tools:layout="@layout/fragment_daily_meal"/>
+    <action
+        android:id="@+id/action_navigation_dailymeal_to_navigation_camera"
+        app:destination="@id/navigation_camera" />
+
+    <fragment
+        android:id="@+id/navigation_dailyexercise"
+        android:name="com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment"
+        android:label="Daily Exercise"
+        tools:layout="@layout/fragment_daily_exercise"/>
 
     <fragment
         android:id="@+id/navigation_goaltracker"
