@@ -14,7 +14,6 @@ import com.teamdui.profiler.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    public static String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

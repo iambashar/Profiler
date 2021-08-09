@@ -22,8 +22,10 @@ import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -40,9 +42,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentCameraBinding;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,6 +89,9 @@ public class CameraFragment extends Fragment{
     Handler mBackgroundHandler;
     HandlerThread mBackgroundThread;
     private volatile byte[] bytes;
+    public static volatile String uri;
+    DatabaseReference myRef;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -87,6 +104,20 @@ public class CameraFragment extends Fragment{
 
         textureView = binding.view;
         textureView.setSurfaceTextureListener(textureListener);
+        myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("url");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                uri = (String) snapshot.getValue();
+                Toast.makeText(getContext(), uri, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
 
         button = binding.Button;
         button.setOnClickListener(new View.OnClickListener() {
@@ -277,7 +308,7 @@ public class CameraFragment extends Fragment{
 //        Long tslong = System.currentTimeMillis()/1000;
 //        String ts = tslong.toString();
 //
-//        file = new File(Environment.getExternalStorageDirectory() + "/Documents" + File.separator  + "/" + ts + ".jpg");
+//        File file = new File(Environment.getExternalStorageDirectory() + "/Documents" + File.separator  + "/" + ts + ".jpg");
 
         ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
             @Override

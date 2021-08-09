@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.databinding.FragmentImageBinding;
 
 import org.json.JSONArray;
@@ -65,9 +66,10 @@ public class ImageFragment extends Fragment {
         String boundary =  "*****";
 
         HttpURLConnection conn = null;
+
         URL url;
         try {
-            url = new URL("http://68e94549aa2e.ngrok.io/predict"); //changed every time
+            url = new URL(CameraFragment.uri);
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();

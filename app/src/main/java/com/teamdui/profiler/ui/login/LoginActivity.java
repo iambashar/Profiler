@@ -133,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            MainActivity.uid = user.getUid();
             Intent loginSuccessIntent = new Intent(this, MainActivity.class);
             startActivity(loginSuccessIntent);
             finish();
