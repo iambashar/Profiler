@@ -129,13 +129,14 @@ public class DailyMealFragment extends Fragment {
         return root;
     }
 
-    int getCalorieDaily()
+    public int getCalorieDaily()
     {
         return calorieDaily;
     }
 
     public void reduceCalorie(String toReduce)
     {
+        toReduce = toReduce.replace(" cal", "");
         calorieDaily = calorieDaily - Integer.parseInt(toReduce);
         calorieUpperText.setText(calorieDaily.toString());
     }
@@ -170,4 +171,5 @@ public class DailyMealFragment extends Fragment {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
 }

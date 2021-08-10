@@ -26,6 +26,9 @@ import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentGoalsaveBinding;
 import com.teamdui.profiler.databinding.FragmentGoaltrackerBinding;
+import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
+import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
+import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
 
 
 public class GoalsaveFragment extends Fragment {
@@ -39,22 +42,33 @@ public class GoalsaveFragment extends Fragment {
     private SeekBar calorieSlider;
     private EditText calorieEditText;
     public static int calorieGoal = 0;
+    public static int finalCalorieGoal = 0;
 
     private ImageView addWaterButton;
     private ImageView deleteWaterButton;
     private EditText waterEditText;
     private EditText waterEditTextml;
     public static int glassGoal = 0;
+    public static int finalGlassGoal = 0;
 
     private EditText hourInput;
     private EditText minuteInput;
     private TextView totalMinute;
     public static int exerciseGoal = 0;
+    public static int finalExerciseGoal = 0;
     public static boolean isSaved = false;
     public static boolean isWaterModified = false;
 
     private Button saveGoalbtn;
     private Button resetbtn;
+
+    public DailyCalorieFragment dailyCalorieFragment = new DailyCalorieFragment();
+    public DailyExerciseFragment dailyExerciseFragment = new DailyExerciseFragment();
+    public DailyMealFragment dailyMealFragment = new DailyMealFragment();
+    public static int calorieDaily;
+    public static int exerciseDaily;
+    public static int glassDaily;
+    public final int waterFactor = 150;
 
     public GoalsaveFragment()
     {
@@ -68,21 +82,24 @@ public class GoalsaveFragment extends Fragment {
         binding = FragmentGoalsaveBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        calorieGoal = dailyMealFragment.getCalorieDaily();
+        //glassGoal = dailyCalorieFragment.getGlassDaily();
+        exerciseGoal = dailyExerciseFragment.getExerciseDaily();
 
 
         //to set calorie goal
         calorieSlider = binding.calorieSlideBar;
         calorieEditText = binding.calorieInput;
-        calorieSlider.setProgress(calorieGoal);
-        calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
-        if(calorieGoal > 3000)
+        calorieSlider.setProgress(finalCalorieGoal);
+        calorieEditText.setText(String.valueOf(finalCalorieGoal), TextView.BufferType.EDITABLE);
+        if(finalCalorieGoal > 3000)
         {
             calorieSlider.getProgressDrawable().setTint(Color.rgb(224, 86, 104));
             calorieSlider.getThumb().setTint(Color.rgb(224, 86, 104));
             //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
         }
-        if(calorieGoal < 3000)
+        if(finalCalorieGoal < 3000)
         {
             calorieSlider.getProgressDrawable().setTint(Color.rgb(72, 83, 146));
             calorieSlider.getThumb().setTint(Color.rgb(72, 83, 146));
@@ -121,6 +138,7 @@ public class GoalsaveFragment extends Fragment {
 
         //to set water goal
         addWaterButton = binding.addWater;
+        glassGoal = finalGlassGoal;
         setGlassVisibility();
         addWaterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,19 +158,23 @@ public class GoalsaveFragment extends Fragment {
                     binding.waterInputGlass.getText().clear();
                     binding.waterInputMl.getText().clear();
                 }
+                if(glassGoal < 0)
+                {
+                    glassGoal = 0;
+                }
                 setGlassInvisibility();
             }
         });
 
         waterEditText = binding.waterInputGlass;
         waterEditTextml = binding.waterInputMl;
-        waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
-        waterEditTextml.setText(String.valueOf(glassGoal * 148), TextView.BufferType.EDITABLE);
+        waterEditText.setText(String.valueOf(finalGlassGoal), TextView.BufferType.EDITABLE);
+        waterEditTextml.setText(String.valueOf(finalGlassGoal * waterFactor), TextView.BufferType.EDITABLE);
         waterEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 String waterText = waterEditText.getText().toString();
-                waterEditTextml.setText(String.valueOf(glassGoal * 148), TextView.BufferType.EDITABLE);
+                waterEditTextml.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
                 int noOfGlass;
                 if(isWaterModified)
                 {
@@ -181,12 +203,12 @@ public class GoalsaveFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 String waterText = waterEditTextml.getText().toString();
                 int y;
-               hideKeyboard(v);
+                hideKeyboard(v);
                 int noOfGlass;
                 if(isWaterModified)
                 {
                     y = Integer.parseInt(waterText);
-                    noOfGlass = (int) Math.ceil((double) y / 148);
+                    noOfGlass = (int) Math.ceil((double) y / waterFactor);
                 }
                 else
                 {
@@ -216,7 +238,7 @@ public class GoalsaveFragment extends Fragment {
         minuteInput = binding.minuteInput;
         totalMinute = binding.minText;
         isSaved = false;
-        totalMinute.setText(String.valueOf(exerciseGoal));
+        totalMinute.setText(String.valueOf(finalExerciseGoal));
         hourInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -277,6 +299,9 @@ public class GoalsaveFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isSaved = true;
+                finalCalorieGoal = calorieGoal;
+                finalGlassGoal = glassGoal;
+                finalExerciseGoal = exerciseGoal;
                 saveGoals();
             }
         });
@@ -302,7 +327,7 @@ public class GoalsaveFragment extends Fragment {
     {
         waterEditText = binding.waterInputGlass;
         waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
-        binding.waterInputMl.setText(String.valueOf(glassGoal * 148), TextView.BufferType.EDITABLE);
+        binding.waterInputMl.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
         switch (glassGoal)
         {
             case 16:
@@ -392,7 +417,7 @@ public class GoalsaveFragment extends Fragment {
     {
         waterEditText = binding.waterInputGlass;
         waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
-        binding.waterInputMl.setText(String.valueOf(glassGoal * 148), TextView.BufferType.EDITABLE);
+        binding.waterInputMl.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
 
         switch (glassGoal)
         {
@@ -484,20 +509,22 @@ public class GoalsaveFragment extends Fragment {
 
     public void saveGoals()
     {
-        String caloriestr = "Total calorie earned(cal): 0/" + String.valueOf(calorieGoal);
+        calorieDaily = dailyMealFragment.getCalorieDaily();
+        String caloriestr = "Total calorie earned(cal): "+ String.valueOf(calorieDaily) + "/" + String.valueOf(finalCalorieGoal);
         binding.calorieEarn.setText(caloriestr);
 
 
-
-        String waterstr = "Water taken(glasses): 0/" + String.valueOf(glassGoal) ;
+        glassDaily = dailyCalorieFragment.getGlassDaily();
+        String waterstr = "Water taken(glasses): " +String.valueOf(glassDaily) + "/" +  String.valueOf(finalGlassGoal) ;
         binding.waterTaken.setText(waterstr);
 
 
         calculateExercise();
         String exercisestr = binding.exerciseDone.getText().toString();
-        exercisestr = "Exercise done(min): 0/" + String.valueOf(exerciseGoal) ;
+        exerciseDaily = dailyExerciseFragment.getExerciseDaily();
+        exercisestr = "Exercise done(min): " + String.valueOf(exerciseDaily) + "/" + String.valueOf(finalExerciseGoal) ;
         binding.exerciseDone.setText(exercisestr);
-        binding.minText.setText(String.valueOf(exerciseGoal));
+        binding.minText.setText(String.valueOf(finalExerciseGoal));
     }
     public void calculateExercise()
     {
@@ -533,17 +560,17 @@ public class GoalsaveFragment extends Fragment {
         }
 
     }
-    int getCalorieGoal()
+    public int getCalorieGoal()
     {
-        return calorieGoal;
+        return finalCalorieGoal;
     }
-    int getGlassGoal()
+    public int getGlassGoal()
     {
-        return glassGoal;
+        return finalGlassGoal;
     }
-    int getExerciseGoal()
+    public int getExerciseGoal()
     {
-        return exerciseGoal;
+        return finalExerciseGoal;
     }
 
     public void resetGoal()
@@ -551,6 +578,9 @@ public class GoalsaveFragment extends Fragment {
         calorieGoal = 0;
         glassGoal = 0;
         exerciseGoal = 0;
+        finalCalorieGoal = 0;
+        finalGlassGoal = 0;
+        finalExerciseGoal = 0;
         calorieSlider.setProgress(calorieGoal);
         calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
         binding.waterInputMl.getText().clear();
@@ -561,11 +591,11 @@ public class GoalsaveFragment extends Fragment {
         binding.hourInput.getText().clear();
         binding.minuteInput.getText().clear();
 
-        String caloriestr = "Total calorie earned(cal): 0/0";
+        String caloriestr = "Total calorie earned(cal): " + String.valueOf(calorieDaily) + "/0";
         binding.calorieEarn.setText(caloriestr);
-        String waterstr = "Water taken(glasses): 0/0";
+        String waterstr = "Water taken(glasses): " + String.valueOf(glassDaily) + "/0";
         binding.waterTaken.setText(waterstr);
-        String exercisestr = "Exercise done(min): 0/0" ;
+        String exercisestr = "Exercise done(min): " + String.valueOf(exerciseDaily) + "/0";
         binding.exerciseDone.setText(exercisestr);
     }
 

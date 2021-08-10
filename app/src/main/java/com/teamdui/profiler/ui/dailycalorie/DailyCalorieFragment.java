@@ -22,6 +22,7 @@ import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentDailycalorieBinding;
+import com.teamdui.profiler.ui.goaltracker.GoalsaveFragment;
 import com.teamdui.profiler.ui.login.LoginActivity;
 
 public class DailyCalorieFragment extends Fragment {
@@ -42,6 +43,13 @@ public class DailyCalorieFragment extends Fragment {
     public TextView waterMlInput;
 
 
+    public static int calorieDaily = 0;
+    public static int exerciseDaily = 0;
+    public static int glassGoal = 0;
+    public static int calorieGoal = 0;
+    public static int exerciseGoal = 0;
+
+    public final int waterFactor = 150;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,6 +59,8 @@ public class DailyCalorieFragment extends Fragment {
 
         binding = FragmentDailycalorieBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        setUpperText();
 
         addMealbtn = binding.addMealButton;
         addMealbtn.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +77,7 @@ public class DailyCalorieFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 glassDaily++;
-                mlDaily = glassDaily * 148;
+                mlDaily = glassDaily * waterFactor;
                 isSaved = true;
                 setWaterText();
                 if(glassDaily == 0)
@@ -75,6 +85,7 @@ public class DailyCalorieFragment extends Fragment {
                     binding.waterInputGlass.getText().clear();
                     binding.waterInputMl.getText().clear();
                 }
+                setUpperText();
                 setGlassVisibility();
             }
         });
@@ -82,7 +93,12 @@ public class DailyCalorieFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 glassDaily--;
-                mlDaily = glassDaily * 148;
+                if(glassDaily < 0)
+                {
+                    glassDaily = 0;
+                }
+                mlDaily = glassDaily * waterFactor;
+                setUpperText();
                 setWaterText();
                 setGlassInvisibility();
             }
@@ -97,8 +113,13 @@ public class DailyCalorieFragment extends Fragment {
             }
         });
 
+
+
         waterGlassInput = binding.waterInputGlass;
         waterMlInput = binding.waterInputMl;
+        waterGlassInput.setText(Integer.toString(glassDaily));
+        waterMlInput.setText(Integer.toString(glassDaily * waterFactor));
+        setGlassVisibility();
         waterGlassInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -113,7 +134,8 @@ public class DailyCalorieFragment extends Fragment {
                 {
                     glassDaily = 0;
                 }
-                mlDaily = glassDaily * 148;
+                setUpperText();
+                mlDaily = glassDaily * waterFactor;
                 if(noOfGlass < glassDaily)
                 {
                     setGlassVisibility();
@@ -123,6 +145,7 @@ public class DailyCalorieFragment extends Fragment {
                     setGlassInvisibility();
                 }
             }
+
         });
         waterMlInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -137,7 +160,8 @@ public class DailyCalorieFragment extends Fragment {
                 {
                     mlDaily = 0;
                 }
-                glassDaily = (int) Math.ceil((double) mlDaily / 148);
+                glassDaily = (int) Math.ceil((double) mlDaily / waterFactor);
+                setUpperText();
                 if(noOfGlass < glassDaily)
                 {
                     setGlassVisibility();
@@ -358,6 +382,39 @@ public class DailyCalorieFragment extends Fragment {
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    public int getGlassDaily()
+    {
+        return glassDaily;
+    }
+
+
+    public void setUpperText()
+    {
+        try{
+            DailyExerciseFragment dailyExerciseFragment = new DailyExerciseFragment();
+            DailyMealFragment dailyMealFragment = new DailyMealFragment();
+            GoalsaveFragment goalsaveFragment = new GoalsaveFragment();
+            calorieDaily = dailyMealFragment.getCalorieDaily();
+            exerciseDaily = dailyExerciseFragment.getExerciseDaily();
+            glassGoal = goalsaveFragment.getGlassGoal();
+            calorieGoal = goalsaveFragment.getCalorieGoal();
+            exerciseGoal = goalsaveFragment.getExerciseGoal();
+        }
+        catch (Exception e)
+        {
+            calorieDaily = 0;
+            exerciseDaily = 0;
+            glassGoal = 0;
+            calorieGoal = 0;
+            exerciseGoal = 0;
+        }
+        TextView calorieText = binding.calorieEarn;
+        TextView waterText = binding.waterTaken;
+        TextView exerciseText = binding.exerciseDone;
+        calorieText.setText("Total calorie earned(cal): " + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
+        waterText.setText("Water taken(glasses): " + String.valueOf(glassDaily) + "/" + String.valueOf(glassGoal));
+        exerciseText.setText("Exercise Done(min):  "+ String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
     }
 
 }

@@ -35,7 +35,7 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull AdapterFood.ViewHolder holder, int position) {
         String foodName = foodList.get(position).getFoodName();
-        String calorieEach = foodList.get(position).getCalorieEach() + "cal";
+        String calorieEach = foodList.get(position).getCalorieEach() + " cal";
         int deleteIcon = foodList.get(position).getDeleteIcon();
         holder.foodNameView.setText(foodName);
         holder.calorieEachView.setText(calorieEach);

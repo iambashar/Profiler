@@ -1,22 +1,21 @@
 package com.teamdui.profiler.ui.goaltracker;
 
-import android.hardware.camera2.CameraAccessException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentGoaltrackerBinding;
+import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
+import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
+import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
 
 public class GoaltrackerFragment extends Fragment {
 
@@ -29,6 +28,10 @@ public class GoaltrackerFragment extends Fragment {
     public static int waterGoal = 0;
     public static  int exerciseGoal = 0;
     public static boolean isGoslsaveVisited = false;
+
+    public static int calorieDaily = 0;
+    public static int glassDaily = 0;
+    public static int exerciseDaily = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -71,12 +74,30 @@ public class GoaltrackerFragment extends Fragment {
     }
     public void setGoalText()
     {
+       try {
+
+            DailyMealFragment dailyMealFragment;
+            DailyCalorieFragment dailyCalorieFragment;
+            DailyExerciseFragment dailyExerciseFragment;
+            dailyCalorieFragment = new DailyCalorieFragment();
+            dailyExerciseFragment = new DailyExerciseFragment();
+            dailyMealFragment = new DailyMealFragment();
+            calorieDaily = dailyMealFragment.getCalorieDaily();
+            glassDaily = dailyCalorieFragment.getGlassDaily();
+            exerciseDaily = dailyExerciseFragment.getExerciseDaily();
+        }
+        catch (Exception e)
+        {
+            calorieDaily = 0;
+            glassDaily = 0;
+            exerciseDaily = 0;
+        }
         String calorieText = binding.calorieEarninTracker.getText().toString();
-        binding.calorieEarninTracker.setText(calorieText + String.valueOf(calorieGoal));
+        binding.calorieEarninTracker.setText(calorieText + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
         String waterText = binding.waterTakeninTracker.getText().toString();
-        binding.waterTakeninTracker.setText(waterText + String.valueOf(waterGoal));
+        binding.waterTakeninTracker.setText(waterText + String.valueOf(glassDaily) + "/" + String.valueOf(waterGoal));
         String exerciseText = binding.exerciseDoneinTracker.getText().toString();
-        binding.exerciseDoneinTracker.setText(exerciseText + String.valueOf(exerciseGoal));
+        binding.exerciseDoneinTracker.setText(exerciseText + String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
     }
 
 }
