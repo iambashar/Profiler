@@ -60,7 +60,7 @@
     <fragment
         android:id="@+id/navigation_camera"
         android:name="com.teamdui.profiler.ui.camera.CameraFragment"
-        android:label="@string/camera"
+        android:label="@string/calorie_calculator"
         tools:layout="@layout/fragment_camera"  >
         <action
             android:id="@+id/action_navigation_camera_to_navigation_image"

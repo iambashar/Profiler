@@ -47,6 +47,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentCameraBinding;
 
@@ -89,8 +90,6 @@ public class CameraFragment extends Fragment{
     Handler mBackgroundHandler;
     HandlerThread mBackgroundThread;
     private volatile byte[] bytes = null;
-    public static volatile String uri;
-    DatabaseReference myRef;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -102,19 +101,6 @@ public class CameraFragment extends Fragment{
 
         textureView = binding.view;
         textureView.setSurfaceTextureListener(textureListener);
-        myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("url");
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                uri = (String) snapshot.getValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
 
         button = binding.Button;
         button.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +120,8 @@ public class CameraFragment extends Fragment{
                         e.printStackTrace();
                     }
                 }
-                Toast.makeText(getContext(), uri, Toast.LENGTH_SHORT).show();
+                if  (MainActivity.uri != null)
+                    Toast.makeText(getContext(), MainActivity.uri, Toast.LENGTH_SHORT).show();
                 Bundle arg = new Bundle();
                 arg.putByteArray("img", bytes);
                 Navigation.findNavController(root).navigate(R.id.action_navigation_camera_to_navigation_image, arg);

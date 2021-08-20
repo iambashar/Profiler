@@ -38,6 +38,9 @@ public class ImageFragment extends Fragment {
     private FragmentImageBinding binding;
     private ImageViewModel imageViewModel;
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+    ArrayList<String> classes = new ArrayList<String>();
+    ArrayList<String> calories = new ArrayList<String>();
+    String show = "";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -69,7 +72,7 @@ public class ImageFragment extends Fragment {
 
         URL url;
         try {
-            url = new URL(CameraFragment.uri);
+            url = new URL(MainActivity.uri);
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,29 +122,31 @@ public class ImageFragment extends Fragment {
             JSONObject js = new JSONObject(sb.toString());
             JSONArray jsonArray = js.getJSONArray("calorie");
             int len = jsonArray.length();
-            ArrayList<String> calories = new ArrayList<String>();
+
             for (int i=0;i<len;i++) {
                 calories.add(jsonArray.get(i).toString());
             }
 
             jsonArray = js.getJSONArray("class_name");
-            ArrayList<String> classes = new ArrayList<String>();
+
             for (int i=0;i<len;i++) {
                 classes.add(jsonArray.get(i).toString());
             }
 
-            String show = "";
+
             for (int i=0; i<len; i++) {
                 show += "           " + classes.get(i) + " : " + calories.get(i) + " calorie\n";
             }
-            textView.setText("Food Info: \n" + show);
+
         } catch (IOException e) {
             e.printStackTrace();
         }catch (JSONException e){
             e.printStackTrace();
         }
-
         conn.disconnect();
+        textView.setText("Food Info: \n" + show);
+
+
         return root;
     }
 
