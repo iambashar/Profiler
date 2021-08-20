@@ -5,12 +5,12 @@
     <item
         android:id="@+id/navigation_dailycalorie"
         android:icon="@drawable/ic_daily"
-        android:title="@string/title_dailycalorie" />
+        android:title= "Daily" />
 
     <item
         android:id="@+id/navigation_goaltracker"
         android:icon="@drawable/ic_goal"
-        android:title="@string/title_goaltracker"
+        android:title="Goal"
         />
 
     <item
@@ -26,5 +26,5 @@
     <item
         android:id="@+id/navigation_bmi"
         android:icon="@drawable/ic_bmi"
-        android:title="@string/title_bmi" />
+        android:title="BMI" />
 </menu>

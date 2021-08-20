@@ -414,7 +414,7 @@ public class DailyCalorieFragment extends Fragment {
         TextView exerciseText = binding.exerciseDone;
         calorieText.setText("Total calorie earned(cal): " + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
         waterText.setText("Water taken(glasses): " + String.valueOf(glassDaily) + "/" + String.valueOf(glassGoal));
-        exerciseText.setText("Exercise Done(min):  "+ String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
+        exerciseText.setText("Exercise done(min): "+ String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
     }
 
 }
