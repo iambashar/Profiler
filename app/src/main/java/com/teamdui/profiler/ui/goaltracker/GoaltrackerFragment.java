@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,6 +35,16 @@ public class GoaltrackerFragment extends Fragment {
     public static int glassDaily = 0;
     public static int exerciseDaily = 0;
 
+    public ProgressBar calorieProgressBar;
+    public ProgressBar waterProgressBar;
+    public ProgressBar exerciseProgressBar;
+    public TextView caloriePercentText;
+    public TextView waterPercentText;
+    public TextView exercisePercentText;
+    public static int caloriePercentage;
+    public static int waterPercentage;
+    public static int exercisePercentage;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         goaltrackerViewModel =
@@ -54,6 +66,21 @@ public class GoaltrackerFragment extends Fragment {
                 Navigation.findNavController(root).navigate(R.id.action_navigation_goaltracker_to_navigation_goalsave, arg);
             }
         });
+
+        calorieProgressBar = binding.calorieProgressBar;
+        waterProgressBar = binding.waterProgressbar;
+        exerciseProgressBar = binding.exerciseProgressbar;
+        caloriePercentText = binding.caloriePercentage;
+        waterPercentText = binding.waterPercentage;
+        exercisePercentText = binding.exercisePercentage;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setProgressBar();
+            }
+        });
+        thread.start();
+
         return root;
     }
 
@@ -100,4 +127,36 @@ public class GoaltrackerFragment extends Fragment {
         binding.exerciseDoneinTracker.setText(exerciseText + String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
     }
 
+    public void setProgressBar()
+    {
+        try {
+            caloriePercentage = (int)(calorieDaily * 100.0f) / calorieGoal;
+        } catch (Exception e) {
+            caloriePercentage = 0;
+        }
+
+        try {
+            waterPercentage = (int)(glassDaily * 100.0f) / waterGoal;
+        } catch (Exception e)
+        {
+            waterPercentage = 0;
+        }
+
+        try {
+            exercisePercentage = (int)(exerciseDaily * 100.0f) / exerciseGoal;
+        } catch (Exception e) {
+            exercisePercentage = 0;
+        }
+
+        calorieProgressBar.setProgress(caloriePercentage);
+        waterProgressBar.setProgress(waterPercentage);
+        exerciseProgressBar.setProgress(exercisePercentage);
+        setPercentText();
+    }
+    public void setPercentText()
+    {
+        caloriePercentText.setText(String.valueOf(caloriePercentage) + "%");
+        waterPercentText.setText(String.valueOf(waterPercentage) + "%");
+        exercisePercentText.setText(String.valueOf(exercisePercentage) + "%");
+    }
 }

@@ -199,23 +199,28 @@ public class BMIFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+    @SuppressLint("ResourceAsColor")
     public void showRange()
     {
         if(bmi < 18.5)
         {
             rangeText.setText("Underweight!!");
+            binding.underweight.setTextColor(Color.parseColor("#ffffff"));
         }
         else if(bmi >= 18.5 && bmi <= 24.99)
         {
             rangeText.setText("Healthy Weight..");
+            binding.healthyWeight.setTextColor(Color.parseColor("#ffffff"));
         }
         else if(bmi >= 25 && bmi <= 29.99)
         {
             rangeText.setText("Overweight..");
+            binding.overweight.setTextColor(Color.parseColor("#ffffff"));
         }
          else if(bmi >= 30 )
         {
             rangeText.setText("Obesity!!");
+            binding.obesity.setTextColor(Color.parseColor("#ffffff"));
         }
          else
         {
@@ -231,5 +236,9 @@ public class BMIFragment extends Fragment {
         resetbtn.setVisibility(View.INVISIBLE);
         BMIText.setText("");
         rangeText.setText("");
+        binding.underweight.setTextColor(Color.parseColor("#A6A2A2"));
+        binding.healthyWeight.setTextColor(Color.parseColor("#A6A2A2"));
+        binding.overweight.setTextColor(Color.parseColor("#A6A2A2"));
+        binding.obesity.setTextColor(Color.parseColor("#A6A2A2"));
     }
 }

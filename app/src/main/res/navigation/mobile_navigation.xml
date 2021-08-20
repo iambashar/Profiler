@@ -10,6 +10,9 @@
         android:name="com.teamdui.profiler.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/home_fragment" />
+    <action
+        android:id="@+id/action_navigation_home_to_navigation_camera"
+        app:destination="@id/navigation_camera" />
 
     <fragment
         android:id="@+id/navigation_dailycalorie"

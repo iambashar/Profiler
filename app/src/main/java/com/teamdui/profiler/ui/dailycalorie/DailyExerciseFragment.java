@@ -233,4 +233,8 @@ public class DailyExerciseFragment extends Fragment {
     {
         return exerciseDaily;
     }
+    public double getBurnedCalorie()
+    {
+        return burnedCalorie;
+    }
 }

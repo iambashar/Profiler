@@ -595,7 +595,7 @@ public class GoalsaveFragment extends Fragment {
         binding.calorieEarn.setText(caloriestr);
         String waterstr = "Water taken(glasses): " + String.valueOf(glassDaily) + "/0";
         binding.waterTaken.setText(waterstr);
-        String exercisestr = "Exercise done(min): " + String.valueOf(exerciseDaily) + "/0";
+        String exercisestr = "Exercise Done(min): " + String.valueOf(exerciseDaily) + "/0";
         binding.exerciseDone.setText(exercisestr);
     }
 
