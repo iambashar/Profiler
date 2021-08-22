@@ -12,11 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.teamdui.profiler.MainActivity;
+import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentImageBinding;
+import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
+import com.teamdui.profiler.ui.dailycalorie.Food;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,17 +36,26 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImageFragment extends Fragment {
 
     ImageView imageView;
-    TextView textView;
     private FragmentImageBinding binding;
     private ImageViewModel imageViewModel;
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     ArrayList<String> classes = new ArrayList<String>();
     ArrayList<String> calories = new ArrayList<String>();
-    String show = "";
+
+
+    RecyclerView foodRecyclerView;
+    LinearLayoutManager foodLayoutManager;
+    AdapterCalorie adapterCalorie;
+    AppCompatButton addButton;
+    public static Integer calorieDailyImage = 0;
+    public static TextView calorieUpperTextImage;
+    public DailyMealFragment dailyMealFragment = new DailyMealFragment();
+    public static List<Food> foodListImage;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -52,8 +67,13 @@ public class ImageFragment extends Fragment {
         binding = FragmentImageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        foodListImage = new ArrayList<>();
         imageView = binding.hgview;
-        textView = binding.calorieinfo;
+        foodRecyclerView = binding.calorieList;
+        addButton = binding.addCalorieButton;
+        calorieUpperTextImage = binding.calorieUpperText;
+        calorieUpperTextImage.setText(dailyMealFragment.calorieDaily.toString());
+
 
         byte[] bytes = getArguments().getByteArray("img");
 
@@ -132,24 +152,50 @@ public class ImageFragment extends Fragment {
             for (int i=0;i<len;i++) {
                 classes.add(jsonArray.get(i).toString());
             }
-
-
-            for (int i=0; i<len; i++) {
-                show += "           " + classes.get(i) + " : " + calories.get(i) + " calorie\n";
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
         }catch (JSONException e){
             e.printStackTrace();
         }
         conn.disconnect();
-        textView.setText("Food Info: \n" + show);
 
+        for (int i=0; i<classes.size(); i++){
+            calorieDailyImage = calorieDailyImage + Integer.valueOf(calories.get(i));
+            initFoodList(classes.get(i), calories.get(i));
+            initRecyclerView();
+        }
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dailyMealFragment.calorieDaily += calorieDailyImage;
+                calorieUpperTextImage.setText(dailyMealFragment.calorieDaily.toString());
+                for (int i=0; i<classes.size(); i++){
+                    dailyMealFragment.foodList.add(new Food(classes.get(i), calories.get(i), R.drawable.ic_minus));
+                }
+            }
+        });
 
         return root;
     }
+    public void initFoodList(String food, String calorie)
+    {
+        foodListImage.add(new Food(food, calorie, R.drawable.ic_minus));
+    }
 
+    public void initRecyclerView()
+    {
+        adapterCalorie = new AdapterCalorie(foodListImage);
+        foodLayoutManager = new LinearLayoutManager(this.getContext());
+        foodLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        foodRecyclerView.setLayoutManager(foodLayoutManager);
+        foodRecyclerView.setAdapter(adapterCalorie);
+        adapterCalorie.notifyDataSetChanged();
+    }
 
-
+    public void reduceCalorie(String toReduce)
+    {
+        toReduce = toReduce.replace(" cal", "");
+        calorieDailyImage = calorieDailyImage - Integer.parseInt(toReduce);
+    }
 }

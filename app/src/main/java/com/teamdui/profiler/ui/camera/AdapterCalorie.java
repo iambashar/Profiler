@@ -1,4 +1,4 @@
-package com.teamdui.profiler.ui.dailycalorie;
+package com.teamdui.profiler.ui.camera;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.teamdui.profiler.R;
+import com.teamdui.profiler.ui.dailycalorie.Food;
 
 import java.util.List;
 
-public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> implements AdapterView.OnItemClickListener {
+public class AdapterCalorie extends RecyclerView.Adapter<AdapterCalorie.ViewHolder> implements AdapterView.OnItemClickListener {
 
     private List<Food>foodList;
-    public DailyMealFragment dailyMealFragment = new DailyMealFragment();
-    public AdapterFood(List<Food>foodList)
+    public ImageFragment imageFragment = new ImageFragment();
+    public AdapterCalorie(List<Food>foodList)
     {
         this.foodList = foodList;
     }
@@ -30,7 +31,7 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> im
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterFood.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterCalorie.ViewHolder holder, int position) {
         String foodName = foodList.get(position).getFoodName();
         String calorieEach = foodList.get(position).getCalorieEach() + " cal";
         int deleteIcon = foodList.get(position).getDeleteIcon();
@@ -44,7 +45,7 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> im
                 foodList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, foodList.size());
-                dailyMealFragment.reduceCalorie(calorieEach);
+                imageFragment.reduceCalorie(calorieEach);
             }
         });
     }

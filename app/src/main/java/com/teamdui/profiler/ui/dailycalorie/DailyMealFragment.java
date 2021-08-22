@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentDailyMealBinding;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,13 +43,15 @@ public class DailyMealFragment extends Fragment {
 
     RecyclerView foodRecyclerView;
     LinearLayoutManager foodLayoutManager;
-    List<Food>foodList;
+    public static List<Food> foodList;
     AdapterFood adapterFood;
-    ImageView deleteMealbtn;
 
 
     public DailyMealFragment()
     {
+        if (foodList == null){
+            foodList = new ArrayList<>();
+        }
 
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,9 +62,11 @@ public class DailyMealFragment extends Fragment {
         calorieUpperText = binding.calorieUpperText;
         calorieUpperText.setText(calorieDaily.toString());
 
-        foodList = new ArrayList<>();
         foodRecyclerView = binding.foodList;
         addbtn = binding.addButton;
+
+        initRecyclerView();
+
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,11 +77,9 @@ public class DailyMealFragment extends Fragment {
                     calorieDaily = calorieDaily + Integer.parseInt(calorie);
                     calorieUpperText.setText(calorieDaily.toString());
                     hideKeyboard(v);
-                    initFoodList();
+                    initFoodList(food, calorie);
                     initRecyclerView();
                 }
-                System.out.println("ga");
-
             }
         });
 
@@ -162,7 +165,7 @@ public class DailyMealFragment extends Fragment {
         adapterFood.notifyDataSetChanged();
     }
 
-    public void initFoodList()
+    public void initFoodList(String food, String calorie)
     {
         foodList.add(new Food(food, calorie, R.drawable.ic_minus));
     }

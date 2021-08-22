@@ -78,6 +78,9 @@
         <action
             android:id="@+id/action_navigation_image_to_navigation_camera"
             app:destination="@id/navigation_camera" />
+        <action
+            android:id="@+id/navigation_image_to_dailymeal"
+            app:destination="@id/navigation_dailymeal" />
     </fragment>
     <fragment
         android:id="@+id/nav_Profile"

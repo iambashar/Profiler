@@ -8,7 +8,7 @@ public class Food {
     String calorieEach;
     int deleteIcon;
 
-    Food(String foodName, String calorieEach, int deleteIcon)
+    public Food(String foodName, String calorieEach, int deleteIcon)
     {
         this.foodName = foodName;
         this.calorieEach = calorieEach;

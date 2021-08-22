@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final float END_SCALE = 0.85f;
     private Button logoutButton;
     public static volatile String uri;
+    public static volatile int fragmentNo;
     DatabaseReference myRef;
 
     @Override

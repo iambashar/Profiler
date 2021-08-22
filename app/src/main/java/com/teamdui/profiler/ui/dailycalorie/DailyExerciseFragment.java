@@ -60,6 +60,12 @@ public class DailyExerciseFragment extends Fragment {
 
     }
 
+    public DailyExerciseFragment(){
+        if (exerciseList == null){
+            exerciseList = new ArrayList<>();
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,9 +125,8 @@ public class DailyExerciseFragment extends Fragment {
         });
 
         calorieBurnText = binding.calorieburnText;
-
-        exerciseList = new ArrayList<>();
         exerciseRecyclerView = binding.exerciseList;
+        initRecyclerView();
         addButton = binding.addButton;
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

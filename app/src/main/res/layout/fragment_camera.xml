@@ -8,10 +8,13 @@
     tools:context=".ui.camera.CameraFragment"
     android:id="@+id/navigation_camera"
     android:tag="camera_fragment">
+
         <TextureView
             android:id="@+id/view"
-            android:layout_width="375dp"
-            android:layout_height="500dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toTopOf="@id/Button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -23,7 +26,9 @@
             android:id="@+id/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="65dp"
             android:clickable="true"
+            android:contentDescription="@string/camera"
             android:focusable="true"
             android:src="@android:drawable/ic_menu_camera"
             app:layout_constraintBottom_toBottomOf="parent"
