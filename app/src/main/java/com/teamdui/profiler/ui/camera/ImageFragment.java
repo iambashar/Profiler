@@ -52,7 +52,7 @@ public class ImageFragment extends Fragment {
     LinearLayoutManager foodLayoutManager;
     AdapterCalorie adapterCalorie;
     AppCompatButton addButton;
-    public static Integer calorieDailyImage = 0;
+    public Integer calorieDailyImage = 0;
     public static TextView calorieUpperTextImage;
     public DailyMealFragment dailyMealFragment = new DailyMealFragment();
     public static List<Food> foodListImage;
