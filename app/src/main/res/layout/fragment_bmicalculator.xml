@@ -10,33 +10,33 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/texts"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:paddingLeft="5dp"
+        android:layout_height="210sp"
+        android:paddingLeft="5sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/underweight"
-            android:padding="4dp"
+            android:padding="4sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bitter"
             android:textAlignment="center"
             android:text="Underweight: &lt;18.5"
             android:textColor="@color/shallow_ash"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/healthyWeight"
-            android:padding="4dp"
+            android:padding="4sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="Healthy Weight: 18.5-24.99"
             android:textColor="@color/shallow_ash"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,26 +44,26 @@
 
         <TextView
             android:id="@+id/overweight"
-            android:padding="4dp"
+            android:padding="4sp"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Overweight: 25-29.99"
             android:textColor="@color/shallow_ash"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/healthyWeight" />
         <TextView
             android:id="@+id/obesity"
-            android:padding="4dp"
+            android:padding="4sp"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Overweight: &gt;29.99"
             android:textColor="@color/shallow_ash"
-            android:textSize="18dp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="160sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.64"
@@ -82,11 +82,11 @@
 
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:text="Weight:"
             android:textColor="@color/ash"
-            android:textSize="25dp"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
@@ -96,13 +96,13 @@
 
         <EditText
             android:id="@+id/weightInput"
-            android:layout_width="130dp"
+            android:layout_width="130sp"
             android:layout_height="wrap_content"
             android:hint="kg"
             android:inputType="numberDecimal"
             android:singleLine="true"
             android:textColor="@color/navyBlue"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="KG             "
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/ash"/>
 
             <RadioButton
@@ -137,16 +137,16 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="Pound"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/ash"/>
         </RadioGroup>
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:text="Height:"
             android:textColor="@color/ash"
-            android:textSize="25dp"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
@@ -156,14 +156,14 @@
 
         <EditText
             android:id="@+id/heightInputFeet"
-            android:layout_width="80dp"
+            android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:hint="feet"
             android:inputType="numberDecimal"
             android:singleLine="true"
             android:text=""
             android:textColor="@color/navyBlue"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.51"
@@ -173,14 +173,14 @@
 
         <EditText
             android:id="@+id/heightInputInch"
-            android:layout_width="80dp"
+            android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:hint="inch"
             android:inputType="numberDecimal"
             android:singleLine="true"
             android:text=""
             android:textColor="@color/navyBlue"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -207,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Feet-Inch "
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/ash"/>
 
             <RadioButton
@@ -216,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="Meter"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/ash"/>
         </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -225,7 +225,7 @@
         android:id="@+id/bmiText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textColor="@color/navyBlue"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -242,7 +242,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/navyBlue"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -254,10 +254,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_blue"
-        android:padding="10dp"
+        android:padding="10sp"
         android:text="Get BMI"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -271,10 +271,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_blue"
-        android:padding="10dp"
+        android:padding="10sp"
         android:text="Reset"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

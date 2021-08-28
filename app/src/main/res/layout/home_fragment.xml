@@ -6,290 +6,302 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:id="@+id/texts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/const2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="140dp"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/const3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/texts">
+
+        <TextView
+            android:id="@+id/homeEarnText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            >
-            <TextView
-                android:id="@+id/homeEarnText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Total Calorie Earned: "
-                android:textAlignment="center"
-                android:textColor="@color/navyBlue"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/homeBurnText"/>
-            <TextView
-                android:id="@+id/homeBurnText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Total Calorie Burned: "
-                android:textAlignment="center"
-                android:textColor="@color/navyBlue"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/homeNetText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/homeEarnText"/>
-            <TextView
-                android:id="@+id/homeNetText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Net Calorie:  "
-                android:textAlignment="center"
-                android:textColor="@color/navyBlue"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/homeBurnText"/>
-
-            <ProgressBar
-                android:id="@+id/calProgress"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:indeterminateOnly="false"
-                android:progressDrawable="@drawable/progress_bar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/homeNetText"
-                app:layout_constraintVertical_bias="0.0"
-                tools:progress="0" />
-
-            <TextView
-                android:id="@+id/homeCalDaily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/navyBlue"
-                android:textSize="25dp"
-                app:layout_constraintBottom_toBottomOf="@+id/calProgress"
-                app:layout_constraintEnd_toEndOf="@+id/calProgress"
-                app:layout_constraintStart_toStartOf="@+id/calProgress"
-                app:layout_constraintTop_toTopOf="@+id/calProgress"
-                app:layout_constraintVertical_bias="0.291" />
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="2dp"
-                android:background="@color/navyBlue"
-                app:layout_constraintBottom_toBottomOf="@+id/calProgress"
-                app:layout_constraintEnd_toEndOf="@+id/calProgress"
-                app:layout_constraintStart_toStartOf="@+id/calProgress"
-                app:layout_constraintTop_toTopOf="@+id/calProgress"
-                app:layout_constraintVertical_bias="0.421" />
-
-            <TextView
-                android:id="@+id/homeCalGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/navyBlue"
-                android:textSize="25dp"
-                app:layout_constraintBottom_toBottomOf="@+id/calProgress"
-                app:layout_constraintEnd_toEndOf="@+id/calProgress"
-                app:layout_constraintStart_toStartOf="@+id/calProgress"
-                app:layout_constraintTop_toTopOf="@+id/calProgress"
-                app:layout_constraintVertical_bias="0.53" />
-
-            <TextView
-                android:id="@+id/calText"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="calories of food consumed"
-                android:textColor="@color/navyBlue"
-                android:textSize="13dp"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="@+id/calProgress"
-                app:layout_constraintEnd_toEndOf="@+id/calProgress"
-                app:layout_constraintStart_toStartOf="@+id/calProgress"
-                app:layout_constraintTop_toTopOf="@+id/calProgress"
-                app:layout_constraintVertical_bias="0.72" />
-            <ProgressBar
-                android:id="@+id/waterProgress"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:indeterminateOnly="false"
-                tools:progress="0"
-                android:progressDrawable="@drawable/progress_bar"
-                app:layout_constraintTop_toBottomOf="@+id/homeNetText"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintVertical_bias="0.0"
-                />
-            <TextView
-                android:id="@+id/homewaterDaily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/navyBlue"
-                android:textSize="25dp"
-                app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
-                app:layout_constraintEnd_toEndOf="@+id/waterProgress"
-                app:layout_constraintStart_toStartOf="@+id/waterProgress"
-                app:layout_constraintTop_toTopOf="@+id/waterProgress"
-                app:layout_constraintVertical_bias="0.291" />
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="2dp"
-                android:background="@color/navyBlue"
-                app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
-                app:layout_constraintEnd_toEndOf="@+id/waterProgress"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/waterProgress"
-                app:layout_constraintTop_toTopOf="@+id/waterProgress"
-                app:layout_constraintVertical_bias="0.421" />
-            <TextView
-                android:id="@+id/homewaterGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/navyBlue"
-                android:textSize="25dp"
-                app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
-                app:layout_constraintEnd_toEndOf="@+id/waterProgress"
-                app:layout_constraintStart_toStartOf="@+id/waterProgress"
-                app:layout_constraintTop_toTopOf="@+id/waterProgress"
-                app:layout_constraintVertical_bias="0.53" />
-            <TextView
-                android:id="@+id/waterText"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="glasses of water taken"
-                android:textColor="@color/navyBlue"
-                android:textSize="13dp"
-                app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
-                app:layout_constraintEnd_toEndOf="@+id/waterProgress"
-                app:layout_constraintStart_toStartOf="@+id/waterProgress"
-                app:layout_constraintTop_toTopOf="@+id/waterProgress"
-                app:layout_constraintVertical_bias="0.72" />
-            <ProgressBar
-                android:id="@+id/exerciseProgress"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:indeterminateOnly="false"
-                tools:progress="0"
-                android:layout_marginTop="140dp"
-                android:progressDrawable="@drawable/progress_bar"
-                app:layout_constraintTop_toBottomOf="@+id/homeNetText"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                />
-            <TextView
-                android:id="@+id/homeExDaily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/navyBlue"
-                android:textSize="25dp"
-                app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
-                app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
-                app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
-                app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
-                app:layout_constraintVertical_bias="0.291" />
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="2dp"
-                android:background="@color/navyBlue"
-                app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
-                app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
-                app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
-                app:layout_constraintVertical_bias="0.421" />
-            <TextView
-                android:id="@+id/homeExGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/navyBlue"
-                android:textSize="25dp"
-                app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
-                app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
-                app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
-                app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
-                app:layout_constraintVertical_bias="0.53" />
-            <TextView
-                android:id="@+id/exerciseText"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="min of exercise done"
-                android:textColor="@color/navyBlue"
-                android:textSize="13dp"
-                app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
-                app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
-                app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
-                app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
-                app:layout_constraintVertical_bias="0.72" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/middleLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
+            android:text="Total Calorie Earned: "
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.2"
-            >
-            <ImageView
-                android:id="@+id/camera"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/camera"
-                app:layout_constraintBottom_toTopOf="@id/blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.891"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <TextView
-                android:id="@+id/blank"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.891"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.881"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25"/>
+
+        <TextView
+            android:id="@+id/homeBurnText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Calorie Burned: "
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.475"/>
+
+        <TextView
+            android:id="@+id/homeNetText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Net Calorie:  "
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.7"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/const4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/const2">
+
+        <ProgressBar
+            android:id="@+id/calProgress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/waterProgress"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:progress="0" />
+
+        <TextView
+            android:id="@+id/homeCalDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/navyBlue"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calProgress"
+            app:layout_constraintEnd_toEndOf="@+id/calProgress"
+            app:layout_constraintStart_toStartOf="@+id/calProgress"
+            app:layout_constraintTop_toTopOf="@+id/calProgress"
+            app:layout_constraintVertical_bias="0.291" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:background="@color/navyBlue"
+            app:layout_constraintBottom_toBottomOf="@+id/calProgress"
+            app:layout_constraintEnd_toEndOf="@+id/calProgress"
+            app:layout_constraintStart_toStartOf="@+id/calProgress"
+            app:layout_constraintTop_toTopOf="@+id/calProgress"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <TextView
+            android:id="@+id/homeCalGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/navyBlue"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calProgress"
+            app:layout_constraintEnd_toEndOf="@+id/calProgress"
+            app:layout_constraintStart_toStartOf="@+id/calProgress"
+            app:layout_constraintTop_toTopOf="@+id/calProgress"
+            app:layout_constraintVertical_bias="0.53" />
+
+        <TextView
+            android:id="@+id/calText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="calories of food consumed"
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calProgress"
+            app:layout_constraintEnd_toEndOf="@+id/calProgress"
+            app:layout_constraintStart_toStartOf="@+id/calProgress"
+            app:layout_constraintTop_toTopOf="@+id/calProgress"
+            app:layout_constraintVertical_bias="0.72" />
+
+        <ProgressBar
+            android:id="@+id/waterProgress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toEndOf="@id/calProgress"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:progress="0" />
+
+        <TextView
+            android:id="@+id/homewaterDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/navyBlue"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
+            app:layout_constraintEnd_toEndOf="@+id/waterProgress"
+            app:layout_constraintStart_toStartOf="@+id/waterProgress"
+            app:layout_constraintTop_toTopOf="@+id/waterProgress"
+            app:layout_constraintVertical_bias="0.291" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:background="@color/navyBlue"
+            app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
+            app:layout_constraintEnd_toEndOf="@+id/waterProgress"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/waterProgress"
+            app:layout_constraintTop_toTopOf="@+id/waterProgress"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <TextView
+            android:id="@+id/homewaterGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/navyBlue"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
+            app:layout_constraintEnd_toEndOf="@+id/waterProgress"
+            app:layout_constraintStart_toStartOf="@+id/waterProgress"
+            app:layout_constraintTop_toTopOf="@+id/waterProgress"
+            app:layout_constraintVertical_bias="0.53" />
+
+        <TextView
+            android:id="@+id/waterText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="glasses of water taken"
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/waterProgress"
+            app:layout_constraintEnd_toEndOf="@+id/waterProgress"
+            app:layout_constraintStart_toStartOf="@+id/waterProgress"
+            app:layout_constraintTop_toTopOf="@+id/waterProgress"
+            app:layout_constraintVertical_bias="0.72" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/const3">
+
+        <ProgressBar
+            android:id="@+id/exerciseProgress"
+            android:layout_width="200dp"
+            android:layout_height="0dp"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:progress="0" />
+
+        <TextView
+            android:id="@+id/homeExDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/navyBlue"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
+            app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
+            app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
+            app:layout_constraintVertical_bias="0.291" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:background="@color/navyBlue"
+            app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
+            app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <TextView
+            android:id="@+id/homeExGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/navyBlue"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
+            app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
+            app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
+            app:layout_constraintVertical_bias="0.53" />
+
+        <TextView
+            android:id="@+id/exerciseText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="min of exercise done"
+            android:textAlignment="center"
+            android:textColor="@color/navyBlue"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/exerciseProgress"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseProgress"
+            app:layout_constraintStart_toStartOf="@+id/exerciseProgress"
+            app:layout_constraintTop_toTopOf="@+id/exerciseProgress"
+            app:layout_constraintVertical_bias="0.72" />
+
+
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.892"
+            app:layout_constraintVertical_bias=".9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
