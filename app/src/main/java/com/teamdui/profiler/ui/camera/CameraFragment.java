@@ -33,6 +33,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -70,7 +71,7 @@ public class CameraFragment extends Fragment{
     private CameraViewModel cameraViewModel;
     private FragmentCameraBinding binding;
     private TextureView textureView;
-    private FloatingActionButton button;
+    private ImageView button;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
