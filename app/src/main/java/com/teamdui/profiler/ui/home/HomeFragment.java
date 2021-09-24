@@ -15,12 +15,35 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.HomeFragmentBinding;
 import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
 import com.teamdui.profiler.ui.goaltracker.GoalsaveFragment;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import static com.teamdui.profiler.MainActivity.burnedCalorie;
+import static com.teamdui.profiler.MainActivity.calorieDaily;
+import static com.teamdui.profiler.MainActivity.calorieGoal;
+import static com.teamdui.profiler.MainActivity.exerciseDaily;
+import static com.teamdui.profiler.MainActivity.exerciseGoal;
+import static com.teamdui.profiler.MainActivity.glassDaily;
+import static com.teamdui.profiler.MainActivity.glassGoal;
+import static com.teamdui.profiler.MainActivity.netCalorie;
+import static com.teamdui.profiler.MainActivity.setVariables;
+import static com.teamdui.profiler.MainActivity.uid;
 
 public class HomeFragment extends Fragment {
 
@@ -41,24 +64,13 @@ public class HomeFragment extends Fragment {
     public TextView exerciseDailyText;
     public TextView exerciseGoalText;
 
-    public static int calorieDaily = 0;
-    public static int calorieGoal = 0;
-    public static int glassDaily = 0;
-    public static int glassGoal = 0;
-    public static int exerciseDaily = 0;
-    public static int exerciseGoal = 0;
-    public static double netCalorie = 0;
-    public static double burnedCalorie = 0;
-
     public DailyMealFragment dailyMealFragment = new DailyMealFragment();
     public DailyCalorieFragment dailyCalorieFragment = new DailyCalorieFragment();
     public DailyExerciseFragment dailyExerciseFragment = new DailyExerciseFragment();
-    public GoalsaveFragment goalsaveFragment = new GoalsaveFragment();
 
     public TextView calEarnText;
     public TextView calBurnText;
     public TextView calNetText;
-
     private ImageView cameraIcon;
 
     public static HomeFragment newInstance() {
@@ -75,6 +87,8 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         setVariables();
+
+        netCalorie = (double)calorieDaily - burnedCalorie;
 
         calProgressBar = binding.calProgress;
         waterProgressBar = binding.waterProgress;
@@ -108,43 +122,6 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
-    }
-
-    public void setVariables()
-    {
-        try {
-            calorieDaily = dailyMealFragment.getCalorieDaily();
-        } catch (Exception e) {
-            calorieDaily = 0;
-        }
-        try {
-            calorieGoal = goalsaveFragment.getCalorieGoal();
-        } catch (Exception e) {
-            calorieGoal= 0;
-        }try {
-        glassDaily = dailyCalorieFragment.getGlassDaily();
-    } catch (Exception e) {
-        glassDaily = 0;
-    }try {
-        glassGoal = goalsaveFragment.getGlassGoal();
-    } catch (Exception e) {
-        glassGoal = 0;
-    }try {
-        exerciseDaily = dailyExerciseFragment.getExerciseDaily();
-    } catch (Exception e) {
-        exerciseDaily = 0;
-    }try {
-        exerciseGoal = goalsaveFragment.getExerciseGoal();
-    } catch (Exception e) {
-        exerciseGoal= 0;
-    }
-        try {
-            burnedCalorie = dailyExerciseFragment.getBurnedCalorie();
-        } catch (Exception e) {
-            burnedCalorie = 0;
-        }
-
-        netCalorie = (double)calorieDaily - burnedCalorie;
     }
 
     public void setProgressBar()
@@ -195,8 +172,5 @@ public class HomeFragment extends Fragment {
         {
             calNetText.setText(calNetText.getText().toString() + " " + String.valueOf(netCalorie));
         }
-
     }
-
-
 }

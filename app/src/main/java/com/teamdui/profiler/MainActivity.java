@@ -1,12 +1,14 @@
 package com.teamdui.profiler;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -20,15 +22,27 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.teamdui.profiler.databinding.ActivityMainBinding;
+import com.teamdui.profiler.ui.dailycalorie.Exercise;
+import com.teamdui.profiler.ui.dailycalorie.Food;
 import com.teamdui.profiler.ui.login.LoginActivity;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment.exerciseList;
+import static com.teamdui.profiler.ui.dailycalorie.DailyMealFragment.foodList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,24 +55,49 @@ public class MainActivity extends AppCompatActivity {
     private static final float END_SCALE = 0.85f;
     private Button logoutButton;
     public static volatile String uri;
+    public int scal = 0, sexr = 0, swat = 0;
     public static volatile int fragmentNo;
-    DatabaseReference myRef;
+    private DatabaseReference urlRef;
 
+    public static FirebaseAuth mAuth;
+    public static DatabaseReference myRef;
+    public static String date;
+    public static String uid;
+    public static int calorieDaily = 0;
+    public static int calorieGoal = 0;
+    public static int glassDaily = 0;
+    public static int glassGoal = 0;
+    public static int exerciseDaily = 0;
+    public static int exerciseGoal = 0;
+    public static double netCalorie = 0;
+    public static double burnedCalorie = 0;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        uid = user.getUid();
+        LocalDate todayDate = LocalDate.now();
+        date = todayDate.toString();
+        myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
+
+        dbUpdate();
+        setVariables();
         bottomNavView = findViewById(R.id.nav_view);
         sideNavView = findViewById(R.id.side_nav_view);
         contentView = findViewById(R.id.content_view);
         drawer = binding.drawerLayout;
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("url");
+        urlRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("url");
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        urlRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 uri = (String) snapshot.getValue();
@@ -113,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -132,13 +172,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
 
-    private void logoutUser(){
+    private void logoutUser() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
         Intent logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -146,4 +185,240 @@ public class MainActivity extends AppCompatActivity {
         startActivity(logoutIntent);
     }
 
+    public static void setVariables() {
+        try {
+            myRef.child(uid).child("date").child(date).child("progress").child("cal").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        calorieDaily = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            calorieDaily = 0;
+        }
+        try {
+            myRef.child(uid).child("date").child(date).child("set").child("cal").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        calorieGoal = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            calorieGoal = 0;
+        }
+        try {
+
+            myRef.child(uid).child("date").child(date).child("progress").child("wat").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        glassDaily = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            glassDaily = 0;
+        }
+        try {
+            myRef.child(uid).child("date").child(date).child("set").child("wat").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        glassGoal = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            glassGoal = 0;
+        }
+        try {
+
+            myRef.child(uid).child("date").child(date).child("progress").child("exr").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        exerciseDaily = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            exerciseDaily = 0;
+        }
+        try {
+            myRef.child(uid).child("date").child(date).child("set").child("exr").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        exerciseGoal = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            exerciseGoal = 0;
+        }
+
+        try {
+            myRef.child(uid).child("calburn").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        burnedCalorie = Double.parseDouble(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            burnedCalorie = 0;
+        }
+
+        try {
+            myRef.child(uid).child("Meal").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    GenericTypeIndicator<HashMap<String, Food>> objectsGTypeInd = new GenericTypeIndicator<HashMap<String, Food>>() {
+                    };
+                    Map<String, Food> objectHashMap = snapshot.getValue(objectsGTypeInd);
+                    if (objectHashMap != null)
+                        foodList = new ArrayList<Food>(objectHashMap.values());
+                    else
+                        foodList = null;
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
+        try {
+            myRef.child(uid).child("Exercise").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    GenericTypeIndicator<HashMap<String, Exercise>> objectsGTypeInd = new GenericTypeIndicator<HashMap<String, Exercise>>() {
+                    };
+                    Map<String, Exercise> objectHashMap = snapshot.getValue(objectsGTypeInd);
+                    if (objectHashMap != null)
+                        exerciseList = new ArrayList<Exercise>(objectHashMap.values());
+                    else
+                        exerciseList = null;
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void dbUpdate() {
+        LocalDate todayDate = LocalDate.now();
+        String date2 = todayDate.minusDays(1).toString();
+
+        myRef.child(uid).child("date").child(date2).child("set").child("cal").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                    scal = Integer.parseInt(String.valueOf(snapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+        myRef.child(uid).child("date").child(date2).child("set").child("exr").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                    sexr = Integer.parseInt(String.valueOf(snapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        myRef.child(uid).child("date").child(date2).child("set").child("wat").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                    swat = Integer.parseInt(String.valueOf(snapshot.getValue()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+        myRef.child(uid).child("date").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    boolean flag = true;
+                    for (DataSnapshot du : snapshot.getChildren()) {
+                        if (date.contentEquals(du.getKey().toString())) {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        myRef.child(uid).child("date").child(date).child("set").child("cal").setValue(scal);
+                        myRef.child(uid).child("date").child(date).child("set").child("exr").setValue(sexr);
+                        myRef.child(uid).child("date").child(date).child("set").child("wat").setValue(swat);
+                        myRef.child(uid).child("calburn").setValue(burnedCalorie);
+
+                        myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(0);
+                        myRef.child(uid).child("date").child(date).child("progress").child("exr").setValue(0);
+                        myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(0);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        } );
+    }
 }

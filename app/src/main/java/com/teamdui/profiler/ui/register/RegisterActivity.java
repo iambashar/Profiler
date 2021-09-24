@@ -21,6 +21,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamdui.profiler.databinding.ActivityRegisterBinding;
 import com.teamdui.profiler.ui.login.LoginActivity;
 
@@ -38,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int minPasswordLength = 5;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
 
     private ActivityRegisterBinding binding;
 
@@ -96,6 +100,9 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
+                            FirebaseUser user = task.getResult().getUser();
+                            myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
+                            myRef.child(user.getUid().toString()).setValue("date");
                             Toast.makeText(getApplicationContext(), "Registration Success!", Toast.LENGTH_SHORT).show();
                             BackToLoginPage();
                         }

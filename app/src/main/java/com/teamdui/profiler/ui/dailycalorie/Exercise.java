@@ -1,20 +1,23 @@
 package com.teamdui.profiler.ui.dailycalorie;
 
-import android.provider.ContactsContract;
-import android.widget.ImageView;
-
 public class Exercise {
     String catName;
     String timeEach;
     int deleteIcon;
     double burnHour;
+    String key;
 
-    Exercise(String catName, String timeEach, int deleteIcon, double burnHour)
+    public Exercise(){
+
+    }
+
+    public Exercise(String catName, String timeEach, int deleteIcon, double burnHour, String key)
     {
         this.catName = catName;
         this.timeEach = timeEach;
         this.deleteIcon = deleteIcon;
         this.burnHour = burnHour;
+        this.key = key;
     }
 
     public String getCatName() {
@@ -29,8 +32,11 @@ public class Exercise {
         return deleteIcon;
     }
 
-    public double getBurnHour()
-    {
+    public double getBurnHour() {
         return burnHour;
+    }
+
+    public  String getKey() {
+        return key;
     }
 }

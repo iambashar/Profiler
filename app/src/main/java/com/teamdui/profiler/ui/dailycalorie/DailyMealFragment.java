@@ -7,13 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,10 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentDailyMealBinding;
 
-
 import java.util.ArrayList;
-import java.util.List;
 
+import static com.teamdui.profiler.MainActivity.calorieDaily;
+import static com.teamdui.profiler.MainActivity.date;
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
 
 public class DailyMealFragment extends Fragment {
 
@@ -38,32 +37,28 @@ public class DailyMealFragment extends Fragment {
     String food = "";
     String calorie = "";
 
-    public static Integer calorieDaily = 0;
-
-
     RecyclerView foodRecyclerView;
     LinearLayoutManager foodLayoutManager;
-    public static List<Food> foodList;
+    public static ArrayList<Food> foodList;
     AdapterFood adapterFood;
 
-
-    public DailyMealFragment()
-    {
+    public DailyMealFragment(){
         if (foodList == null){
             foodList = new ArrayList<>();
         }
-
     }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDailyMealBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         calorieUpperText = binding.calorieUpperText;
-        calorieUpperText.setText(calorieDaily.toString());
 
         foodRecyclerView = binding.foodList;
         addbtn = binding.addButton;
+
+        calorieUpperText.setText(((Integer)calorieDaily).toString());
 
         initRecyclerView();
 
@@ -75,7 +70,8 @@ public class DailyMealFragment extends Fragment {
                     food = binding.foodText.getText().toString();
                     calorie = binding.calorieText.getText().toString();
                     calorieDaily = calorieDaily + Integer.parseInt(calorie);
-                    calorieUpperText.setText(calorieDaily.toString());
+                    myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(calorieDaily);
+                    calorieUpperText.setText(((Integer)calorieDaily).toString());
                     hideKeyboard(v);
                     initFoodList(food, calorie);
                     initRecyclerView();
@@ -126,24 +122,16 @@ public class DailyMealFragment extends Fragment {
             }
         });
 
-
-
-        // Inflate the layout for this fragment
         return root;
-    }
-
-    public int getCalorieDaily()
-    {
-        return calorieDaily;
     }
 
     public void reduceCalorie(String toReduce)
     {
         toReduce = toReduce.replace(" cal", "");
         calorieDaily = calorieDaily - Integer.parseInt(toReduce);
-        calorieUpperText.setText(calorieDaily.toString());
+        myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(calorieDaily);
+        calorieUpperText.setText(((Integer)calorieDaily).toString());
     }
-
 
     public boolean checkIfTextFilled()
     {
@@ -167,7 +155,12 @@ public class DailyMealFragment extends Fragment {
 
     public void initFoodList(String food, String calorie)
     {
-        foodList.add(new Food(food, calorie, R.drawable.ic_minus));
+        String key = myRef.child(uid).child("date").child(date).child("Meal").push().getKey();
+        foodList.add(new Food(food, calorie, R.drawable.ic_minus, key));
+        myRef.child(uid).child("Meal").child(key).child("foodName").setValue(food);
+        myRef.child(uid).child("Meal").child(key).child("key").setValue(key);
+        myRef.child(uid).child("Meal").child(key).child("calorieEach").setValue(calorie);
+        myRef.child(uid).child("Meal").child(key).child("deleteIcon").setValue(R.drawable.ic_minus);
     }
 
     public void hideKeyboard(View view) {

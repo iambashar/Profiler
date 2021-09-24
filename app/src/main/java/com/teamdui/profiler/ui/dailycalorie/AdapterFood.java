@@ -14,6 +14,9 @@ import com.teamdui.profiler.R;
 
 import java.util.List;
 
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
+
 public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> implements AdapterView.OnItemClickListener {
 
     private List<Food>foodList;
@@ -41,6 +44,11 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> im
         holder.deleteIconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String k = null;
+                for (int i=0; i<=position; i++)
+                    k = foodList.get(i).getKey();
+                myRef.child(uid).child("Meal").child(k).removeValue();
+
                 foodList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, foodList.size());

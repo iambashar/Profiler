@@ -3,7 +3,6 @@ package com.teamdui.profiler.ui.dailycalorie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.teamdui.profiler.R;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
+
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
 
 public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHolder> implements AdapterView.OnItemClickListener {
 
@@ -44,6 +44,11 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHo
         holder.deleteIconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String k = null;
+                for (int i=0; i<=position; i++)
+                    k = exerciseList.get(i).getKey();
+                myRef.child(uid).child("Exercise").child(k).removeValue();
+
                 double x = exerciseList.get(position).getBurnHour();
                 exerciseList.remove(position);
                 notifyItemRemoved(position);

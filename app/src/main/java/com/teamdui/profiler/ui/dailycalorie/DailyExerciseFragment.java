@@ -2,14 +2,6 @@ package com.teamdui.profiler.ui.dailycalorie;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,18 +10,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationBarView;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentDailyExerciseBinding;
-import com.teamdui.profiler.databinding.FragmentDailycalorieBinding;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
+
+import static com.teamdui.profiler.MainActivity.burnedCalorie;
+import static com.teamdui.profiler.MainActivity.date;
+import static com.teamdui.profiler.MainActivity.exerciseDaily;
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
 
 public class DailyExerciseFragment extends Fragment {
     public FragmentDailyExerciseBinding binding;
@@ -37,28 +36,19 @@ public class DailyExerciseFragment extends Fragment {
     public AutoCompleteTextView autoCompleteTextView;
     public EditText hourInput;
     public EditText minInput;
-    public static int exerciseDaily = 0;
-    public static int finalExerciseDaily = 0;
     AppCompatButton addButton;
 
     public static RecyclerView exerciseRecyclerView;
     LinearLayoutManager exerciseLayoutManager;
-    public static List<Exercise> exerciseList;
+    public static ArrayList<Exercise> exerciseList;
     public static AdapterExercise adapterExercise;
-    ImageView deleteExercisebtn;
 
     String category = "";
     String timeinMin = "";
     Double burnHour = 0.0;
-    public static Double burnedCalorie = 0.0;
     public static TextView calorieBurnText;
 
     DecimalFormat df = new DecimalFormat("#.##");
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     public DailyExerciseFragment(){
         if (exerciseList == null){
@@ -127,6 +117,9 @@ public class DailyExerciseFragment extends Fragment {
         calorieBurnText = binding.calorieburnText;
         exerciseRecyclerView = binding.exerciseList;
         initRecyclerView();
+
+        burnedCalorie = Double.valueOf(df.format(burnedCalorie));
+        binding.calorieburnText.setText(Double.toString(burnedCalorie));
         addButton = binding.addButton;
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,20 +130,21 @@ public class DailyExerciseFragment extends Fragment {
                     if(!hourInput.getText().toString().isEmpty())
                     {
                         int hour = Integer.parseInt(hourInput.getText().toString());
-                        exerciseDaily = exerciseDaily + hour * 60;
+                        exerciseDaily += hour * 60;
                         x = x + hour * 60;
                     }
                     if(!minInput.getText().toString().isEmpty())
                     {
                         int min = Integer.parseInt(minInput.getText().toString());
-                        exerciseDaily = exerciseDaily + min;
+                        exerciseDaily += min;
                         x = x + min;
                     }
                     category = binding.categoryText.getText().toString();
                     timeinMin = Integer.toString(x) + " min";
-                    calculateBurnedCalorie();
+                    calculateBurnedCalorie(x);
                     initExerciseList();
                     initRecyclerView();
+                    myRef.child(uid).child("date").child(date).child("progress").child("exr").setValue(exerciseDaily);
                 }
             }
         });
@@ -158,11 +152,8 @@ public class DailyExerciseFragment extends Fragment {
         burnedCalorie = Double.valueOf(df.format(burnedCalorie));
         binding.calorieburnText.setText(Double.toString(burnedCalorie));
 
-
-        // Inflate the layout for this fragment
         return root;
     }
-
 
     public void setColrieText(int idx)
     {
@@ -182,14 +173,13 @@ public class DailyExerciseFragment extends Fragment {
         {
             binding.calorieText.setText("600");
         }
-
     }
 
-    public void calculateBurnedCalorie()
-    {
-        double caloriePerMin= Double.parseDouble(binding.calorieText.getText().toString()) / 60;
+    public void calculateBurnedCalorie(int x) {
+        double caloriePerMin= Double.parseDouble(binding.calorieText.getText().toString()) / 60.0;
         burnHour = Double.parseDouble(binding.calorieText.getText().toString());
-        burnedCalorie = exerciseDaily * caloriePerMin;
+        burnedCalorie += x * caloriePerMin;
+        myRef.child(uid).child("calburn").setValue(burnedCalorie);
         burnedCalorie = Double.valueOf(df.format(burnedCalorie));
         calorieBurnText.setText(Double.toString(burnedCalorie));
     }
@@ -197,13 +187,14 @@ public class DailyExerciseFragment extends Fragment {
     public void reduceTime(String toReduce, Double caloriePerHour)
     {
         toReduce = toReduce.replace(" min", "");
-        exerciseDaily = exerciseDaily - Integer.parseInt(toReduce);
-        double caloriePerMin = caloriePerHour / 60;
-        burnedCalorie = exerciseDaily * caloriePerMin;
+        exerciseDaily -= Integer.parseInt(toReduce);
+        myRef.child(uid).child("date").child(date).child("progress").child("exr").setValue(exerciseDaily);
+        double caloriePerMin = caloriePerHour / 60.0;
+        burnedCalorie -= Integer.parseInt(toReduce) * caloriePerMin;
+        myRef.child(uid).child("calburn").setValue(burnedCalorie);
         burnedCalorie = Double.valueOf(df.format(burnedCalorie));
         calorieBurnText.setText(Double.toString(burnedCalorie));
     }
-
 
     public boolean checkIfTextFilled()
     {
@@ -227,19 +218,17 @@ public class DailyExerciseFragment extends Fragment {
 
     public void initExerciseList()
     {
-        exerciseList.add(new Exercise(category, timeinMin, R.drawable.ic_minus, burnHour));
+        String key = myRef.child(uid).child("date").child(date).child("Exercise").push().getKey();
+        exerciseList.add(new Exercise(category, timeinMin, R.drawable.ic_minus, burnHour, key));
+        myRef.child(uid).child("Exercise").child(key).child("catName").setValue(category);
+        myRef.child(uid).child("Exercise").child(key).child("timeEach").setValue(timeinMin);
+        myRef.child(uid).child("Exercise").child(key).child("deleteIcon").setValue(R.drawable.ic_minus);
+        myRef.child(uid).child("Exercise").child(key).child("burnHour").setValue(burnHour);
+        myRef.child(uid).child("Exercise").child(key).child("key").setValue(key);
     }
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-    public int getExerciseDaily()
-    {
-        return exerciseDaily;
-    }
-    public double getBurnedCalorie()
-    {
-        return burnedCalorie;
     }
 }

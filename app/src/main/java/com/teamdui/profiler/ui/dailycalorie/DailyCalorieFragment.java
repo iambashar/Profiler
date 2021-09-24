@@ -1,29 +1,33 @@
 package com.teamdui.profiler.ui.dailycalorie;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentDailycalorieBinding;
-import com.teamdui.profiler.ui.goaltracker.GoalsaveFragment;
-import com.teamdui.profiler.ui.login.LoginActivity;
+
+import static com.teamdui.profiler.MainActivity.calorieDaily;
+import static com.teamdui.profiler.MainActivity.calorieGoal;
+import static com.teamdui.profiler.MainActivity.exerciseDaily;
+import static com.teamdui.profiler.MainActivity.exerciseGoal;
+
+import static com.teamdui.profiler.MainActivity.glassDaily;
+import static com.teamdui.profiler.MainActivity.glassGoal;
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
+import static com.teamdui.profiler.MainActivity.date;
 
 public class DailyCalorieFragment extends Fragment {
 
@@ -36,19 +40,10 @@ public class DailyCalorieFragment extends Fragment {
 
     public ImageView addWaterbtn;
     public ImageView deleteWaterbtn;
-    public static Integer glassDaily = 0;
     public static Integer mlDaily = 0;
 
     public TextView waterGlassInput;
     public TextView waterMlInput;
-
-
-    public static int calorieDaily = 0;
-    public static int exerciseDaily = 0;
-    public static int glassGoal = 0;
-    public static int calorieGoal = 0;
-    public static int exerciseGoal = 0;
-
     public final int waterFactor = 150;
 
 
@@ -61,6 +56,7 @@ public class DailyCalorieFragment extends Fragment {
         View root = binding.getRoot();
 
         setUpperText();
+        mlDaily = glassDaily * waterFactor;
 
         addMealbtn = binding.addMealButton;
         addMealbtn.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +73,7 @@ public class DailyCalorieFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 glassDaily++;
+                myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(glassDaily);
                 mlDaily = glassDaily * waterFactor;
                 isSaved = true;
                 setWaterText();
@@ -93,6 +90,7 @@ public class DailyCalorieFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 glassDaily--;
+                myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(glassDaily);
                 if(glassDaily < 0)
                 {
                     glassDaily = 0;
@@ -144,6 +142,7 @@ public class DailyCalorieFragment extends Fragment {
                 {
                     setGlassInvisibility();
                 }
+                myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(glassDaily);
             }
 
         });
@@ -170,21 +169,20 @@ public class DailyCalorieFragment extends Fragment {
                 {
                     setGlassInvisibility();
                 }
+                myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(glassDaily);
             }
         });
-
-
-
-
 
         return root;
     }
 
     public void setGlassVisibility()
     {
-        binding.waterInputGlass.setText(glassDaily.toString());
+        Integer gd = glassDaily;
+        binding.waterInputGlass.setText(gd.toString());
         binding.waterInputMl.setText(mlDaily.toString());
         isSaved = true;
+
         if(glassDaily == 0)
         {
             binding.waterInputMl.getText().clear();
@@ -279,7 +277,7 @@ public class DailyCalorieFragment extends Fragment {
 
     public void setGlassInvisibility()
     {
-        binding.waterInputGlass.setText(glassDaily.toString());
+        binding.waterInputGlass.setText(((Integer)glassDaily).toString());
         binding.waterInputMl.setText(mlDaily.toString());
         isSaved = true;
         if(glassDaily == 0)
@@ -376,39 +374,16 @@ public class DailyCalorieFragment extends Fragment {
 
     public void setWaterText()
     {
-        waterGlassInput.setText(glassDaily.toString());
+        waterGlassInput.setText(((Integer)glassDaily).toString());
         waterMlInput.setText(mlDaily.toString());
     }
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-    public int getGlassDaily()
-    {
-        return glassDaily;
-    }
-
 
     public void setUpperText()
     {
-        try{
-            DailyExerciseFragment dailyExerciseFragment = new DailyExerciseFragment();
-            DailyMealFragment dailyMealFragment = new DailyMealFragment();
-            GoalsaveFragment goalsaveFragment = new GoalsaveFragment();
-            calorieDaily = dailyMealFragment.getCalorieDaily();
-            exerciseDaily = dailyExerciseFragment.getExerciseDaily();
-            glassGoal = goalsaveFragment.getGlassGoal();
-            calorieGoal = goalsaveFragment.getCalorieGoal();
-            exerciseGoal = goalsaveFragment.getExerciseGoal();
-        }
-        catch (Exception e)
-        {
-            calorieDaily = 0;
-            exerciseDaily = 0;
-            glassGoal = 0;
-            calorieGoal = 0;
-            exerciseGoal = 0;
-        }
         TextView calorieText = binding.calorieEarn;
         TextView waterText = binding.waterTaken;
         TextView exerciseText = binding.exerciseDone;

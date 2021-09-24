@@ -1,7 +1,5 @@
 package com.teamdui.profiler.ui.camera;
 
-import android.media.Image;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

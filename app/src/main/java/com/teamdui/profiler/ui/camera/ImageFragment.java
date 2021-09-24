@@ -2,7 +2,6 @@ package com.teamdui.profiler.ui.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,7 +34,11 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+
+import static com.teamdui.profiler.MainActivity.calorieDaily;
+import static com.teamdui.profiler.MainActivity.date;
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
 
 public class ImageFragment extends Fragment {
 
@@ -55,9 +57,8 @@ public class ImageFragment extends Fragment {
     public Integer calorieDailyImage = 0;
     public static TextView calorieUpperTextImage;
     public DailyMealFragment dailyMealFragment = new DailyMealFragment();
-    public static List<Food> foodListImage;
+    public static ArrayList<Food> foodListImage;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,8 +73,7 @@ public class ImageFragment extends Fragment {
         foodRecyclerView = binding.calorieList;
         addButton = binding.addCalorieButton;
         calorieUpperTextImage = binding.calorieUpperText;
-        calorieUpperTextImage.setText(dailyMealFragment.calorieDaily.toString());
-
+        calorieUpperTextImage.setText(((Integer)calorieDaily).toString());
 
         byte[] bytes = getArguments().getByteArray("img");
 
@@ -168,10 +168,11 @@ public class ImageFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dailyMealFragment.calorieDaily += calorieDailyImage;
-                calorieUpperTextImage.setText(dailyMealFragment.calorieDaily.toString());
+                calorieDaily += calorieDailyImage;
+                myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(calorieDaily);
+                calorieUpperTextImage.setText(((Integer)calorieDaily).toString());
                 for (int i=0; i<classes.size(); i++){
-                    dailyMealFragment.foodList.add(new Food(classes.get(i), calories.get(i), R.drawable.ic_minus));
+                    dailyMealFragment.initFoodList(classes.get(i), calories.get(i));
                 }
             }
         });
@@ -180,7 +181,7 @@ public class ImageFragment extends Fragment {
     }
     public void initFoodList(String food, String calorie)
     {
-        foodListImage.add(new Food(food, calorie, R.drawable.ic_minus));
+        foodListImage.add(new Food(food, calorie, R.drawable.ic_minus, "df"));
     }
 
     public void initRecyclerView()

@@ -15,9 +15,13 @@ import androidx.navigation.Navigation;
 
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentGoaltrackerBinding;
-import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
-import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
-import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
+
+import static com.teamdui.profiler.MainActivity.calorieDaily;
+import static com.teamdui.profiler.MainActivity.calorieGoal;
+import static com.teamdui.profiler.MainActivity.exerciseDaily;
+import static com.teamdui.profiler.MainActivity.exerciseGoal;
+import static com.teamdui.profiler.MainActivity.glassDaily;
+import static com.teamdui.profiler.MainActivity.glassGoal;
 
 public class GoaltrackerFragment extends Fragment {
 
@@ -26,14 +30,7 @@ public class GoaltrackerFragment extends Fragment {
     public Button goalButton;
     public GoalsaveFragment goalsaveFragment = new GoalsaveFragment();
 
-    public static int calorieGoal = 0;
-    public static int waterGoal = 0;
-    public static  int exerciseGoal = 0;
     public static boolean isGoslsaveVisited = false;
-
-    public static int calorieDaily = 0;
-    public static int glassDaily = 0;
-    public static int exerciseDaily = 0;
 
     public ProgressBar calorieProgressBar;
     public ProgressBar waterProgressBar;
@@ -53,8 +50,6 @@ public class GoaltrackerFragment extends Fragment {
         binding = FragmentGoaltrackerBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-        setGoalVariables();
         setGoalText();
 
         goalButton = binding.setGoalButton;
@@ -73,6 +68,7 @@ public class GoaltrackerFragment extends Fragment {
         caloriePercentText = binding.caloriePercentage;
         waterPercentText = binding.waterPercentage;
         exercisePercentText = binding.exercisePercentage;
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -90,39 +86,12 @@ public class GoaltrackerFragment extends Fragment {
         binding = null;
     }
 
-    public void setGoalVariables()
-    {
-        if(isGoslsaveVisited)
-        {
-            calorieGoal = goalsaveFragment.getCalorieGoal();
-            waterGoal = goalsaveFragment.getGlassGoal();
-            exerciseGoal = goalsaveFragment.getExerciseGoal();
-        }
-    }
     public void setGoalText()
     {
-       try {
-
-            DailyMealFragment dailyMealFragment;
-            DailyCalorieFragment dailyCalorieFragment;
-            DailyExerciseFragment dailyExerciseFragment;
-            dailyCalorieFragment = new DailyCalorieFragment();
-            dailyExerciseFragment = new DailyExerciseFragment();
-            dailyMealFragment = new DailyMealFragment();
-            calorieDaily = dailyMealFragment.getCalorieDaily();
-            glassDaily = dailyCalorieFragment.getGlassDaily();
-            exerciseDaily = dailyExerciseFragment.getExerciseDaily();
-        }
-        catch (Exception e)
-        {
-            calorieDaily = 0;
-            glassDaily = 0;
-            exerciseDaily = 0;
-        }
         String calorieText = binding.calorieEarninTracker.getText().toString();
         binding.calorieEarninTracker.setText(calorieText + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
         String waterText = binding.waterTakeninTracker.getText().toString();
-        binding.waterTakeninTracker.setText(waterText + String.valueOf(glassDaily) + "/" + String.valueOf(waterGoal));
+        binding.waterTakeninTracker.setText(waterText + String.valueOf(glassDaily) + "/" + String.valueOf(glassGoal));
         String exerciseText = binding.exerciseDoneinTracker.getText().toString();
         binding.exerciseDoneinTracker.setText(exerciseText + String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
     }
@@ -136,7 +105,7 @@ public class GoaltrackerFragment extends Fragment {
         }
 
         try {
-            waterPercentage = (int)(glassDaily * 100.0f) / waterGoal;
+            waterPercentage = (int)(glassDaily * 100.0f) / glassGoal;
         } catch (Exception e)
         {
             waterPercentage = 0;
@@ -153,6 +122,7 @@ public class GoaltrackerFragment extends Fragment {
         exerciseProgressBar.setProgress(exercisePercentage);
         setPercentText();
     }
+
     public void setPercentText()
     {
         caloriePercentText.setText(String.valueOf(caloriePercentage) + "%");

@@ -1,16 +1,8 @@
 package com.teamdui.profiler.ui.goaltracker;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,41 +12,40 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.teamdui.profiler.MainActivity;
-import com.teamdui.profiler.R;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.teamdui.profiler.databinding.FragmentGoalsaveBinding;
-import com.teamdui.profiler.databinding.FragmentGoaltrackerBinding;
-import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
-import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
-import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
+
+import static com.teamdui.profiler.MainActivity.calorieDaily;
+import static com.teamdui.profiler.MainActivity.calorieGoal;
+import static com.teamdui.profiler.MainActivity.date;
+import static com.teamdui.profiler.MainActivity.exerciseDaily;
+import static com.teamdui.profiler.MainActivity.exerciseGoal;
+import static com.teamdui.profiler.MainActivity.glassDaily;
+import static com.teamdui.profiler.MainActivity.glassGoal;
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
 
 
 public class GoalsaveFragment extends Fragment {
 
-
-
     private FragmentGoalsaveBinding binding;
-
-    public GoaltrackerFragment goaltrackerFragment;
 
     private SeekBar calorieSlider;
     private EditText calorieEditText;
-    public static int calorieGoal = 0;
     public static int finalCalorieGoal = 0;
 
     private ImageView addWaterButton;
     private ImageView deleteWaterButton;
     private EditText waterEditText;
     private EditText waterEditTextml;
-    public static int glassGoal = 0;
     public static int finalGlassGoal = 0;
 
     private EditText hourInput;
     private EditText minuteInput;
     private TextView totalMinute;
-    public static int exerciseGoal = 0;
     public static int finalExerciseGoal = 0;
     public static boolean isSaved = false;
     public static boolean isWaterModified = false;
@@ -62,12 +53,6 @@ public class GoalsaveFragment extends Fragment {
     private Button saveGoalbtn;
     private Button resetbtn;
 
-    public DailyCalorieFragment dailyCalorieFragment = new DailyCalorieFragment();
-    public DailyExerciseFragment dailyExerciseFragment = new DailyExerciseFragment();
-    public DailyMealFragment dailyMealFragment = new DailyMealFragment();
-    public static int calorieDaily;
-    public static int exerciseDaily;
-    public static int glassDaily;
     public final int waterFactor = 150;
 
     public GoalsaveFragment()
@@ -82,16 +67,16 @@ public class GoalsaveFragment extends Fragment {
         binding = FragmentGoalsaveBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        calorieGoal = dailyMealFragment.getCalorieDaily();
-        //glassGoal = dailyCalorieFragment.getGlassDaily();
-        exerciseGoal = dailyExerciseFragment.getExerciseDaily();
-
+        finalCalorieGoal = calorieGoal;
+        finalGlassGoal = glassGoal;
+        finalExerciseGoal = exerciseGoal;
 
         //to set calorie goal
         calorieSlider = binding.calorieSlideBar;
         calorieEditText = binding.calorieInput;
         calorieSlider.setProgress(finalCalorieGoal);
         calorieEditText.setText(String.valueOf(finalCalorieGoal), TextView.BufferType.EDITABLE);
+
         if(finalCalorieGoal > 3000)
         {
             calorieSlider.getProgressDrawable().setTint(Color.rgb(224, 86, 104));
@@ -302,6 +287,10 @@ public class GoalsaveFragment extends Fragment {
                 finalCalorieGoal = calorieGoal;
                 finalGlassGoal = glassGoal;
                 finalExerciseGoal = exerciseGoal;
+
+                myRef.child(uid).child("date").child(date).child("set").child("cal").setValue(calorieGoal);
+                myRef.child(uid).child("date").child(date).child("set").child("exr").setValue(exerciseGoal);
+                myRef.child(uid).child("date").child(date).child("set").child("wat").setValue(glassGoal);
                 saveGoals();
             }
         });
@@ -311,6 +300,10 @@ public class GoalsaveFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 resetGoal();
+
+                myRef.child(uid).child("date").child(date).child("set").child("cal").setValue(0);
+                myRef.child(uid).child("date").child(date).child("set").child("exr").setValue(0);
+                myRef.child(uid).child("date").child(date).child("set").child("wat").setValue(0);
             }
         });
 
@@ -509,19 +502,16 @@ public class GoalsaveFragment extends Fragment {
 
     public void saveGoals()
     {
-        calorieDaily = dailyMealFragment.getCalorieDaily();
         String caloriestr = "Total calorie earned(cal): "+ String.valueOf(calorieDaily) + "/" + String.valueOf(finalCalorieGoal);
         binding.calorieEarn.setText(caloriestr);
 
-
-        glassDaily = dailyCalorieFragment.getGlassDaily();
         String waterstr = "Water taken(glasses): " +String.valueOf(glassDaily) + "/" +  String.valueOf(finalGlassGoal) ;
         binding.waterTaken.setText(waterstr);
 
 
         calculateExercise();
         String exercisestr = binding.exerciseDone.getText().toString();
-        exerciseDaily = dailyExerciseFragment.getExerciseDaily();
+
         exercisestr = "Exercise done(min): " + String.valueOf(exerciseDaily) + "/" + String.valueOf(finalExerciseGoal) ;
         binding.exerciseDone.setText(exercisestr);
         binding.minText.setText(String.valueOf(finalExerciseGoal));
@@ -559,18 +549,6 @@ public class GoalsaveFragment extends Fragment {
             binding.minText.setText(String.valueOf(exerciseGoal));
         }
 
-    }
-    public int getCalorieGoal()
-    {
-        return finalCalorieGoal;
-    }
-    public int getGlassGoal()
-    {
-        return finalGlassGoal;
-    }
-    public int getExerciseGoal()
-    {
-        return finalExerciseGoal;
     }
 
     public void resetGoal()
