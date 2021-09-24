@@ -85,17 +85,20 @@ public class MainActivity extends AppCompatActivity {
         uid = user.getUid();
         LocalDate todayDate = LocalDate.now();
         date = todayDate.toString();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
+        myRef.keepSynced(true);
 
         dbUpdate();
         setVariables();
+
         bottomNavView = findViewById(R.id.nav_view);
         sideNavView = findViewById(R.id.side_nav_view);
         contentView = findViewById(R.id.content_view);
         drawer = binding.drawerLayout;
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         urlRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("url");
+        urlRef.keepSynced(true);
 
         urlRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -406,7 +409,9 @@ public class MainActivity extends AppCompatActivity {
                         myRef.child(uid).child("date").child(date).child("set").child("cal").setValue(scal);
                         myRef.child(uid).child("date").child(date).child("set").child("exr").setValue(sexr);
                         myRef.child(uid).child("date").child(date).child("set").child("wat").setValue(swat);
-                        myRef.child(uid).child("calburn").setValue(burnedCalorie);
+                        myRef.child(uid).child("calburn").setValue(0);
+                        myRef.child(uid).child("Meal").removeValue();
+                        myRef.child(uid).child("Exercise").removeValue();
 
                         myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(0);
                         myRef.child(uid).child("date").child(date).child("progress").child("exr").setValue(0);

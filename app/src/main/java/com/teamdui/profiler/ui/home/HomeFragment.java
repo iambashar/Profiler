@@ -86,8 +86,6 @@ public class HomeFragment extends Fragment {
         binding = HomeFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        setVariables();
-
         netCalorie = (double)calorieDaily - burnedCalorie;
 
         calProgressBar = binding.calProgress;

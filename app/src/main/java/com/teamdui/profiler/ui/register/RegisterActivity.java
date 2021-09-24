@@ -1,10 +1,12 @@
 package com.teamdui.profiler.ui.register;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.teamdui.profiler.databinding.ActivityRegisterBinding;
 import com.teamdui.profiler.ui.login.LoginActivity;
 
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -41,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int minPasswordLength = 5;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef2;
 
     private ActivityRegisterBinding binding;
 
@@ -96,13 +99,24 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setProgress(100, true);
 
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            FirebaseUser user = task.getResult().getUser();
-                            myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
-                            myRef.child(user.getUid().toString()).setValue("date");
+                            myRef2 = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
+                            FirebaseUser uid1 = task.getResult().getUser();
+                            String uid2 = uid1.getUid().toString();
+                            LocalDate todayDate = LocalDate.now();
+                            String date = todayDate.toString();
+                            myRef2.child(uid2).child("date").child(date).child("set").child("cal").setValue(0);
+                            myRef2.child(uid2).child("date").child(date).child("set").child("exr").setValue(0);
+                            myRef2.child(uid2).child("date").child(date).child("set").child("wat").setValue(0);
+                            myRef2.child(uid2).child("calburn").setValue(0);
+
+                            myRef2.child(uid2).child("date").child(date).child("progress").child("cal").setValue(0);
+                            myRef2.child(uid2).child("date").child(date).child("progress").child("exr").setValue(0);
+                            myRef2.child(uid2).child("date").child(date).child("progress").child("wat").setValue(0);
                             Toast.makeText(getApplicationContext(), "Registration Success!", Toast.LENGTH_SHORT).show();
                             BackToLoginPage();
                         }
