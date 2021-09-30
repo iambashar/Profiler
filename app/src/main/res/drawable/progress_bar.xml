@@ -6,7 +6,7 @@
             android:thicknessRatio="16"
             android:useLevel="false">
 
-            <solid android:color="@color/shallow_ash" />
+            <solid android:color="#BCBABA" />
         </shape>
     </item>
 

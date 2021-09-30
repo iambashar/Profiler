@@ -79,15 +79,15 @@ public class GoalsaveFragment extends Fragment {
 
         if(finalCalorieGoal > 3000)
         {
-            calorieSlider.getProgressDrawable().setTint(Color.rgb(224, 86, 104));
-            calorieSlider.getThumb().setTint(Color.rgb(224, 86, 104));
+            calorieSlider.getProgressDrawable().setTint(Color.rgb(237, 85, 28));
+            calorieSlider.getThumb().setTint(Color.rgb(237, 85, 28));
             //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
         }
         if(finalCalorieGoal < 3000)
         {
-            calorieSlider.getProgressDrawable().setTint(Color.rgb(72, 83, 146));
-            calorieSlider.getThumb().setTint(Color.rgb(72, 83, 146));
+            calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
+            calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
         }
 
         calorieSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -98,15 +98,15 @@ public class GoalsaveFragment extends Fragment {
 
                 if(calorieGoal > 3000)
                 {
-                    calorieSlider.getProgressDrawable().setTint(Color.rgb(224, 86, 104));
-                    calorieSlider.getThumb().setTint(Color.rgb(224, 86, 104));
+                    calorieSlider.getProgressDrawable().setTint(Color.rgb(237, 85, 28));
+                    calorieSlider.getThumb().setTint(Color.rgb(237, 85, 28));
                     //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
                 }
                 if(calorieGoal < 3000)
                 {
-                    calorieSlider.getProgressDrawable().setTint(Color.rgb(72, 83, 146));
-                    calorieSlider.getThumb().setTint(Color.rgb(72, 83, 146));
+                    calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
+                    calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
                 }
             }
 

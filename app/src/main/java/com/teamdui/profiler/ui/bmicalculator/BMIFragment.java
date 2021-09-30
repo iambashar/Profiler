@@ -126,7 +126,7 @@ public class BMIFragment extends Fragment {
                     BMIText.setText("BMI: " + String.valueOf(bmi));
                     resetbtn.setVisibility(View.VISIBLE);
                     getBMIbtn.setVisibility(View.INVISIBLE);
-                    rangeText.setTextColor(Color.parseColor("#485392"));
+                    rangeText.setTextColor(Color.parseColor("#ED551C"));
                     showRange();
                 }
             }
@@ -206,21 +206,25 @@ public class BMIFragment extends Fragment {
         {
             rangeText.setText("Underweight!!");
             binding.underweight.setTextColor(Color.parseColor("#ffffff"));
+            binding.underweight.setTextSize(22);
         }
         else if(bmi >= 18.5 && bmi <= 24.99)
         {
             rangeText.setText("Healthy Weight..");
             binding.healthyWeight.setTextColor(Color.parseColor("#ffffff"));
+            binding.healthyWeight.setTextSize(22);
         }
         else if(bmi >= 25 && bmi <= 29.99)
         {
             rangeText.setText("Overweight..");
             binding.overweight.setTextColor(Color.parseColor("#ffffff"));
+            binding.overweight.setTextSize(22);
         }
          else if(bmi >= 30 )
         {
             rangeText.setText("Obesity!!");
             binding.obesity.setTextColor(Color.parseColor("#ffffff"));
+            binding.obesity.setTextSize(22);
         }
          else
         {
@@ -240,5 +244,9 @@ public class BMIFragment extends Fragment {
         binding.healthyWeight.setTextColor(Color.parseColor("#A6A2A2"));
         binding.overweight.setTextColor(Color.parseColor("#A6A2A2"));
         binding.obesity.setTextColor(Color.parseColor("#A6A2A2"));
+        binding.underweight.setTextSize(18);
+        binding.healthyWeight.setTextSize(18);
+        binding.obesity.setTextSize(18);
+        binding.overweight.setTextSize(18);
     }
 }
