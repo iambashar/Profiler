@@ -9,10 +9,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordText;
     private Button loginButton;
     private ProgressBar loginProgressBar;
-    private Button registerButton;
+    private TextView registerButton;
 
     private FirebaseAuth mAuth;
 
@@ -48,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = binding.editTextTextPassword;
         loginButton = binding.loginButton;
         loginProgressBar = binding.loginProgressBar;
-        registerButton = binding.goToRegisterButton;
+        registerButton = binding.signUp;
 
 
         mAuth = FirebaseAuth.getInstance();
