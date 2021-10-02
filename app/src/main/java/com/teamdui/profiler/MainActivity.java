@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+
+
+
         uid = user.getUid();
         LocalDate todayDate = LocalDate.now();
         date = todayDate.toString();
