@@ -77,7 +77,7 @@ public class BMIFragment extends Fragment {
                    || (heightRadioButtonMeter.isChecked() && heightRadioButtonFeet.getText().toString().isEmpty()))
                         {
                     rangeText.setText(R.string.giveinput);
-                    rangeText.setTextColor(Color.parseColor("#E05668"));
+                    rangeText.setTextColor(Color.parseColor("#FF8303"));
                 }
                 else
                 {
@@ -126,7 +126,7 @@ public class BMIFragment extends Fragment {
                     BMIText.setText("BMI: " + String.valueOf(bmi));
                     resetbtn.setVisibility(View.VISIBLE);
                     getBMIbtn.setVisibility(View.INVISIBLE);
-                    rangeText.setTextColor(Color.parseColor("#ED551C"));
+                    rangeText.setTextColor(Color.parseColor("#FF8303"));
                     showRange();
                 }
             }

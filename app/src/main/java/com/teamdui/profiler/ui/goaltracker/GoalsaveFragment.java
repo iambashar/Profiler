@@ -79,8 +79,8 @@ public class GoalsaveFragment extends Fragment {
 
         if(finalCalorieGoal > 3000)
         {
-            calorieSlider.getProgressDrawable().setTint(Color.rgb(237, 85, 28));
-            calorieSlider.getThumb().setTint(Color.rgb(237, 85, 28));
+            calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
+            calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
             //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
         }
@@ -98,8 +98,8 @@ public class GoalsaveFragment extends Fragment {
 
                 if(calorieGoal > 3000)
                 {
-                    calorieSlider.getProgressDrawable().setTint(Color.rgb(237, 85, 28));
-                    calorieSlider.getThumb().setTint(Color.rgb(237, 85, 28));
+                    calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
+                    calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
                     //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
                 }
