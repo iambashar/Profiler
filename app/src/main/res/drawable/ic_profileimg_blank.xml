@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_dry_clean"
+        android:gravity="center"
+        android:height="35dp"
+        android:width="35dp"/>
+
+    <item
+        android:drawable="@drawable/ic_baseline_person_24"
+        android:gravity="center"
+        android:height="24dp"
+        android:width="24dp"/>
+</layer-list>
