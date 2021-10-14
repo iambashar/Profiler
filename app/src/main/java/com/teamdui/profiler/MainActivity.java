@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         uid = user.getUid();
         LocalDate todayDate = LocalDate.now();
         date = todayDate.toString();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
         myRef.keepSynced(true);
 

@@ -124,17 +124,17 @@
         app:layout_constraintVertical_bias="0.76" />
 
     <TextView
-        android:id="@+id/noAccountText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No Account?"
+        android:id="@+id/continueWithoutText"
+        android:layout_width="183dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="Continue Without an Account"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintHorizontal_bias="0.028"
+        app:layout_constraintStart_toEndOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
     <TextView
         android:id="@+id/signUp"
@@ -156,10 +156,10 @@
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noAccountText"
+        app:layout_constraintTop_toBottomOf="@+id/forgetPassword"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
@@ -172,8 +172,9 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.837"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintVertical_bias="0.781" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
