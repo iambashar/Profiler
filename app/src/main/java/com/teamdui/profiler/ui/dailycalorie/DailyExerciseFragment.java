@@ -221,6 +221,8 @@ public class DailyExerciseFragment extends Fragment {
     public void initExerciseList()
     {
         String key = myRef.child(uid).child("date").child(date).child("Exercise").push().getKey();
+        if(exerciseList == null)
+            exerciseList = new ArrayList<Exercise>();
         exerciseList.add(new Exercise(category, timeinMin, R.drawable.ic_minus, burnHour, key));
         myRef.child(uid).child("Exercise").child(key).child("catName").setValue(category);
         myRef.child(uid).child("Exercise").child(key).child("timeEach").setValue(timeinMin);

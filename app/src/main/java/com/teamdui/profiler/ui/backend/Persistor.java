@@ -1,10 +1,18 @@
 package com.teamdui.profiler.ui.backend;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+
+import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
+import android.content.pm.PackageManager;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class Persistor extends Application {
+
+    private static final int REQUEST_READ_EXTERNAL_STORAGE_DATA = 21412;
     @Override
     public void onCreate()
     {
