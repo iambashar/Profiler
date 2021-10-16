@@ -26,7 +26,7 @@
     <!-- Login form -->
     <string name="login_button_text">LOGIN</string>
     <string name="email_hint">example@gmail.com</string>
-    <string name="password_hint">ex. 123Xyz#</string>
+    <string name="password_hint">ex. Abc123Xyz</string>
     <string name="giveinput">You must input weight and height..</string>
 
     <!-- Register form -->

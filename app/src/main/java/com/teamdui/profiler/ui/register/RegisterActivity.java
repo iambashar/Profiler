@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +32,8 @@ import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityRegisterBinding;
 import com.teamdui.profiler.ui.login.LoginActivity;
 
+import org.w3c.dom.Text;
+
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
@@ -40,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passwordText;
     private EditText confirmPasswordText;
     private Button registerButton;
-    private Button backButton;
+    private TextView backButton;
     private ProgressBar progressBar;
 
     static String passwordRegex;

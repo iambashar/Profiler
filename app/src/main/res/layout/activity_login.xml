@@ -56,6 +56,7 @@
         android:layout_marginTop="112dp"
         android:ems="10"
         android:hint="@string/email_hint"
+        android:textColorHint="@color/shallow_ash"
         android:inputType="textEmailAddress"
         android:textSize="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,6 +85,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password_hint"
+        android:textColorHint="@color/shallow_ash"
         android:inputType="textPassword"
         android:textSize="22dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,14 +130,14 @@
         android:id="@+id/continueWithoutText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
-        android:text="or continue without an Account"
+        android:text="or continue without an account"
         android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toEndOf="@+id/loginButton"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".616"/>
 
     <TextView
         android:id="@+id/signUp"
