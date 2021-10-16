@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -125,11 +126,13 @@ public class RegisterActivity extends AppCompatActivity {
                             myRef2.child(uid2).child("date").child(date).child("progress").child("exr").setValue(0);
                             myRef2.child(uid2).child("date").child(date).child("progress").child("wat").setValue(0);
                             Toast.makeText(getApplicationContext(), "Registration Success!", Toast.LENGTH_SHORT).show();
-                            BackToLoginPage();
+                            SendVerificationEmail(uid1);
+                            //BackToLoginPage();
+                            finish();
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(), "Registration Failed!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "User already exists / Registration Failed!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -186,6 +189,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private void SendVerificationEmail(FirebaseUser user)
+    {
+        if(user == null)
+            return;
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                        {
+                            Log.d("VERIFY EMAIL", "SENT");
+                        }
+                    }
+                });
+    }
 
 
     public static boolean ValidateEmail(CharSequence email)

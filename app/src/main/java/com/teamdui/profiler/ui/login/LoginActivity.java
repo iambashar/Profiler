@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthCredential;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
@@ -65,6 +66,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -199,6 +201,12 @@ public class LoginActivity extends Activity {
         if(user == null)
         {
             Toast.makeText(getApplicationContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
+            emailText.getText().clear();
+            passwordText.getText().clear();
+        }
+        else if(!user.isEmailVerified() && !user.isAnonymous())
+        {
+            Toast.makeText(getApplicationContext(), "Please verify your email!", Toast.LENGTH_SHORT).show();
             emailText.getText().clear();
             passwordText.getText().clear();
         }
