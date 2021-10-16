@@ -1,14 +1,23 @@
 package com.teamdui.profiler.ui.profile;
 
+import java.util.Date;
+
 public class ProfileData {
     public String fname;
     public String lname;
 
-    public class dob {
-        public int month;
-        public int date;
-        public int year;
-    }
+    public Date dob;    // yes ik this is deprecated, idc
 
-    public ProfileData() {}
+    public int heightFeet;
+    public int heightInches;
+
+    public double weight;
+
+    public ProfileData() {
+        fname = "";
+        lname = "";
+        dob = new Date();
+        heightFeet = 0;
+        heightInches = 0;
+    }
 }
