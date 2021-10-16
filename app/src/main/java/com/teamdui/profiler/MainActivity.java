@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     private Button logoutButton;
     public static volatile String uri;
     public int scal = 0, sexr = 0, swat = 0;
-    public static volatile int fragmentNo;
     private DatabaseReference urlRef;
 
     public static FirebaseAuth mAuth;
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
+
         FirebaseUser user = mAuth.getCurrentUser();
 
         final String dbUrl = "https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -95,9 +95,11 @@ public class MainActivity extends AppCompatActivity {
         LocalDate todayDate = LocalDate.now();
         date = todayDate.toString();
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         myRef = FirebaseDatabase.getInstance(dbUrl).getReference("userid");
+
         myRef.keepSynced(true);
+
 
         dbUpdate();
         setVariables();
@@ -469,3 +471,4 @@ public class MainActivity extends AppCompatActivity {
         } );
     }
 }
+

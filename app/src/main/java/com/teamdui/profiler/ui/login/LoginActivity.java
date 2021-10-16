@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthCredential;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
@@ -54,6 +55,7 @@ public class LoginActivity extends Activity {
 
     private SignInButton googleSignInButton;
     private GoogleSignInClient mGoogleSignInClient;
+    private String signInText;
     private final int RC_SIGN_IN = 123;
 
     private FirebaseAuth mAuth;
@@ -64,6 +66,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -201,6 +204,12 @@ public class LoginActivity extends Activity {
             emailText.getText().clear();
             passwordText.getText().clear();
         }
+        else if(!user.isEmailVerified() && !user.isAnonymous())
+        {
+            Toast.makeText(getApplicationContext(), "Please verify your email!", Toast.LENGTH_SHORT).show();
+            emailText.getText().clear();
+            passwordText.getText().clear();
+        }
         else
         {
             Intent loginSuccessIntent = new Intent(this, MainActivity.class);
@@ -319,4 +328,6 @@ public class LoginActivity extends Activity {
         Intent registerIntent = new Intent( this, RegisterActivity.class);
         startActivity(registerIntent);
     }
+
+   
 }

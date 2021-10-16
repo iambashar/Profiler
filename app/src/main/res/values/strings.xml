@@ -30,7 +30,7 @@
     <string name="giveinput">You must input weight and height..</string>
 
     <!-- Register form -->
-    <string name="register_title">Profiler Registration Form</string>
+    <string name="register_title">Register Here:</string>
     <string name="register_email">Email</string>
     <string name="register_password">Password</string>
     <string name="register_confirm_password">Confirm Password</string>
