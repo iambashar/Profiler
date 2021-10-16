@@ -14,18 +14,19 @@
         android:layout_marginTop="80dp"
         android:text="@string/register_title"
         android:textAlignment="center"
-        android:textColor="#9FA8DA"
+        android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"
         android:layout_width="156dp"
         android:layout_height="49dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="52dp"
         android:text="@string/register_button"
+        android:background="@drawable/button_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
 
@@ -80,13 +81,14 @@
         app:layout_constraintStart_toEndOf="@+id/registerButton"
         app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="133dp"
         android:layout_marginTop="72dp"
         android:text="Back"
+        android:background="@drawable/button_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 

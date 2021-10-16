@@ -3,9 +3,11 @@ package com.teamdui.profiler;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -33,6 +35,7 @@ import com.teamdui.profiler.databinding.ActivityMainBinding;
 import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
 import com.teamdui.profiler.ui.login.LoginActivity;
+import com.teamdui.profiler.ui.profile.ProfileData;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -72,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
     public static double netCalorie = 0;
     public static double burnedCalorie = 0;
 
+    public static ProfileData profileData;
+    public static View headerView;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +89,14 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
-
+        final String dbUrl = "https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
         uid = user.getUid();
         LocalDate todayDate = LocalDate.now();
         date = todayDate.toString();
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        myRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        myRef = FirebaseDatabase.getInstance(dbUrl).getReference("userid");
         myRef.keepSynced(true);
 
         dbUpdate();
@@ -100,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         contentView = findViewById(R.id.content_view);
         drawer = binding.drawerLayout;
 
-        urlRef = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("url");
+        urlRef = FirebaseDatabase.getInstance(dbUrl).getReference("url");
         urlRef.keepSynced(true);
 
         urlRef.addValueEventListener(new ValueEventListener() {
@@ -118,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        View headerView = sideNavView.inflateHeaderView(R.layout.nav_header_main);
+        headerView = sideNavView.inflateHeaderView(R.layout.nav_header_main);
 
         logoutButton = headerView.findViewById(R.id.logout);
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -131,10 +138,17 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dailycalorie, R.id.navigation_goaltracker, R.id.navigation_bmi,
-                R.id.navigation_camera, R.id.nav_Profile, R.id.nav_help, R.id.nav_history, R.id.nav_settings)
-                .setDrawerLayout(drawer)
-                .build();
+                R.id.navigation_home,
+                R.id.navigation_dailycalorie,
+                R.id.navigation_goaltracker,
+                R.id.navigation_bmi,
+                R.id.navigation_camera,
+                R.id.nav_Profile,
+                R.id.nav_help,
+                R.id.nav_history,
+                R.id.nav_settings
+        ).setDrawerLayout(drawer).build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(sideNavView, navController);
@@ -192,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setVariables() {
+
         try {
             myRef.child(uid).child("date").child(date).child("progress").child("cal").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -208,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             calorieDaily = 0;
         }
+
         try {
             myRef.child(uid).child("date").child(date).child("set").child("cal").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -224,8 +240,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             calorieGoal = 0;
         }
-        try {
 
+        try {
             myRef.child(uid).child("date").child(date).child("progress").child("wat").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -241,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             glassDaily = 0;
         }
+
         try {
             myRef.child(uid).child("date").child(date).child("set").child("wat").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -258,8 +275,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             glassGoal = 0;
         }
-        try {
 
+        try {
             myRef.child(uid).child("date").child(date).child("progress").child("exr").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -275,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             exerciseDaily = 0;
         }
+
         try {
             myRef.child(uid).child("date").child(date).child("set").child("exr").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -328,8 +346,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
-
+            //
         }
+
         try {
             myRef.child(uid).child("Exercise").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -349,7 +368,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
+            //
+        }
 
+        try {
+            myRef.child(uid).child("profile").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        profileData = dataSnapshot.getValue(ProfileData.class);
+                        TextView name = headerView.findViewById(R.id.fullName);
+                        name.setText((profileData.fname + " " + profileData.lname));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError databaseError) {
+
+                }
+            });
+        } catch (Exception e) {
+            //
         }
 
     }
