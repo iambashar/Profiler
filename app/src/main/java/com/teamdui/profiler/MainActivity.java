@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
         uid = user.getUid();
         LocalDate todayDate = LocalDate.now();
         date = todayDate.toString();
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         myRef = FirebaseDatabase.getInstance(dbUrl).getReference("userid");
         myRef.keepSynced(true);
 
