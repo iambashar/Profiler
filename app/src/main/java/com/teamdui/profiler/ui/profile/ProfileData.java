@@ -13,5 +13,11 @@ public class ProfileData {
 
     public double weight;
 
-    public ProfileData() {}
+    public ProfileData() {
+        fname = "";
+        lname = "";
+        dob = new Date();
+        heightFeet = 0;
+        heightInches = 0;
+    }
 }

@@ -31,14 +31,8 @@ public class ProfileEdit extends Fragment {
         binding = ProfileEditFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+
         return root;
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }
