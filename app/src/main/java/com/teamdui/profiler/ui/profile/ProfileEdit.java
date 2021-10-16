@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ProfileEditFragmentBinding;
+import com.teamdui.profiler.databinding.ProfileFragmentBinding;
 
 public class ProfileEdit extends Fragment {
 
@@ -27,7 +28,10 @@ public class ProfileEdit extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile_edit_fragment, container, false);
+        binding = ProfileEditFragmentBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        return root;
     }
 
     @Override

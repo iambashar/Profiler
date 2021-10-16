@@ -8,5 +8,10 @@ public class ProfileData {
 
     public Date dob;    // yes ik this is deprecated, idc
 
+    public int heightFeet;
+    public int heightInches;
+
+    public double weight;
+
     public ProfileData() {}
 }
