@@ -2,6 +2,7 @@ package com.teamdui.profiler.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
@@ -34,8 +36,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.OAuthCredential;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
@@ -43,6 +48,8 @@ import com.teamdui.profiler.ui.forgotpass.ForgotPasswordActivity;
 import com.teamdui.profiler.ui.register.RegisterActivity;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDate;
 
 public class LoginActivity extends Activity {
 
@@ -60,6 +67,7 @@ public class LoginActivity extends Activity {
     private final int RC_SIGN_IN = 123;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
 
     private ActivityLoginBinding binding;
 
@@ -211,6 +219,11 @@ public class LoginActivity extends Activity {
             Toast.makeText(getApplicationContext(), "Please verify your email!", Toast.LENGTH_SHORT).show();
             emailText.getText().clear();
             passwordText.getText().clear();
+
+
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
+
         }
         else
         {
@@ -272,6 +285,7 @@ public class LoginActivity extends Activity {
 
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
@@ -279,6 +293,43 @@ public class LoginActivity extends Activity {
                             Toast.makeText(getApplicationContext(), "Authentication Success!", Toast.LENGTH_SHORT).show();
 
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            databaseReference = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                    .getReference("userid");
+
+                            String userId = user.getUid().toString();
+                            LocalDate todayDate = LocalDate.now();
+                            String date = todayDate.toString();
+
+                            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists())
+                                    {
+                                        Log.d("USER DATA CREATE:", "USER ALREADY HAS DATA");
+
+                                    }
+                                    else
+                                    {
+                                        databaseReference.child(userId).child("date").child(date).child("set").child("cal").setValue(0);
+                                        databaseReference.child(userId).child("date").child(date).child("set").child("exr").setValue(0);
+                                        databaseReference.child(userId).child("date").child(date).child("set").child("wat").setValue(0);
+                                        databaseReference.child(userId).child("calburn").setValue(0);
+
+                                        databaseReference.child(userId).child("date").child(date).child("progress").child("cal").setValue(0);
+                                        databaseReference.child(userId).child("date").child(date).child("progress").child("exr").setValue(0);
+                                        databaseReference.child(userId).child("date").child(date).child("progress").child("wat").setValue(0);
+                                        Log.d("USER DATA CREATE:", "CREATE NEW USER DATA");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.e("USER DATA CREATE:", "CREATE NEW USER DATA CANCELLED");
+                                }
+
+                            });
+
                             updateUI(user);
                         }
                         else
