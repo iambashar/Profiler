@@ -4,14 +4,24 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.teamdui.profiler.MainActivity;
+
+import java.time.Year;
+
 public class ProfileViewModel extends ViewModel {
-    private MutableLiveData<String> mText;
+    private MutableLiveData<ProfileData> mData;
+
     // TODO: Implement the ViewModel
     public ProfileViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Profile fragment");
+        mData = new MutableLiveData<>();
+        MainActivity.myRef
+                .child(MainActivity.uid)
+                .child("profile")
+                .get()
+                .addOnCompleteListener(task -> mData.setValue(task.getResult().getValue(ProfileData.class)));
     }
-    public LiveData<String> getText() {
-        return mText;
+
+    public LiveData<ProfileData> getData() {
+        return mData;
     }
 }

@@ -86,7 +86,11 @@
         android:id="@+id/nav_Profile"
         android:name="com.teamdui.profiler.ui.profile.Profile"
         android:label="Profile"
-        tools:layout="@layout/profile_fragment" />
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_nav_Profile_to_profileEdit"
+            app:destination="@id/profileEdit" />
+    </fragment>
     <fragment
         android:id="@+id/nav_history"
         android:name="com.teamdui.profiler.ui.History.History"
@@ -102,5 +106,10 @@
         android:name="com.teamdui.profiler.ui.settings.Settings"
         android:label="Settings"
         tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/profileEdit"
+        android:name="com.teamdui.profiler.ui.profile.ProfileEdit"
+        android:label="profile_edit_fragment"
+        tools:layout="@layout/profile_edit_fragment" />
 
 </navigation>

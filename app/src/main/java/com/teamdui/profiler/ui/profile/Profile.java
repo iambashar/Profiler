@@ -1,5 +1,6 @@
 package com.teamdui.profiler.ui.profile;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,18 +9,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.databinding.ProfileFragmentBinding;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Year;
 import java.util.HashMap;
 
 public class Profile extends Fragment {
@@ -33,6 +37,7 @@ public class Profile extends Fragment {
         return new Profile();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -42,6 +47,16 @@ public class Profile extends Fragment {
         binding = ProfileFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        mViewModel.getData().observe(getViewLifecycleOwner(), new Observer<ProfileData>() {
+            @Override
+            public void onChanged(ProfileData profileData) {
+                String fullName = data.fname + " " + data.lname;
+                binding.fullNameText.setText(fullName);
+                int age = Integer.parseInt(Year.now().toString()) - data.dob.getYear();
+                binding.ageValue.setText(Integer.toString(age));
+            }
+        });
+
         MainActivity.myRef
                 .child(MainActivity.uid)
                 .child("profile")
@@ -49,8 +64,13 @@ public class Profile extends Fragment {
                 .addOnCompleteListener(task -> {
                     data = task.getResult().getValue(ProfileData.class);
                     String fullName = data.fname + " " + data.lname;
-                    binding.textView4.setText(fullName);
+                    binding.fullNameText.setText(fullName);
+                    int age = Integer.parseInt(Year.now().toString()) - data.dob.getYear();
+                    binding.ageValue.setText(Integer.toString(age));
                 });
+
+        //binding.button.setOnClickListener();
+
 
         return root;
     }
