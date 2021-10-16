@@ -48,7 +48,7 @@ public class Help extends Fragment {
         SpannableString spannableString6 = new SpannableString(textView6);
 
         StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
-        spannableString1.setSpan(boldSpan, 32, 43, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString1.setSpan(boldSpan, 31, 43, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString2.setSpan(boldSpan, 118, 124, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString3.setSpan(boldSpan, 28, 40, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString4.setSpan(boldSpan, 53, 66, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

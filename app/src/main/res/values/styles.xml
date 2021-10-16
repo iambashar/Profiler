@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Base application theme. -->
-	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+	<style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 		<!-- Customize your theme here. -->
 		<item name="colorPrimary">@color/main</item>
 		<item name="colorPrimaryDark">#0E66B9</item>
@@ -10,7 +10,9 @@
 		<item name="android:listDivider">@android:color/transparent</item>
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
+		<item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 	</style>
+
 	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 	<style name="AppTheme.popUpOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 	<style name="TextViewStyle" parent="android:Widget.TextView"

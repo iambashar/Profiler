@@ -1,12 +1,15 @@
 package com.teamdui.profiler.ui.profile;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,7 +60,6 @@ public class ProfileEdit extends Fragment {
         heightInch = binding.profileHeightInch;
         weight = binding.profileWeight;
         profileImage = binding.profileImg;
-        cancelButton = binding.cancelButton;
 
         mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -84,27 +86,70 @@ public class ProfileEdit extends Fragment {
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         profileSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myRef.child(uid).child("profile").child("fname").setValue(fName.getText().toString());
                 myRef.child(uid).child("profile").child("lname").setValue(lName.getText().toString());
-                myRef.child(uid).child("profile").child("heightFeet").setValue(Integer.parseInt(heightFeet.getText().toString()));
-                myRef.child(uid).child("profile").child("heightInches").setValue(Integer.parseInt(heightInch.getText().toString()));
-                myRef.child(uid).child("profile").child("weight").setValue(Double.parseDouble(weight.getText().toString()));
+                try {
+                    myRef.child(uid).child("profile").child("heightFeet").setValue(Integer.parseInt(heightFeet.getText().toString()));
+                }
+                catch (Exception e){
+                    myRef.child(uid).child("profile").child("heightFeet").setValue(0);
+                }
+                try {
+                    myRef.child(uid).child("profile").child("heightInches").setValue(Integer.parseInt(heightInch.getText().toString()));
+                }
+                catch (Exception e){
+                    myRef.child(uid).child("profile").child("heightInches").setValue(0);
+                }
+                try {
+                    myRef.child(uid).child("profile").child("weight").setValue(Double.parseDouble(weight.getText().toString()));
+                }
+                catch (Exception e){
+                    myRef.child(uid).child("profile").child("weight").setValue(0);
+                }
+
                 myRef.child(uid).child("profile").child("dob").child("date").setValue(dobDate.getDay());
                 myRef.child(uid).child("profile").child("dob").child("month").setValue(dobDate.getMonth());
                 myRef.child(uid).child("profile").child("dob").child("year").setValue(dobDate.getYear());
+                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
+            }
+
+        });
+
+        fName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        lName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        heightFeet.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        heightInch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
             }
         });
 
         return root;
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

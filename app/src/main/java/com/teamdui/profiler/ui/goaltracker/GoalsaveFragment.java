@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -536,6 +537,7 @@ public class GoalsaveFragment extends Fragment {
         exercisestr = "Exercise done(min): " + String.valueOf(exerciseDaily) + "/" + String.valueOf(finalExerciseGoal) ;
         binding.exerciseDone.setText(exercisestr);
         binding.minText.setText(String.valueOf(finalExerciseGoal));
+        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
     }
     public void calculateExercise()
     {
