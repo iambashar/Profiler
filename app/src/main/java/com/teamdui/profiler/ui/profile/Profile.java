@@ -42,15 +42,7 @@ public class Profile extends Fragment {
         binding = ProfileFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        MainActivity.myRef
-                .child(MainActivity.uid)
-                .child("profile")
-                .get()
-                .addOnCompleteListener(task -> {
-                    data = task.getResult().getValue(ProfileData.class);
-                    String fullName = data.fname + " " + data.lname;
-                    binding.textView4.setText(fullName);
-                });
+
 
         return root;
     }

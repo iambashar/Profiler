@@ -24,7 +24,7 @@
             android:fontFamily="@font/bitter"
             android:text="Total calorie earned(cal): "
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="Water taken(glasses): "
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="Exercise Done(min):"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"

@@ -27,6 +27,7 @@ import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
 import com.teamdui.profiler.ui.goaltracker.GoalsaveFragment;
+import com.teamdui.profiler.ui.profile.ProfileData;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -72,6 +73,7 @@ public class HomeFragment extends Fragment {
     public TextView calBurnText;
     public TextView calNetText;
     private ImageView cameraIcon;
+    public ProfileData data;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -118,6 +120,9 @@ public class HomeFragment extends Fragment {
                 Navigation.findNavController(root).navigate(R.id.action_navigation_home_to_navigation_camera);
             }
         });
+
+
+
 
         return root;
     }

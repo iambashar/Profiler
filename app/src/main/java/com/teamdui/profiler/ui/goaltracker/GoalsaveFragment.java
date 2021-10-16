@@ -96,7 +96,7 @@ public class GoalsaveFragment extends Fragment {
                 calorieGoal = progress;
                 calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
 
-                if(calorieGoal > 3000)
+                if(calorieGoal >= 3000)
                 {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
                     calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
@@ -118,6 +118,27 @@ public class GoalsaveFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+        calorieEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int cal = Integer.valueOf(calorieEditText.getText().toString());
+                calorieSlider.setProgress(cal);
+                hideKeyboard(v);
+                if(cal >= 3000)
+                {
+                    calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
+                    calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
+                    //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
+
+                }
+                if(cal < 3000)
+                {
+                    calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
+                    calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
+                }
             }
         });
 

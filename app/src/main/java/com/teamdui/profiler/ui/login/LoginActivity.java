@@ -54,6 +54,7 @@ public class LoginActivity extends Activity {
 
     private SignInButton googleSignInButton;
     private GoogleSignInClient mGoogleSignInClient;
+    private String signInText;
     private final int RC_SIGN_IN = 123;
 
     private FirebaseAuth mAuth;
@@ -319,4 +320,6 @@ public class LoginActivity extends Activity {
         Intent registerIntent = new Intent( this, RegisterActivity.class);
         startActivity(registerIntent);
     }
+
+   
 }
