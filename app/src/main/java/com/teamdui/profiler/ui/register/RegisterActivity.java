@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityRegisterBinding;
 import com.teamdui.profiler.ui.login.LoginActivity;
 
@@ -41,7 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Button backButton;
     private ProgressBar progressBar;
 
-    private static final int minPasswordLength = 5;
+    static String passwordRegex;
+
+    private static final int minPasswordLength = 8;
 
     private FirebaseAuth mAuth;
     private DatabaseReference myRef2;
@@ -61,6 +64,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = binding.registerButton;
         progressBar = binding.registerProgress;
         backButton = binding.backButton;
+
+        passwordRegex = getString(R.string.password_regex);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -97,6 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
                 progressBar.setProgress(100, true);
+
+
 
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -169,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if(!ValidatePassword(passwordText.getText()))
                 {
-                    passwordText.setError("Must be at least " + minPasswordLength + " characters.");
+                    passwordText.setError("Must be at least " + minPasswordLength + " characters with at least 1 capital 1 small and 1 number");
                 }
             }
         });
@@ -189,7 +196,11 @@ public class RegisterActivity extends AppCompatActivity {
     public static boolean ValidatePassword(CharSequence password)
     {
         int len = password.length();
-        if(len < minPasswordLength)
+
+        Pattern p = Pattern.compile(passwordRegex);
+
+
+        if(!p.matcher(password).matches())
         {
             return false;
         }

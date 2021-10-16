@@ -37,6 +37,7 @@ import com.google.firebase.auth.OAuthCredential;
 import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
+import com.teamdui.profiler.ui.forgotpass.ForgotPasswordActivity;
 import com.teamdui.profiler.ui.register.RegisterActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,6 +49,9 @@ public class LoginActivity extends Activity {
     private Button loginButton;
     private ProgressBar loginProgressBar;
     private TextView registerButton;
+    private TextView forgotPasswordLink;
+    private TextView continueWithoutLink;
+
     private SignInButton googleSignInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private final int RC_SIGN_IN = 123;
@@ -68,7 +72,8 @@ public class LoginActivity extends Activity {
         loginButton = binding.loginButton;
         loginProgressBar = binding.loginProgressBar;
         registerButton = binding.signUp;
-
+        forgotPasswordLink = binding.forgetPassword;
+        continueWithoutLink = binding.continueWithoutText;
 
 
         //Button
@@ -167,6 +172,21 @@ public class LoginActivity extends Activity {
                 GoToRegisterPage();
             }
         });
+
+        forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToForgotPassword();
+            }
+        });
+
+        continueWithoutLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SignInAnonymously();
+            }
+        });
+
     }
 
     @Override
@@ -204,6 +224,9 @@ public class LoginActivity extends Activity {
 
     private void signInWithGoogle()
     {
+        loginProgressBar.setVisibility(View.VISIBLE);
+        loginProgressBar.setProgress(100, true);
+
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
 
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -251,13 +274,44 @@ public class LoginActivity extends Activity {
                         {
                             updateUI(null);
                         }
+
+                        loginProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
 
     }
 
+    private void SignInAnonymously()
+    {
+        loginProgressBar.setVisibility(View.VISIBLE);
+        loginProgressBar.setProgress(100, true);
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+                            Log.d("SIGN IN ANONYMOUS", "Success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        }
+                        else
+                        {
+                            Log.w("SIGN IN ANONYMOUS FAIL", task.getException());
 
+                            updateUI(null);
+                        }
 
+                        loginProgressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
+    }
+
+    private void GoToForgotPassword()
+    {
+        Intent forgotPasswordIntent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(forgotPasswordIntent);
+    }
 
 
     private void GoToRegisterPage()
