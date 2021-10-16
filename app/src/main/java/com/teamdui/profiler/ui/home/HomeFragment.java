@@ -155,25 +155,39 @@ public class HomeFragment extends Fragment {
 
     public void setProgressText()
     {
-        calDailyText.setText(String.valueOf(calorieDaily));
-        calGoalText.setText(String.valueOf(calorieGoal));
-        glassDailyText.setText(String.valueOf(glassDaily));
-        glassGoalText.setText(String.valueOf(glassGoal));
-        exerciseDailyText.setText(String.valueOf(exerciseDaily));
-        exerciseGoalText.setText(String.valueOf(exerciseGoal));
+        textSetter(calDailyText, String.valueOf(calorieDaily));
+        textSetter(calGoalText,String.valueOf(calorieGoal));
+        textSetter(glassDailyText,String.valueOf(glassDaily));
+        textSetter(glassGoalText,String.valueOf(glassGoal));
+        textSetter(exerciseDailyText,String.valueOf(exerciseDaily));
+        textSetter(exerciseGoalText,String.valueOf(exerciseGoal));
     }
 
     public void setCalorieText()
     {
-        calEarnText.setText(calEarnText.getText().toString() + " " + String.valueOf((double)calorieDaily));
-        calBurnText.setText(calBurnText.getText().toString() + " " + String.valueOf(burnedCalorie));
+        textSetter(calEarnText, calEarnText.getText().toString() + " " + String.valueOf((double)calorieDaily));
+        textSetter(calBurnText,calBurnText.getText().toString() + " " + String.valueOf(burnedCalorie));
         if(netCalorie > 0)
         {
-            calNetText.setText(calNetText.getText().toString() + " " + "+" + String.valueOf(netCalorie));
+            textSetter(calNetText,calNetText.getText().toString() + " " + "+" + String.valueOf(netCalorie));
         }
         else
         {
-            calNetText.setText(calNetText.getText().toString() + " " + String.valueOf(netCalorie));
+            textSetter(calNetText,calNetText.getText().toString() + " " + String.valueOf(netCalorie));
+        }
+    }
+
+
+    private void textSetter(TextView view, String text)
+    {
+        if(view != null)
+        {
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    view.setText(text);
+                }
+            });
         }
     }
 }
