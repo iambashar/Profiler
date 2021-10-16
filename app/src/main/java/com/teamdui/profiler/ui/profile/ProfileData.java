@@ -1,5 +1,6 @@
 package com.teamdui.profiler.ui.profile;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 
 public class ProfileData {
@@ -12,6 +13,7 @@ public class ProfileData {
     public int heightInches;
 
     public double weight;
+    public String Image;
 
     public ProfileData() {
         fname = "";
@@ -19,5 +21,6 @@ public class ProfileData {
         dob = new Date();
         heightFeet = 0;
         heightInches = 0;
+        Image = "";
     }
 }

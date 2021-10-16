@@ -1,12 +1,12 @@
 package com.teamdui.profiler.ui.profile;
 
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,18 +16,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ProfileFragmentBinding;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.time.Year;
-import java.util.HashMap;
+import java.util.Base64;
+
+import static com.teamdui.profiler.MainActivity.bytesProfileImage;
 
 public class Profile extends Fragment {
 
@@ -63,6 +58,12 @@ public class Profile extends Fragment {
                 binding.heightValue.setText(height);
                 binding.weightValue.setText(Double.toString(data.weight));
                 double heightMetres = (data.heightFeet * 12 + data.heightInches) * 2.54 / 100;
+                String bmi2 = String.format("%.2f", data.weight/(heightMetres*heightMetres));
+                binding.bmiValue.setText(bmi2);
+                String base64 = data.Image;
+                bytesProfileImage = Base64.getDecoder().decode(base64);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length);
+                binding.profileImg.setImageBitmap(bitmap);
                 double bmi = data.weight/(heightMetres*heightMetres);
                 String bmiText = String.format("%.2f", data.weight/(heightMetres*heightMetres));
                 String bmiRange = "";

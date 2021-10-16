@@ -1,14 +1,13 @@
 package com.teamdui.profiler;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +20,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,16 +35,16 @@ import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
 import com.teamdui.profiler.ui.login.LoginActivity;
 import com.teamdui.profiler.ui.profile.ProfileData;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import static com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment.exerciseList;
 import static com.teamdui.profiler.ui.dailycalorie.DailyMealFragment.foodList;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private static final float END_SCALE = 0.85f;
     private Button logoutButton;
+    public static CircleImageView profileImage;
     public static volatile String uri;
     public int scal = 0, sexr = 0, swat = 0;
     private DatabaseReference urlRef;
@@ -74,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
     public static int exerciseGoal = 0;
     public static double netCalorie = 0;
     public static double burnedCalorie = 0;
-
+    public static byte[] bytesProfileImage;
     public static ProfileData profileData;
     public static View headerView;
+    public static String firstName, lastName;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        profileImage = headerView.findViewById(R.id.profileImg);
+        setpropic();
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -202,6 +205,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static void setpropic(){
+        if (bytesProfileImage != null)
+            profileImage.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
+    }
+
     private void logoutUser() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
@@ -211,6 +219,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setVariables() {
+        try{
+            myRef.child(uid).child("profile").child("Image").addValueEventListener(new ValueEventListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        bytesProfileImage = Base64.getDecoder().decode(String.valueOf(snapshot.getValue()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+                });
+            }catch (Exception e){
+                bytesProfileImage = new byte[0];
+            }
+
+        try{
+            myRef.child(uid).child("profile").child("fname").addValueEventListener(new ValueEventListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        firstName = (String) snapshot.getValue();
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        }catch (Exception e){
+            firstName = "";
+        }
+        try{
+            myRef.child(uid).child("profile").child("lname").addValueEventListener(new ValueEventListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                        lastName = (String) snapshot.getValue();
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        }catch (Exception e){
+            lastName = "";
+        }
 
         try {
             myRef.child(uid).child("date").child(date).child("progress").child("cal").addValueEventListener(new ValueEventListener() {

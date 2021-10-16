@@ -1,5 +1,6 @@
 package com.teamdui.profiler.ui.home;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,40 +12,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.HomeFragmentBinding;
 import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
-import com.teamdui.profiler.ui.goaltracker.GoalsaveFragment;
 import com.teamdui.profiler.ui.profile.ProfileData;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import static com.teamdui.profiler.MainActivity.burnedCalorie;
+import static com.teamdui.profiler.MainActivity.bytesProfileImage;
 import static com.teamdui.profiler.MainActivity.calorieDaily;
 import static com.teamdui.profiler.MainActivity.calorieGoal;
 import static com.teamdui.profiler.MainActivity.exerciseDaily;
 import static com.teamdui.profiler.MainActivity.exerciseGoal;
+import static com.teamdui.profiler.MainActivity.firstName;
 import static com.teamdui.profiler.MainActivity.glassDaily;
 import static com.teamdui.profiler.MainActivity.glassGoal;
+import static com.teamdui.profiler.MainActivity.lastName;
 import static com.teamdui.profiler.MainActivity.netCalorie;
-import static com.teamdui.profiler.MainActivity.setVariables;
-import static com.teamdui.profiler.MainActivity.uid;
+import static com.teamdui.profiler.MainActivity.setpropic;
 
 public class HomeFragment extends Fragment {
 
@@ -89,6 +78,11 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         netCalorie = (double)calorieDaily - burnedCalorie;
+        if (bytesProfileImage != null)
+            binding.profileImg.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
+
+        binding.userNameText.setText(firstName+ " " +lastName);
+        setpropic();
 
         calProgressBar = binding.calProgress;
         waterProgressBar = binding.waterProgress;
