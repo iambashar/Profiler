@@ -128,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                             myRef2.child(uid2).child("date").child(date).child("progress").child("cal").setValue(0);
                             myRef2.child(uid2).child("date").child(date).child("progress").child("exr").setValue(0);
                             myRef2.child(uid2).child("date").child(date).child("progress").child("wat").setValue(0);
+                            myRef2.child(uid2).child("date").child(date).child("progress").child("calburn").setValue(0);
                             Toast.makeText(getApplicationContext(), "Registration Success!", Toast.LENGTH_SHORT).show();
                             SendVerificationEmail(uid1);
                             //BackToLoginPage();

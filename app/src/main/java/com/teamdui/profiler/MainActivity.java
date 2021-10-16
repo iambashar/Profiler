@@ -3,7 +3,6 @@ package com.teamdui.profiler;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_Profile,
                 R.id.nav_help,
                 R.id.nav_history,
-                R.id.nav_settings
+                R.id.profileEdit
         ).setDrawerLayout(drawer).build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
@@ -460,6 +459,7 @@ public class MainActivity extends AppCompatActivity {
                         myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(0);
                         myRef.child(uid).child("date").child(date).child("progress").child("exr").setValue(0);
                         myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(0);
+                        myRef.child(uid).child("date").child(date).child("progress").child("calburn").setValue(0);
                     }
                 }
             }

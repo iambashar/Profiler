@@ -18,7 +18,7 @@
             android:icon="@drawable/ic_help"
             android:title="Help"/>
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/profileEdit"
             android:icon="@drawable/ic_settings"
             android:title="Edit Profile"/>
     </group>

@@ -102,14 +102,9 @@
         android:label="Help"
         tools:layout="@layout/help_fragment" />
     <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.teamdui.profiler.ui.settings.Settings"
-        android:label="Settings"
-        tools:layout="@layout/settings_fragment" />
-    <fragment
         android:id="@+id/profileEdit"
         android:name="com.teamdui.profiler.ui.profile.ProfileEdit"
-        android:label="profile_edit_fragment"
+        android:label="Edit Profile"
         tools:layout="@layout/profile_edit_fragment" />
 
 </navigation>

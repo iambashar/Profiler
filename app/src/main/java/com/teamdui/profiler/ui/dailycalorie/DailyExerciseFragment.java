@@ -180,6 +180,7 @@ public class DailyExerciseFragment extends Fragment {
         burnHour = Double.parseDouble(binding.calorieText.getText().toString());
         burnedCalorie += x * caloriePerMin;
         myRef.child(uid).child("calburn").setValue(burnedCalorie);
+        myRef.child(uid).child("date").child(date).child("progress").child("calburn").setValue(burnedCalorie);
         burnedCalorie = Double.valueOf(df.format(burnedCalorie));
         calorieBurnText.setText(Double.toString(burnedCalorie));
     }
@@ -192,6 +193,7 @@ public class DailyExerciseFragment extends Fragment {
         double caloriePerMin = caloriePerHour / 60.0;
         burnedCalorie -= Integer.parseInt(toReduce) * caloriePerMin;
         myRef.child(uid).child("calburn").setValue(burnedCalorie);
+        myRef.child(uid).child("date").child(date).child("progress").child("calburn").setValue(burnedCalorie);
         burnedCalorie = Double.valueOf(df.format(burnedCalorie));
         calorieBurnText.setText(Double.toString(burnedCalorie));
     }
