@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".36"
+        app:layout_constraintVertical_bias=".42"
         app:layout_constraintHorizontal_bias=".1"/>
 
     <TextView
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".54"
+        app:layout_constraintVertical_bias=".6"
         app:layout_constraintHorizontal_bias=".1" />
 
     <TextView
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".48"
+        app:layout_constraintVertical_bias=".54"
         app:layout_constraintHorizontal_bias=".1" />
 
     <TextView
@@ -72,8 +72,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".6"
+        app:layout_constraintVertical_bias=".66"
         app:layout_constraintHorizontal_bias=".1" />
+
+
 
     <TextView
         android:id="@+id/textView4"
@@ -85,7 +87,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".42"
+        app:layout_constraintVertical_bias=".48"
         app:layout_constraintHorizontal_bias=".1"/>
 
     <EditText
@@ -99,7 +101,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".36"
+        app:layout_constraintVertical_bias=".42"
         app:layout_constraintHorizontal_bias=".8" />
 
     <EditText
@@ -112,30 +114,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".60"
+        app:layout_constraintVertical_bias=".66"
         app:layout_constraintHorizontal_bias=".8" />
 
-    <EditText
+
+    <ImageView
         android:id="@+id/profileEditDob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="9"
-        android:inputType="date"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
+        android:src="@drawable/ic_baseline_calendar_today_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".48"
-        app:layout_constraintHorizontal_bias=".8" />
+        app:layout_constraintVertical_bias=".54"
+        app:layout_constraintHorizontal_bias=".5" />
 
     <EditText
         android:id="@+id/profileHeightFeet"
         android:layout_width="85dp"
-        android:layout_height="39dp"
+        android:layout_height="wrap_content"
         android:ems="9"
         android:inputType="numberDecimal"
         android:hint="feet"
@@ -144,13 +142,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".54"
+        app:layout_constraintVertical_bias=".6"
         app:layout_constraintHorizontal_bias=".5"/>
 
     <EditText
         android:id="@+id/profileHeightInch"
         android:layout_width="86dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:ems="9"
         android:inputType="numberDecimal"
         android:hint="inch"
@@ -159,7 +157,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".54"
+        app:layout_constraintVertical_bias=".6"
         app:layout_constraintHorizontal_bias=".858" />
 
     <EditText
@@ -173,7 +171,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".42"
+        app:layout_constraintVertical_bias=".48"
         app:layout_constraintHorizontal_bias=".8"/>
 
 
@@ -189,7 +187,7 @@
         app:layout_constraintHorizontal_bias="0.779"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.724" />
+        app:layout_constraintVertical_bias="0.8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

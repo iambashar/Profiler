@@ -146,19 +146,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        emailText.addTextChangedListener(new TextWatcher() {
+        emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
+            public void onFocusChange(View v, boolean hasFocus) {
                 if(!ValidateEmail(emailText.getText()))
                 {
                     emailText.setError("Invalid Email");
@@ -170,27 +160,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        passwordText.addTextChangedListener(new TextWatcher() {
+        passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
+            public void onFocusChange(View v, boolean hasFocus) {
                 if(!ValidatePassword(passwordText.getText()))
                 {
                     passwordText.setError("Must be at least " + minPasswordLength + " characters with at least 1 capital 1 small and 1 number");
                 }
             }
         });
-
-
 
 
     }

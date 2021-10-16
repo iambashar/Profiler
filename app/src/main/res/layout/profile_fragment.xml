@@ -10,7 +10,6 @@
         android:id="@+id/profileImg"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:elevation="5dp"
         android:src="@drawable/ic_profileimg_blank"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,12 +23,13 @@
         android:id="@+id/fullNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="Name"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".4"
         tools:text="@tools:sample/full_names" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -42,84 +42,115 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullNameText" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".8"
+        app:layout_constraintHorizontal_bias=".8"/>
 
         <TextView
         android:id="@+id/ageLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="44dp"
         android:text="Age"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias=".5"
+            app:layout_constraintHorizontal_bias=".1"/>
 
     <TextView
         android:id="@+id/ageValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
         android:gravity="right"
         android:text=" "
-        app:layout_constraintBottom_toBottomOf="@+id/ageLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".5"
+        app:layout_constraintHorizontal_bias=".8" />
 
     <TextView
         android:id="@+id/heightLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="24dp"
         android:text="Height"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ageLabel" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".56"
+        app:layout_constraintHorizontal_bias=".1"/>
 
     <TextView
         android:id="@+id/weightLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="24dp"
         android:text="Weight"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heightLabel" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".62"
+        app:layout_constraintHorizontal_bias=".1" />
 
     <TextView
         android:id="@+id/heightValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
         android:text=" "
-        app:layout_constraintBottom_toBottomOf="@+id/heightLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".56"
+        app:layout_constraintHorizontal_bias=".8" />
 
     <TextView
         android:id="@+id/weightValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
         android:text=" "
-        app:layout_constraintBottom_toBottomOf="@+id/weightLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".62"
+        app:layout_constraintHorizontal_bias=".8" />
 
     <TextView
         android:id="@+id/bmiLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="24dp"
         android:text="BMI"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightLabel" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".68"
+        app:layout_constraintHorizontal_bias=".1" />
 
     <TextView
         android:id="@+id/bmiValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
         android:text=" "
-        app:layout_constraintBottom_toBottomOf="@+id/bmiLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".68"
+        app:layout_constraintHorizontal_bias=".8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

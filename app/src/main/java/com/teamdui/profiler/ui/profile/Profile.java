@@ -1,5 +1,6 @@
 package com.teamdui.profiler.ui.profile;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,13 +54,35 @@ public class Profile extends Fragment {
                 String fullName = data.fname + " " + data.lname;
                 binding.fullNameText.setText(fullName);
                 int age = Integer.parseInt(Year.now().toString()) - data.dob.getYear();
+                if(age == 1900)
+                {
+                    age = 0;
+                }
                 binding.ageValue.setText(Integer.toString(age));
                 String height = String.format("%d' %d\"", data.heightFeet, data.heightInches);
                 binding.heightValue.setText(height);
                 binding.weightValue.setText(Double.toString(data.weight));
                 double heightMetres = (data.heightFeet * 12 + data.heightInches) * 2.54 / 100;
-                String bmi = String.format("%.2f", data.weight/(heightMetres*heightMetres));
-                binding.bmiValue.setText(bmi);
+                double bmi = data.weight/(heightMetres*heightMetres);
+                String bmiText = String.format("%.2f", data.weight/(heightMetres*heightMetres));
+                String bmiRange = "";
+                if(bmi < 18.5)
+                {
+                    bmiRange = " (Underweight)";
+                }
+                else if(bmi >= 18.5 && bmi <= 24.99)
+                {
+                    bmiRange = " (Healthy Weight)";
+                }
+                else if(bmi >= 25 && bmi <= 29.99)
+                {
+                    bmiRange = " (Overweight)";
+                }
+                else if(bmi >= 30 )
+                {
+                    bmiRange = " (Obesity)";
+                }
+                binding.bmiValue.setText(bmiText + bmiRange);
             }
         });
 

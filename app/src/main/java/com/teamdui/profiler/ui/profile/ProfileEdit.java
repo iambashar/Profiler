@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,10 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.teamdui.profiler.databinding.ProfileEditFragmentBinding;
 
+import java.time.Year;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,7 +40,7 @@ public class ProfileEdit extends Fragment {
     private TextView heightFeet;
     private TextView heightInch;
     private TextView weight;
-    private TextView dob;
+    private ImageView dob;
     private AppCompatButton profileSaveButton;
     private AppCompatButton cancelButton;
     final Calendar myCalendar = Calendar.getInstance();
@@ -62,6 +65,18 @@ public class ProfileEdit extends Fragment {
         profileImage = binding.profileImg;
 
         mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        mViewModel =
+                new ViewModelProvider(this).get(ProfileViewModel.class);
+        mViewModel.getData().observe(getViewLifecycleOwner(), new Observer<ProfileData>() {
+            @Override
+            public void onChanged(ProfileData data) {
+                fName.setText(data.fname);
+                lName.setText(data.lname);
+                heightFeet.setText(Integer.toString(data.heightFeet));
+                heightInch.setText(Integer.toString(data.heightInches));
+                weight.setText(Double.toString(data.weight));
+            }
+        });
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -69,7 +84,6 @@ public class ProfileEdit extends Fragment {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, month);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                dob.setText(String.format("%d-%d-%d", dayOfMonth, month, year));
                 dobDate.setYear(year);
                 dobDate.setMonth(month);
                 dobDate.setDate(dayOfMonth);
