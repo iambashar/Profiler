@@ -13,21 +13,43 @@ Profiler is a lifestyle app for tracking users' calorie consumption and exertion
 
 Clone the git repository and build the project using Android Studio.
 
+## Calorie Calculator API
+
+A <a href="https://colab.research.google.com/drive/17rbwDlBppi2ap8uwZKGchekwcDtHogfg?usp=sharing">Colab Notebook</a> is used to run an API to identify the foods from image and estimate calorie.
+
 ## Screenshots
 
-![Alt Text](img/Screenshot_20211017_143915.png?raw=true "Home Page")
+### Homepage
+<img src="img/HomePage.jpg" style="width:25%"> <br/>
 
-![Alt Text](img/Screenshot_20211017_144009.png?raw=true "BMI Calculator")
+### Calorie Calcultor
+<img src="img/Calorie_Calculator.jpg" style="width:25%">
+<img src="img/Image.jpg" style="width:25%"> <br/>
 
-![Alt Text](img/Screenshot_20211017_144015.png?raw=true "Goal Tracker")
+### Goal Tracker
+<img src="img/Goal_Tracker.jpg" style="width:25%">
+<img src="img/Goal_Save1.jpg" style="width:25%">
+<img src="img/Goal_Save2.jpg" style="width:25%"> <br/>
 
-![Alt Text](img/Screenshot_20211017_144027.png?raw=true "Goal Save")
+### Daily Calorie Update
+<img src="img/Daily_Calorie.jpg" style="width:25%">
+<img src="img/Daily_Meal.jpg" style="width:25%">
+<img src="img/Daily_Exercise.jpg" style="width:25%"> <br/>
 
-![Alt Text](img/Screenshot_20211017_144152.png?raw=true "Daily Meal")
+### BMI Calculator
+<img src="img/BMI_Calculator.jpg" style="width:25%"> <br/>
 
-![Alt Text](img/Screenshot_20211017_144404.png?raw=true "Daily Exercise")
+### Side Navigaton Menu
+<img src="img/Drawer.jpg" style="width:25%"><br/>
 
-![Alt Text](img/Screenshot_20211017-131750_Profiler.png?raw=true "Calorie View")
+### Profile
+<img src="img/Profile.jpg" style="width:25%">
+<img src="img/Edit_Profile.jpg" style="width:25%"><br/>
+
+### Documentation
+<img src="img/Help1.jpg" style="width:25%">
+<img src="img/Help2.jpg" style="width:25%">
+
 
 ## Copyright
 
