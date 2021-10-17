@@ -22,6 +22,7 @@ import static com.teamdui.profiler.MainActivity.exerciseDaily;
 import static com.teamdui.profiler.MainActivity.exerciseGoal;
 import static com.teamdui.profiler.MainActivity.glassDaily;
 import static com.teamdui.profiler.MainActivity.glassGoal;
+import static com.teamdui.profiler.ui.util.TextUpdater.textSetter;
 
 public class GoaltrackerFragment extends Fragment {
 
@@ -89,11 +90,11 @@ public class GoaltrackerFragment extends Fragment {
     public void setGoalText()
     {
         String calorieText = binding.calorieEarninTracker.getText().toString();
-        binding.calorieEarninTracker.setText(calorieText + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
+        textSetter(binding.calorieEarninTracker,calorieText + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
         String waterText = binding.waterTakeninTracker.getText().toString();
-        binding.waterTakeninTracker.setText(waterText + String.valueOf(glassDaily) + "/" + String.valueOf(glassGoal));
+        textSetter(binding.waterTakeninTracker,waterText + String.valueOf(glassDaily) + "/" + String.valueOf(glassGoal));
         String exerciseText = binding.exerciseDoneinTracker.getText().toString();
-        binding.exerciseDoneinTracker.setText(exerciseText + String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
+        textSetter(binding.exerciseDoneinTracker,exerciseText + String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
     }
 
     public void setProgressBar()
@@ -125,8 +126,8 @@ public class GoaltrackerFragment extends Fragment {
 
     public void setPercentText()
     {
-        caloriePercentText.setText(String.valueOf(caloriePercentage) + "%");
-        waterPercentText.setText(String.valueOf(waterPercentage) + "%");
-        exercisePercentText.setText(String.valueOf(exercisePercentage) + "%");
+        textSetter(caloriePercentText,String.valueOf(caloriePercentage) + "%");
+        textSetter(waterPercentText,String.valueOf(waterPercentage) + "%");
+        textSetter(exercisePercentText,String.valueOf(exercisePercentage) + "%");
     }
 }

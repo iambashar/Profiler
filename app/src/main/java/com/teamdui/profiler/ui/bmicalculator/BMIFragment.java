@@ -120,9 +120,7 @@ public class BMIFragment extends Fragment {
                         height = Float.parseFloat(heightInputFeet.getText().toString());
                     }
 
-                    bmi = weight / (height * height);
-                    bmi = Math.round((bmi * 100));
-                    bmi = bmi / 100;
+                    bmi = GetBMI(weight, height);
                     BMIText.setText("BMI: " + String.valueOf(bmi));
                     resetbtn.setVisibility(View.VISIBLE);
                     getBMIbtn.setVisibility(View.INVISIBLE);
@@ -248,5 +246,14 @@ public class BMIFragment extends Fragment {
         binding.healthyWeight.setTextSize(18);
         binding.obesity.setTextSize(18);
         binding.overweight.setTextSize(18);
+    }
+
+    public static float GetBMI(float weightInKg, float heightInMeters)
+    {
+        float bmi = weightInKg / (heightInMeters * heightInMeters);
+        bmi = Math.round((bmi * 100));
+        bmi = bmi / 100;
+
+        return bmi;
     }
 }
