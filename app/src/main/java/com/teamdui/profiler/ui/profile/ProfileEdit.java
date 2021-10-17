@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,11 +44,11 @@ public class ProfileEdit extends Fragment {
     private ProfileViewModel mViewModel;
     private ProfileEditFragmentBinding binding;
     private CircleImageView profileImage;
-    private TextView fName;
-    private TextView lName;
-    private TextView heightFeet;
-    private TextView heightInch;
-    private TextView weight;
+    private EditText fName;
+    private EditText lName;
+    private EditText heightFeet;
+    private EditText heightInch;
+    private EditText weight;
     private ImageView dob;
     private AppCompatButton profileSaveButton;
     final Calendar myCalendar = Calendar.getInstance();
@@ -78,11 +79,45 @@ public class ProfileEdit extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(ProfileData data) {
-                fName.setText(data.fname);
-                lName.setText(data.lname);
-                heightFeet.setText(Integer.toString(data.heightFeet));
-                heightInch.setText(Integer.toString(data.heightInches));
-                weight.setText(Double.toString(data.weight));
+                if(data.fname == null)
+                {
+                    fName.getText().clear();
+                }
+                else
+                {
+                    fName.setText(data.fname);
+                }
+                if(data.lname == null)
+                {
+                    lName.getText().clear();
+                }
+                else
+                {
+                    lName.setText(data.lname);
+                }
+                if(data.heightFeet == 0)
+                {
+                    heightFeet.getText().clear();
+                }
+                else
+                {
+                    heightFeet.setText(Integer.toString(data.heightFeet));
+                }
+                if(data.heightInches == 0)
+                {
+                    heightInch.getText().clear();
+                }
+                else
+                {
+                    heightInch.setText(Integer.toString(data.heightInches));
+                }
+                if(data.weight == 0)
+                {
+                    weight.getText().clear();
+                }
+                else {
+                    weight.setText(Double.toString(data.weight));
+                }
                 String base64 = data.Image;
                 bytesProfileImage = Base64.getDecoder().decode(base64);
                 profileImage.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));

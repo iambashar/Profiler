@@ -156,6 +156,9 @@ public class DailyMealFragment extends Fragment {
     public void initFoodList(String food, String calorie)
     {
         String key = myRef.child(uid).child("date").child(date).child("Meal").push().getKey();
+        if (foodList == null){
+            foodList = new ArrayList<>();
+        }
         foodList.add(new Food(food, calorie, R.drawable.ic_minus, key));
         myRef.child(uid).child("Meal").child(key).child("foodName").setValue(food);
         myRef.child(uid).child("Meal").child(key).child("key").setValue(key);

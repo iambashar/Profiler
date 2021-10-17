@@ -4,7 +4,7 @@
 	<style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 		<!-- Customize your theme here. -->
 		<item name="colorPrimary">@color/main</item>
-		<item name="colorPrimaryDark">#0E66B9</item>
+		<item name="colorPrimaryDark">@color/navyBlue</item>
 		<item name="colorAccent">@color/ash</item>
 		<item name="drawerArrowStyle">@style/DrawerIcon</item>
 		<item name="android:listDivider">@android:color/transparent</item>
@@ -30,4 +30,5 @@
 		<item name="android:progressTint">@color/navyBlue</item>
 		<item name="height">20dp</item>
 	</style>
+
 </resources>
