@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_camera,
                 R.id.nav_Profile,
                 R.id.nav_help,
-                R.id.nav_history,
                 R.id.profileEdit
         ).setDrawerLayout(drawer).build();
 
