@@ -131,6 +131,9 @@ public class LoginActivity extends Activity {
                 loginProgressBar.setVisibility(View.VISIBLE);
                 loginProgressBar.setProgress(100, true);
 
+                EnableUIButtons(false);
+
+
                 mAuth.signInWithEmailAndPassword(email, password).
                         addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -148,6 +151,7 @@ public class LoginActivity extends Activity {
 
 
                                 loginProgressBar.setVisibility(View.INVISIBLE);
+                                EnableUIButtons(true);
                             }
                         });
 
@@ -174,7 +178,9 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 if(view.getId() == R.id.sign_in_button)
                 {
+                    EnableUIButtons(false);
                     signInWithGoogle();
+
                 }
             }
         });
@@ -196,7 +202,7 @@ public class LoginActivity extends Activity {
         continueWithoutLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignInAnonymously();
+                SignInAnonymously(); EnableUIButtons(false);
             }
         });
 
@@ -338,6 +344,7 @@ public class LoginActivity extends Activity {
                         }
 
                         loginProgressBar.setVisibility(View.INVISIBLE);
+                        EnableUIButtons(true);
                     }
                 });
 
@@ -365,6 +372,7 @@ public class LoginActivity extends Activity {
                         }
 
                         loginProgressBar.setVisibility(View.INVISIBLE);
+                        EnableUIButtons(true);
                     }
                 });
     }
@@ -382,5 +390,13 @@ public class LoginActivity extends Activity {
         startActivity(registerIntent);
     }
 
+    private void EnableUIButtons(boolean value)
+    {
+        loginButton.setClickable(value);
+        registerButton.setClickable(value);
+        forgotPasswordLink.setClickable(value);
+        continueWithoutLink.setClickable(value);
+        googleSignInButton.setClickable(value);
+    }
    
 }
