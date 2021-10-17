@@ -59,6 +59,8 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     implementation group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
     implementation('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient"
