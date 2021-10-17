@@ -34,6 +34,7 @@ import static com.teamdui.profiler.MainActivity.glassGoal;
 import static com.teamdui.profiler.MainActivity.lastName;
 import static com.teamdui.profiler.MainActivity.netCalorie;
 import static com.teamdui.profiler.MainActivity.setpropic;
+import static com.teamdui.profiler.ui.util.TextUpdater.textSetter;
 
 public class HomeFragment extends Fragment {
 
@@ -172,16 +173,5 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void textSetter(TextView view, String text)
-    {
-        if(view != null)
-        {
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-                    view.setText(text);
-                }
-            });
-        }
-    }
+
 }
