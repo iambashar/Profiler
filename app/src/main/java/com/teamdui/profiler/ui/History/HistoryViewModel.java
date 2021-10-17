@@ -8,25 +8,20 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.github.mikephil.charting.data.BarEntry;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.utilities.Tree;
-import com.teamdui.profiler.UsageData;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.teamdui.profiler.MainActivity.uid;
 
 public class HistoryViewModel extends ViewModel {
     private MutableLiveData<List<BarEntry>> dataEntries;
-    private MutableLiveData<TreeMap<String, UsageData>> rawData;
+    private MutableLiveData<TreeMap<String, set>> rawData;
     private MutableLiveData<Integer> daysRange;
 
 
@@ -48,7 +43,7 @@ public class HistoryViewModel extends ViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void queryData() {
-        TreeMap<String, UsageData> data = new TreeMap<>(Comparator.reverseOrder());
+        TreeMap<String, set> data = new TreeMap<>(Comparator.reverseOrder());
         DatabaseReference dbRef =
                 FirebaseDatabase
                         .getInstance()
@@ -62,5 +57,5 @@ public class HistoryViewModel extends ViewModel {
 
     public LiveData<List<BarEntry>> getDataEntries() { return dataEntries; }
     public LiveData<Integer> getDaysRange() { return daysRange; }
-    public LiveData<TreeMap<String, UsageData>> getRawData() { return rawData; }
+    public LiveData<TreeMap<String, set>> getRawData() { return rawData; }
 }

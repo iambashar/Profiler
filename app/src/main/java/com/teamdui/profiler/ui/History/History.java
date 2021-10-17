@@ -16,21 +16,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.teamdui.profiler.UsageData;
 import com.teamdui.profiler.databinding.HistoryFragmentBinding;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class History extends Fragment {
 
     private HistoryViewModel mViewModel;
     private HistoryFragmentBinding binding;
+    public  static ArrayList<rec> r = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
