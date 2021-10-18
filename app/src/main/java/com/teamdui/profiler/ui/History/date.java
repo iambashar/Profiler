@@ -1,11 +1,13 @@
 package com.teamdui.profiler.ui.History;
 
 public class date {
-    String date;
-    set set = new set();
-    progress progress = new progress();
+    public String date;
+    public set set;
+    public progress progress;
 
-    date(){
-
+    public date(){
+        date = "";
+        set = new set();
+        progress = new progress();
     }
 }

@@ -6,7 +6,7 @@ public class rec {
     String date;
     rec(int c, int cal, String d){
         this.cal = c;
-        this.cal = calburn;
+        this.calburn = cal;
         this.date = d;
     }
 }

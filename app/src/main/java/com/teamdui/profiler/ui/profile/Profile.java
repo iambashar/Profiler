@@ -23,6 +23,7 @@ import java.time.Year;
 import java.util.Base64;
 
 import static com.teamdui.profiler.MainActivity.bytesProfileImage;
+import static com.teamdui.profiler.MainActivity.fullName;
 
 public class Profile extends Fragment {
 
@@ -46,7 +47,7 @@ public class Profile extends Fragment {
         mViewModel.getData().observe(getViewLifecycleOwner(), new Observer<ProfileData>() {
             @Override
             public void onChanged(ProfileData data) {
-                String fullName = data.fname + " " + data.lname;
+                fullName = data.fname + " " + data.lname;
                 binding.fullNameText.setText(fullName);
                 int age = Integer.parseInt(Year.now().toString()) - data.dob.getYear();
                 if(age == 1900)

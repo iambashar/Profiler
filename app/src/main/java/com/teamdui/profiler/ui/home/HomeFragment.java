@@ -26,14 +26,13 @@ import static com.teamdui.profiler.MainActivity.burnedCalorie;
 import static com.teamdui.profiler.MainActivity.bytesProfileImage;
 import static com.teamdui.profiler.MainActivity.calorieDaily;
 import static com.teamdui.profiler.MainActivity.calorieGoal;
+import static com.teamdui.profiler.MainActivity.dbFetchFirstTime;
 import static com.teamdui.profiler.MainActivity.exerciseDaily;
 import static com.teamdui.profiler.MainActivity.exerciseGoal;
-import static com.teamdui.profiler.MainActivity.firstName;
+import static com.teamdui.profiler.MainActivity.fullName;
 import static com.teamdui.profiler.MainActivity.glassDaily;
 import static com.teamdui.profiler.MainActivity.glassGoal;
-import static com.teamdui.profiler.MainActivity.lastName;
 import static com.teamdui.profiler.MainActivity.netCalorie;
-import static com.teamdui.profiler.MainActivity.setpropic;
 import static com.teamdui.profiler.ui.util.TextUpdater.textSetter;
 
 public class HomeFragment extends Fragment {
@@ -63,11 +62,6 @@ public class HomeFragment extends Fragment {
     public TextView calBurnText;
     public TextView calNetText;
     private ImageView cameraIcon;
-    public ProfileData data;
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -78,16 +72,27 @@ public class HomeFragment extends Fragment {
         binding = HomeFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        int count = 0;
+        while (dbFetchFirstTime == false && count < 5)
+        {
+            try {
+                Thread.sleep(1000);
+                count++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         netCalorie = (double)calorieDaily - burnedCalorie;
         if (bytesProfileImage != null)
             binding.profileImg.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
 
-        binding.userNameText.setText(firstName+ " " +lastName);
-        setpropic();
+        binding.userNameText.setText(fullName);
 
         calProgressBar = binding.calProgress;
         waterProgressBar = binding.waterProgress;
         exerciseProgressBar = binding.exerciseProgress;
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

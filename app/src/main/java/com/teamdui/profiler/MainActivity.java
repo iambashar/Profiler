@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,17 +33,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.teamdui.profiler.databinding.ActivityMainBinding;
+import com.teamdui.profiler.ui.History.date;
+import com.teamdui.profiler.ui.History.set;
 import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
+import com.teamdui.profiler.ui.home.HomeFragment;
 import com.teamdui.profiler.ui.login.LoginActivity;
+import com.teamdui.profiler.ui.profile.Profile;
 import com.teamdui.profiler.ui.profile.ProfileData;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment.exerciseList;
 import static com.teamdui.profiler.ui.dailycalorie.DailyMealFragment.foodList;
 
@@ -56,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private static final float END_SCALE = 0.85f;
     private Button logoutButton;
-    public static CircleImageView profileImage;
     public static volatile String uri;
     public int scal = 0, sexr = 0, swat = 0;
     private DatabaseReference urlRef;
@@ -65,18 +74,24 @@ public class MainActivity extends AppCompatActivity {
     public static DatabaseReference myRef;
     public static String date;
     public static String uid;
-    public static int calorieDaily = 0;
-    public static int calorieGoal = 0;
-    public static int glassDaily = 0;
-    public static int glassGoal = 0;
-    public static int exerciseDaily = 0;
-    public static int exerciseGoal = 0;
-    public static double netCalorie = 0;
-    public static double burnedCalorie = 0;
-    public static byte[] bytesProfileImage;
-    public static ProfileData profileData;
+    public static volatile int calorieDaily = 0;
+    public static volatile int calorieGoal = 0;
+    public static volatile int glassDaily = 0;
+    public static volatile int glassGoal = 0;
+    public static volatile int exerciseDaily = 0;
+    public static volatile int exerciseGoal = 0;
+    public static volatile double netCalorie = 0;
+    public static volatile double burnedCalorie = 0;
+    public static volatile byte[] bytesProfileImage;
     public static View headerView;
-    public static String firstName, lastName;
+    public static volatile String fullName;
+    public static date dailydata;
+    public static volatile ProfileData profile;
+    public static volatile Boolean dbFetchFirstTime = false;
+
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -140,9 +155,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        profileImage = headerView.findViewById(R.id.profileImg);
-        setpropic();
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -204,11 +216,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void setpropic(){
-        if (bytesProfileImage != null)
-            profileImage.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
-    }
-
     private void logoutUser() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
@@ -218,65 +225,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setVariables() {
-        try{
-            myRef.child(uid).child("profile").child("Image").addValueEventListener(new ValueEventListener() {
+        try {
+            myRef.child(uid).child("profile").addValueEventListener(new ValueEventListener() {
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        bytesProfileImage = Base64.getDecoder().decode(String.valueOf(snapshot.getValue()));
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-                });
-            }catch (Exception e){
-                bytesProfileImage = new byte[0];
-            }
-
-        try{
-            myRef.child(uid).child("profile").child("fname").addValueEventListener(new ValueEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        firstName = (String) snapshot.getValue();
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        }catch (Exception e){
-            firstName = "";
-        }
-        try{
-            myRef.child(uid).child("profile").child("lname").addValueEventListener(new ValueEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        lastName = (String) snapshot.getValue();
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        }catch (Exception e){
-            lastName = "";
-        }
-
-        try {
-            myRef.child(uid).child("date").child(date).child("progress").child("cal").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        calorieDaily = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                    if (snapshot.exists()) {
+                        profile = snapshot.getValue(ProfileData.class);
+                        fullName = profile.fname + profile.lname;
+                        bytesProfileImage = Base64.getDecoder().decode(profile.Image);
+                        TextView name = headerView.findViewById(R.id.fullName);
+                        name.setText(fullName);
+                        CircleImageView profileImage = headerView.findViewById(R.id.profileImg);
+                        profileImage.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
+                    }
                 }
 
                 @Override
@@ -285,15 +247,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
-            calorieDaily = 0;
+
         }
 
         try {
-            myRef.child(uid).child("date").child(date).child("set").child("cal").addValueEventListener(new ValueEventListener() {
+            myRef.child(uid).child("date").child(date).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        calorieGoal = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                    if (snapshot.exists()) {
+                        dailydata = snapshot.getValue(date.class);
+                        calorieDaily = dailydata.progress.cal;
+                        calorieGoal = dailydata.set.cal;
+                        glassDaily = dailydata.progress.wat;
+                        glassGoal = dailydata.set.wat;
+                        exerciseDaily = dailydata.progress.exr;
+                        exerciseGoal = dailydata.set.exr;
+                        dbFetchFirstTime = true;
+                    }
                 }
 
                 @Override
@@ -302,78 +272,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
-            calorieGoal = 0;
+
         }
-
-        try {
-            myRef.child(uid).child("date").child(date).child("progress").child("wat").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        glassDaily = Integer.parseInt(String.valueOf(snapshot.getValue()));
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception e) {
-            glassDaily = 0;
-        }
-
-        try {
-            myRef.child(uid).child("date").child(date).child("set").child("wat").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        glassGoal = Integer.parseInt(String.valueOf(snapshot.getValue()));
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-
-        } catch (Exception e) {
-            glassGoal = 0;
-        }
-
-        try {
-            myRef.child(uid).child("date").child(date).child("progress").child("exr").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        exerciseDaily = Integer.parseInt(String.valueOf(snapshot.getValue()));
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception e) {
-            exerciseDaily = 0;
-        }
-
-        try {
-            myRef.child(uid).child("date").child(date).child("set").child("exr").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        exerciseGoal = Integer.parseInt(String.valueOf(snapshot.getValue()));
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception e) {
-            exerciseGoal = 0;
-        }
-
         try {
             myRef.child(uid).child("calburn").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -434,27 +334,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             //
         }
-
-        try {
-            myRef.child(uid).child("profile").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        profileData = dataSnapshot.getValue(ProfileData.class);
-                        TextView name = headerView.findViewById(R.id.fullName);
-                        name.setText((profileData.fname + " " + profileData.lname));
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError databaseError) {
-
-                }
-            });
-        } catch (Exception e) {
-            //
-        }
-
     }
 
 
@@ -463,36 +342,15 @@ public class MainActivity extends AppCompatActivity {
         LocalDate todayDate = LocalDate.now();
         String date2 = todayDate.minusDays(1).toString();
 
-        myRef.child(uid).child("date").child(date2).child("set").child("cal").addValueEventListener(new ValueEventListener() {
+        myRef.child(uid).child("date").child(date2).child("set").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                    scal = Integer.parseInt(String.valueOf(snapshot.getValue()));
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-
-        myRef.child(uid).child("date").child(date2).child("set").child("exr").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                    sexr = Integer.parseInt(String.valueOf(snapshot.getValue()));
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-        myRef.child(uid).child("date").child(date2).child("set").child("wat").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                    swat = Integer.parseInt(String.valueOf(snapshot.getValue()));
+                if (snapshot.exists()) {
+                    set st = snapshot.getValue(set.class);
+                    scal = st.cal;
+                    sexr = st.exr;
+                    swat = st.wat;
+                }
             }
 
             @Override
@@ -512,17 +370,19 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (flag) {
-                        myRef.child(uid).child("date").child(date).child("set").child("cal").setValue(scal);
-                        myRef.child(uid).child("date").child(date).child("set").child("exr").setValue(sexr);
-                        myRef.child(uid).child("date").child(date).child("set").child("wat").setValue(swat);
+                        date data = new date();
+                        data.date= date;
+                        data.progress.cal = 0;
+                        data.progress.exr = 0;
+                        data.progress.wat = 0;
+                        data.progress.calburn = 0;
+                        data.set.cal = scal;
+                        data.set.exr = sexr;
+                        data.set.wat = swat;
+                        myRef.child(uid).child("date").setValue(data);
                         myRef.child(uid).child("calburn").setValue(0);
                         myRef.child(uid).child("Meal").removeValue();
                         myRef.child(uid).child("Exercise").removeValue();
-
-                        myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(0);
-                        myRef.child(uid).child("date").child(date).child("progress").child("exr").setValue(0);
-                        myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(0);
-                        myRef.child(uid).child("date").child(date).child("progress").child("calburn").setValue(0);
                     }
                 }
             }
@@ -531,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
-        } );
+        });
     }
 }
 
