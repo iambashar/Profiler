@@ -1,4 +1,4 @@
-package com.teamdui.profiler.ui.History;
+package com.teamdui.profiler.ui.history;
 
 public class date {
     public String date;

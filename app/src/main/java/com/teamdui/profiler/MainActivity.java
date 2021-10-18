@@ -35,8 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.teamdui.profiler.databinding.ActivityMainBinding;
-import com.teamdui.profiler.ui.History.date;
-import com.teamdui.profiler.ui.History.set;
+import com.teamdui.profiler.ui.history.date;
+import com.teamdui.profiler.ui.history.set;
 import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
 import com.teamdui.profiler.ui.login.LoginActivity;
@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_camera,
                 R.id.nav_Profile,
                 R.id.nav_help,
-                R.id.profileEdit
+                R.id.profileEdit,
+                R.id.nav_history
         ).setDrawerLayout(drawer).build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);

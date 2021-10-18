@@ -102,4 +102,11 @@
         android:label="Edit Profile"
         tools:layout="@layout/profile_edit_fragment" />
 
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.teamdui.profiler.ui.history.History"
+        android:label="History"
+        tools:layout="@layout/history_fragment"
+        />
+
 </navigation>

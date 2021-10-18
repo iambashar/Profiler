@@ -24,6 +24,7 @@
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_profileimg_blank"
+            android:background="@drawable/circle_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

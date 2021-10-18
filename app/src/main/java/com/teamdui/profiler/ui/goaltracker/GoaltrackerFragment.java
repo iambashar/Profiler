@@ -70,13 +70,7 @@ public class GoaltrackerFragment extends Fragment {
         waterPercentText = binding.waterPercentage;
         exercisePercentText = binding.exercisePercentage;
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setProgressBar();
-            }
-        });
-        thread.start();
+        setProgressBar();
 
         return root;
     }
