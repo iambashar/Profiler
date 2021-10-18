@@ -1,26 +1,22 @@
 package com.teamdui.profiler.ui.register;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,8 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityRegisterBinding;
 import com.teamdui.profiler.ui.login.LoginActivity;
-
-import org.w3c.dom.Text;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
@@ -89,19 +83,16 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = passwordText.getText().toString().trim();
                 String confirm = confirmPasswordText.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email))
-                {
+                if (TextUtils.isEmpty(email)) {
                     emailText.setError("Email is required");
                     return;
                 }
-                if(TextUtils.isEmpty(password))
-                {
+                if (TextUtils.isEmpty(password)) {
                     passwordText.setError("Password is required");
                     return;
                 }
 
-                if(!TextUtils.equals(password, confirm))
-                {
+                if (!TextUtils.equals(password, confirm)) {
                     confirmPasswordText.setError("Passwords don't match!");
                     return;
                 }
@@ -110,16 +101,14 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setProgress(100, true);
 
 
-
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             myRef2 = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("userid");
                             FirebaseUser uid1 = task.getResult().getUser();
-                            String uid2 = uid1.getUid().toString();
+                            String uid2 = uid1.getUid();
                             LocalDate todayDate = LocalDate.now();
                             String date = todayDate.toString();
                             myRef2.child(uid2).child("date").child(date).child("set").child("cal").setValue(0);
@@ -135,9 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                             SendVerificationEmail(uid1);
                             //BackToLoginPage();
                             finish();
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(getApplicationContext(), "User already exists / Registration Failed!", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -149,12 +136,9 @@ public class RegisterActivity extends AppCompatActivity {
         emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!ValidateEmail(emailText.getText()))
-                {
+                if (!ValidateEmail(emailText.getText())) {
                     emailText.setError("Invalid Email");
-                }
-                else
-                {
+                } else {
                     emailText.setError(null);
                 }
             }
@@ -163,8 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!ValidatePassword(passwordText.getText()))
-                {
+                if (!ValidatePassword(passwordText.getText())) {
                     passwordText.setError("Must be at least " + minPasswordLength + " characters with at least 1 capital 1 small and 1 number");
                 }
             }
@@ -173,16 +156,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void SendVerificationEmail(FirebaseUser user)
-    {
-        if(user == null)
+    private void SendVerificationEmail(FirebaseUser user) {
+        if (user == null)
             return;
         user.sendEmailVerification()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             Log.d("VERIFY EMAIL", "SENT");
                         }
                     }
@@ -190,30 +171,20 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    public static boolean ValidateEmail(CharSequence email)
-    {
+    public static boolean ValidateEmail(CharSequence email) {
         return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
-    public static boolean ValidatePassword(CharSequence password)
-    {
+    public static boolean ValidatePassword(CharSequence password) {
         int len = password.length();
 
         Pattern p = Pattern.compile(passwordRegex);
 
 
-        if(!p.matcher(password).matches())
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return p.matcher(password).matches();
     }
 
-    private void BackToLoginPage()
-    {
+    private void BackToLoginPage() {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
     }

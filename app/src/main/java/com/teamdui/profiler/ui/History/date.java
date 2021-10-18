@@ -5,7 +5,7 @@ public class date {
     public set set;
     public progress progress;
 
-    public date(){
+    public date() {
         date = "";
         set = new set();
         progress = new progress();

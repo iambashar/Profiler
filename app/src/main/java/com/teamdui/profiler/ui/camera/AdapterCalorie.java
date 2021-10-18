@@ -17,12 +17,13 @@ import java.util.List;
 
 public class AdapterCalorie extends RecyclerView.Adapter<AdapterCalorie.ViewHolder> implements AdapterView.OnItemClickListener {
 
-    private List<Food>foodList;
+    private final List<Food> foodList;
     public ImageFragment imageFragment = new ImageFragment();
-    public AdapterCalorie(List<Food>foodList)
-    {
+
+    public AdapterCalorie(List<Food> foodList) {
         this.foodList = foodList;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -61,10 +62,10 @@ public class AdapterCalorie extends RecyclerView.Adapter<AdapterCalorie.ViewHold
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView foodNameView;
-        private TextView calorieEachView;
-        private ImageView deleteIconView;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView foodNameView;
+        private final TextView calorieEachView;
+        private final ImageView deleteIconView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

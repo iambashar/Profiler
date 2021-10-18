@@ -19,12 +19,13 @@ import static com.teamdui.profiler.MainActivity.uid;
 
 public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHolder> implements AdapterView.OnItemClickListener {
 
-    private List<Exercise>exerciseList;
+    private final List<Exercise> exerciseList;
     public DailyExerciseFragment dailyExerciseFragment = new DailyExerciseFragment();
-    public AdapterExercise(List<Exercise>exerciseList)
-    {
+
+    public AdapterExercise(List<Exercise> exerciseList) {
         this.exerciseList = exerciseList;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -35,7 +36,7 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AdapterExercise.ViewHolder holder, int position) {
         String catName = exerciseList.get(position).getCatName();
-        String timeEach = exerciseList.get(position).getTimeEach() ;
+        String timeEach = exerciseList.get(position).getTimeEach();
         int deleteIcon = exerciseList.get(position).getDeleteIcon();
         holder.catNameView.setText(catName);
         holder.timeEachView.setText(timeEach);
@@ -45,7 +46,7 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHo
             @Override
             public void onClick(View v) {
                 String k = null;
-                for (int i=0; i<=position; i++)
+                for (int i = 0; i <= position; i++)
                     k = exerciseList.get(i).getKey();
                 myRef.child(uid).child("Exercise").child(k).removeValue();
 
@@ -60,10 +61,10 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHo
 
     @Override
     public int getItemCount() {
-        if(exerciseList != null)
+        if (exerciseList != null)
             return exerciseList.size();
         else
-            return  0;
+            return 0;
     }
 
     @Override
@@ -72,10 +73,10 @@ public class AdapterExercise extends RecyclerView.Adapter<AdapterExercise.ViewHo
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView catNameView;
-        private TextView timeEachView;
-        private ImageView deleteIconView;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView catNameView;
+        private final TextView timeEachView;
+        private final ImageView deleteIconView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

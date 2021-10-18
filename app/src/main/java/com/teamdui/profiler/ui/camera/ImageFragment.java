@@ -73,7 +73,7 @@ public class ImageFragment extends Fragment {
         foodRecyclerView = binding.calorieList;
         addButton = binding.addCalorieButton;
         calorieUpperTextImage = binding.calorieUpperText;
-        calorieUpperTextImage.setText(((Integer)calorieDaily).toString());
+        calorieUpperTextImage.setText(((Integer) calorieDaily).toString());
 
         byte[] bytes = getArguments().getByteArray("img");
 
@@ -86,7 +86,7 @@ public class ImageFragment extends Fragment {
         String attachmentFileName = "file.bmp";
         String crlf = "\r\n";
         String twoHyphens = "--";
-        String boundary =  "*****";
+        String boundary = "*****";
 
         HttpURLConnection conn = null;
 
@@ -108,7 +108,7 @@ public class ImageFragment extends Fragment {
         conn.setRequestProperty("Connection", "Keep-Alive");
         conn.setRequestProperty("Cache-Control", "no-cache");
         conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-        conn.setRequestProperty("Accept","application/json");
+        conn.setRequestProperty("Accept", "application/json");
         DataOutputStream request = null;
         try {
             request = new DataOutputStream(conn.getOutputStream());
@@ -117,8 +117,7 @@ public class ImageFragment extends Fragment {
                     attachmentName + "\";filename=\"" +
                     attachmentFileName + "\"" + crlf);
             request.writeBytes(crlf);
-            while (bytes == null)
-            {
+            while (bytes == null) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -135,7 +134,7 @@ public class ImageFragment extends Fragment {
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
-                sb.append(line+"\n");
+                sb.append(line + "\n");
             }
             br.close();
 
@@ -143,23 +142,23 @@ public class ImageFragment extends Fragment {
             JSONArray jsonArray = js.getJSONArray("calorie");
             int len = jsonArray.length();
 
-            for (int i=0;i<len;i++) {
+            for (int i = 0; i < len; i++) {
                 calories.add(jsonArray.get(i).toString());
             }
 
             jsonArray = js.getJSONArray("class_name");
 
-            for (int i=0;i<len;i++) {
+            for (int i = 0; i < len; i++) {
                 classes.add(jsonArray.get(i).toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         conn.disconnect();
 
-        for (int i=0; i<classes.size(); i++){
+        for (int i = 0; i < classes.size(); i++) {
             calorieDailyImage = calorieDailyImage + Integer.valueOf(calories.get(i));
             initFoodList(classes.get(i), calories.get(i));
             initRecyclerView();
@@ -170,8 +169,8 @@ public class ImageFragment extends Fragment {
             public void onClick(View v) {
                 calorieDaily += calorieDailyImage;
                 myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(calorieDaily);
-                calorieUpperTextImage.setText(((Integer)calorieDaily).toString());
-                for (int i=0; i<classes.size(); i++){
+                calorieUpperTextImage.setText(((Integer) calorieDaily).toString());
+                for (int i = 0; i < classes.size(); i++) {
                     dailyMealFragment.initFoodList(classes.get(i), calories.get(i));
                 }
             }
@@ -179,13 +178,12 @@ public class ImageFragment extends Fragment {
 
         return root;
     }
-    public void initFoodList(String food, String calorie)
-    {
+
+    public void initFoodList(String food, String calorie) {
         foodListImage.add(new Food(food, calorie, R.drawable.ic_minus, "df"));
     }
 
-    public void initRecyclerView()
-    {
+    public void initRecyclerView() {
         adapterCalorie = new AdapterCalorie(foodListImage);
         foodLayoutManager = new LinearLayoutManager(this.getContext());
         foodLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -194,8 +192,7 @@ public class ImageFragment extends Fragment {
         adapterCalorie.notifyDataSetChanged();
     }
 
-    public void reduceCalorie(String toReduce)
-    {
+    public void reduceCalorie(String toReduce) {
         toReduce = toReduce.replace(" cal", "");
         calorieDailyImage = calorieDailyImage - Integer.parseInt(toReduce);
     }

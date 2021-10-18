@@ -6,7 +6,7 @@ public class Food {
     int deleteIcon;
     String key;
 
-    public Food(){
+    public Food() {
 
     }
 
@@ -30,6 +30,6 @@ public class Food {
     }
 
     public String getKey() {
-        return  key;
+        return key;
     }
 }

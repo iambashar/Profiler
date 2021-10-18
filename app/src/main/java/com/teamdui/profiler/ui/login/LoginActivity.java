@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -102,13 +98,10 @@ public class LoginActivity extends Activity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        if(mAuth.getCurrentUser() != null)
-        {
+        if (mAuth.getCurrentUser() != null) {
             updateUI(mAuth.getCurrentUser());
             finish();
         }
-
-
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -117,13 +110,11 @@ public class LoginActivity extends Activity {
                 String email = emailText.getText().toString().trim();
                 String password = passwordText.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email))
-                {
+                if (TextUtils.isEmpty(email)) {
                     emailText.setError("Email is required");
                     return;
                 }
-                if(TextUtils.isEmpty(password))
-                {
+                if (TextUtils.isEmpty(password)) {
                     passwordText.setError("Password is required");
                     return;
                 }
@@ -138,14 +129,11 @@ public class LoginActivity extends Activity {
                         addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                                if(task.isSuccessful())
-                                {
+                                if (task.isSuccessful()) {
                                     FirebaseUser user = mAuth.getCurrentUser();
 
                                     updateUI(user);
-                                }
-                                else
-                                {
+                                } else {
                                     updateUI(null);
                                 }
 
@@ -161,14 +149,14 @@ public class LoginActivity extends Activity {
         emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
         passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
@@ -176,8 +164,7 @@ public class LoginActivity extends Activity {
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(view.getId() == R.id.sign_in_button)
-                {
+                if (view.getId() == R.id.sign_in_button) {
                     EnableUIButtons(false);
                     signInWithGoogle();
 
@@ -202,7 +189,8 @@ public class LoginActivity extends Activity {
         continueWithoutLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignInAnonymously(); EnableUIButtons(false);
+                SignInAnonymously();
+                EnableUIButtons(false);
             }
         });
 
@@ -214,14 +202,11 @@ public class LoginActivity extends Activity {
     }
 
     private void updateUI(FirebaseUser user) {
-        if(user == null)
-        {
+        if (user == null) {
             Toast.makeText(getApplicationContext(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
             emailText.getText().clear();
             passwordText.getText().clear();
-        }
-        else if(!user.isEmailVerified() && !user.isAnonymous())
-        {
+        } else if (!user.isEmailVerified() && !user.isAnonymous()) {
             Toast.makeText(getApplicationContext(), "Please verify your email!", Toast.LENGTH_SHORT).show();
             emailText.getText().clear();
             passwordText.getText().clear();
@@ -230,30 +215,23 @@ public class LoginActivity extends Activity {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.signOut();
 
-        }
-        else
-        {
+        } else {
             Intent loginSuccessIntent = new Intent(this, MainActivity.class);
             startActivity(loginSuccessIntent);
             finish();
         }
     }
 
-    private void processGoogleAccount(GoogleSignInAccount account)
-    {
-        if(account == null)
-        {
+    private void processGoogleAccount(GoogleSignInAccount account) {
+        if (account == null) {
             return;
-        }
-        else
-        {
+        } else {
             firebaseAuthWithGoogle(account.getIdToken());
         }
     }
 
 
-    private void signInWithGoogle()
-    {
+    private void signInWithGoogle() {
         loginProgressBar.setVisibility(View.VISIBLE);
         loginProgressBar.setProgress(100, true);
 
@@ -266,21 +244,17 @@ public class LoginActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == RC_SIGN_IN)
-        {
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask)
-    {
-        try{
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             processGoogleAccount(account);
-        }
-        catch (ApiException e)
-        {
+        } catch (ApiException e) {
             Log.w("GOOGLE SIGNIN:", "Google signin failed!" + e.getStatusCode());
         }
 
@@ -294,8 +268,7 @@ public class LoginActivity extends Activity {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Authentication Success!", Toast.LENGTH_SHORT).show();
 
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -303,20 +276,17 @@ public class LoginActivity extends Activity {
                             databaseReference = FirebaseDatabase.getInstance("https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/")
                                     .getReference("userid");
 
-                            String userId = user.getUid().toString();
+                            String userId = user.getUid();
                             LocalDate todayDate = LocalDate.now();
                             String date = todayDate.toString();
 
                             databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.exists())
-                                    {
+                                    if (snapshot.exists()) {
                                         Log.d("USER DATA CREATE:", "USER ALREADY HAS DATA");
 
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         databaseReference.child(userId).child("date").child(date).child("set").child("cal").setValue(0);
                                         databaseReference.child(userId).child("date").child(date).child("set").child("exr").setValue(0);
                                         databaseReference.child(userId).child("date").child(date).child("set").child("wat").setValue(0);
@@ -337,9 +307,7 @@ public class LoginActivity extends Activity {
                             });
 
                             updateUI(user);
-                        }
-                        else
-                        {
+                        } else {
                             updateUI(null);
                         }
 
@@ -350,22 +318,18 @@ public class LoginActivity extends Activity {
 
     }
 
-    private void SignInAnonymously()
-    {
+    private void SignInAnonymously() {
         loginProgressBar.setVisibility(View.VISIBLE);
         loginProgressBar.setProgress(100, true);
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             Log.d("SIGN IN ANONYMOUS", "Success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                        }
-                        else
-                        {
+                        } else {
                             Log.w("SIGN IN ANONYMOUS FAIL", task.getException());
 
                             updateUI(null);
@@ -377,26 +341,23 @@ public class LoginActivity extends Activity {
                 });
     }
 
-    private void GoToForgotPassword()
-    {
+    private void GoToForgotPassword() {
         Intent forgotPasswordIntent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(forgotPasswordIntent);
     }
 
 
-    private void GoToRegisterPage()
-    {
-        Intent registerIntent = new Intent( this, RegisterActivity.class);
+    private void GoToRegisterPage() {
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
         startActivity(registerIntent);
     }
 
-    private void EnableUIButtons(boolean value)
-    {
+    private void EnableUIButtons(boolean value) {
         loginButton.setClickable(value);
         registerButton.setClickable(value);
         forgotPasswordLink.setClickable(value);
         continueWithoutLink.setClickable(value);
         googleSignInButton.setClickable(value);
     }
-   
+
 }

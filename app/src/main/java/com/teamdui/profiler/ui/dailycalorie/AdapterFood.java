@@ -19,12 +19,13 @@ import static com.teamdui.profiler.MainActivity.uid;
 
 public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> implements AdapterView.OnItemClickListener {
 
-    private List<Food>foodList;
+    private final List<Food> foodList;
     public DailyMealFragment dailyMealFragment = new DailyMealFragment();
-    public AdapterFood(List<Food>foodList)
-    {
+
+    public AdapterFood(List<Food> foodList) {
         this.foodList = foodList;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -45,7 +46,7 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> im
             @Override
             public void onClick(View v) {
                 String k = null;
-                for (int i=0; i<=position; i++)
+                for (int i = 0; i <= position; i++)
                     k = foodList.get(i).getKey();
                 myRef.child(uid).child("Meal").child(k).removeValue();
 
@@ -68,10 +69,10 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> im
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView foodNameView;
-        private TextView calorieEachView;
-        private ImageView deleteIconView;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView foodNameView;
+        private final TextView calorieEachView;
+        private final ImageView deleteIconView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

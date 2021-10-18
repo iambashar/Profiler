@@ -12,13 +12,8 @@ import com.teamdui.profiler.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.time.Year;
-import java.util.Base64;
-
-import static com.teamdui.profiler.MainActivity.bytesProfileImage;
-
 public class ProfileViewModel extends ViewModel {
-    private MutableLiveData<ProfileData> mData;
+    private final MutableLiveData<ProfileData> mData;
 
     public ProfileViewModel() {
         mData = new MutableLiveData<>();

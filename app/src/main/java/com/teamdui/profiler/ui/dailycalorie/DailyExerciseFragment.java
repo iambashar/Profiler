@@ -50,8 +50,8 @@ public class DailyExerciseFragment extends Fragment {
 
     DecimalFormat df = new DecimalFormat("#.##");
 
-    public DailyExerciseFragment(){
-        if (exerciseList == null){
+    public DailyExerciseFragment() {
+        if (exerciseList == null) {
             exerciseList = new ArrayList<>();
         }
     }
@@ -64,10 +64,10 @@ public class DailyExerciseFragment extends Fragment {
         View root = binding.getRoot();
 
         autoCompleteTextView = binding.exerciseDropDown;
-        String []option = getResources().getStringArray(R.array.exercise_dropdown);
+        String[] option = getResources().getStringArray(R.array.exercise_dropdown);
         ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), R.layout.dropdown_item, option);
         autoCompleteTextView.setAdapter(arrayAdapter);
-        ((AutoCompleteTextView)binding.dropdownMenu.getEditText()).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ((AutoCompleteTextView) binding.dropdownMenu.getEditText()).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedValue = (String) arrayAdapter.getItem(position);
@@ -80,8 +80,8 @@ public class DailyExerciseFragment extends Fragment {
         autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                    binding.categoryText.setText(autoCompleteTextView.getText().toString());
-                    hideKeyboard(v);
+                binding.categoryText.setText(autoCompleteTextView.getText().toString());
+                hideKeyboard(v);
             }
         });
 
@@ -124,23 +124,20 @@ public class DailyExerciseFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkIfTextFilled())
-                {
+                if (checkIfTextFilled()) {
                     int x = 0;
-                    if(!hourInput.getText().toString().isEmpty())
-                    {
+                    if (!hourInput.getText().toString().isEmpty()) {
                         int hour = Integer.parseInt(hourInput.getText().toString());
                         exerciseDaily += hour * 60;
                         x = x + hour * 60;
                     }
-                    if(!minInput.getText().toString().isEmpty())
-                    {
+                    if (!minInput.getText().toString().isEmpty()) {
                         int min = Integer.parseInt(minInput.getText().toString());
                         exerciseDaily += min;
                         x = x + min;
                     }
                     category = binding.categoryText.getText().toString();
-                    timeinMin = Integer.toString(x) + " min";
+                    timeinMin = x + " min";
                     calculateBurnedCalorie(x);
                     initExerciseList();
                     initRecyclerView();
@@ -155,28 +152,20 @@ public class DailyExerciseFragment extends Fragment {
         return root;
     }
 
-    public void setColrieText(int idx)
-    {
-        if(idx == 0)
-        {
+    public void setColrieText(int idx) {
+        if (idx == 0) {
             binding.calorieText.setText("285");
-        }
-        else if(idx == 1)
-        {
+        } else if (idx == 1) {
             binding.calorieText.setText("560");
-        }
-        else if(idx == 2)
-        {
+        } else if (idx == 2) {
             binding.calorieText.setText("400");
-        }
-        else if(idx == 3)
-        {
+        } else if (idx == 3) {
             binding.calorieText.setText("600");
         }
     }
 
     public void calculateBurnedCalorie(int x) {
-        double caloriePerMin= Double.parseDouble(binding.calorieText.getText().toString()) / 60.0;
+        double caloriePerMin = Double.parseDouble(binding.calorieText.getText().toString()) / 60.0;
         burnHour = Double.parseDouble(binding.calorieText.getText().toString());
         burnedCalorie += x * caloriePerMin;
         myRef.child(uid).child("calburn").setValue(burnedCalorie);
@@ -185,8 +174,7 @@ public class DailyExerciseFragment extends Fragment {
         calorieBurnText.setText(Double.toString(burnedCalorie));
     }
 
-    public void reduceTime(String toReduce, Double caloriePerHour)
-    {
+    public void reduceTime(String toReduce, Double caloriePerHour) {
         toReduce = toReduce.replace(" min", "");
         exerciseDaily -= Integer.parseInt(toReduce);
         myRef.child(uid).child("date").child(date).child("progress").child("exr").setValue(exerciseDaily);
@@ -198,18 +186,16 @@ public class DailyExerciseFragment extends Fragment {
         calorieBurnText.setText(Double.toString(burnedCalorie));
     }
 
-    public boolean checkIfTextFilled()
-    {
-        if(binding.categoryText.getText().toString().isEmpty() || binding.calorieText.getText().toString().isEmpty() ||
-                (binding.hourInput.getText().toString().isEmpty() && binding.minuteInput.getText().toString().isEmpty()))
-        {
+    public boolean checkIfTextFilled() {
+        if (binding.categoryText.getText().toString().isEmpty() || binding.calorieText.getText().toString().isEmpty() ||
+                (binding.hourInput.getText().toString().isEmpty() && binding.minuteInput.getText().toString().isEmpty())) {
             Toast.makeText(this.getContext(), "You must Fill All the Fields", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
-    public void initRecyclerView()
-    {
+
+    public void initRecyclerView() {
         adapterExercise = new AdapterExercise(exerciseList);
         exerciseLayoutManager = new LinearLayoutManager(this.getContext());
         exerciseLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -218,10 +204,9 @@ public class DailyExerciseFragment extends Fragment {
         adapterExercise.notifyDataSetChanged();
     }
 
-    public void initExerciseList()
-    {
+    public void initExerciseList() {
         String key = myRef.child(uid).child("date").child(date).child("Exercise").push().getKey();
-        if (exerciseList == null){
+        if (exerciseList == null) {
             exerciseList = new ArrayList<>();
         }
         exerciseList.add(new Exercise(category, timeinMin, R.drawable.ic_minus, burnHour, key));
@@ -233,7 +218,7 @@ public class DailyExerciseFragment extends Fragment {
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

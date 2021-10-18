@@ -1,6 +1,7 @@
 package com.teamdui.profiler.ui.home;
 
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -22,16 +25,20 @@ import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
 import com.teamdui.profiler.ui.profile.ProfileData;
 
+import java.util.Base64;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.teamdui.profiler.MainActivity.burnedCalorie;
 import static com.teamdui.profiler.MainActivity.bytesProfileImage;
 import static com.teamdui.profiler.MainActivity.calorieDaily;
 import static com.teamdui.profiler.MainActivity.calorieGoal;
-import static com.teamdui.profiler.MainActivity.dbFetchFirstTime;
 import static com.teamdui.profiler.MainActivity.exerciseDaily;
 import static com.teamdui.profiler.MainActivity.exerciseGoal;
 import static com.teamdui.profiler.MainActivity.fullName;
 import static com.teamdui.profiler.MainActivity.glassDaily;
 import static com.teamdui.profiler.MainActivity.glassGoal;
+import static com.teamdui.profiler.MainActivity.headerView;
 import static com.teamdui.profiler.MainActivity.netCalorie;
 import static com.teamdui.profiler.ui.util.TextUpdater.textSetter;
 
@@ -72,46 +79,62 @@ public class HomeFragment extends Fragment {
         binding = HomeFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        int count = 0;
-        while (dbFetchFirstTime == false && count < 5)
-        {
-            try {
-                Thread.sleep(1000);
-                count++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        netCalorie = (double)calorieDaily - burnedCalorie;
-        if (bytesProfileImage != null)
-            binding.profileImg.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
-
-        binding.userNameText.setText(fullName);
-
-        calProgressBar = binding.calProgress;
-        waterProgressBar = binding.waterProgress;
-        exerciseProgressBar = binding.exerciseProgress;
-
-        Thread thread = new Thread(new Runnable() {
+        homeViewModel.getData2().observe(getViewLifecycleOwner(), new Observer<ProfileData>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void run() {
-                setProgressBar();
+            public void onChanged(ProfileData profileData) {
+                bytesProfileImage = Base64.getDecoder().decode(profileData.Image);
+                fullName = profileData.fname + profileData.lname;
+                if (bytesProfileImage != null)
+                    binding.profileImg.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
+
+                binding.userNameText.setText(fullName);
+                TextView name = headerView.findViewById(R.id.fullName);
+                name.setText(fullName);
+                CircleImageView profileImage = headerView.findViewById(R.id.profileImg);
+                profileImage.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
             }
         });
-        thread.start();
 
-        calDailyText = binding.homeCalDaily;
-        calGoalText = binding.homeCalGoal;
-        glassDailyText = binding.homewaterDaily;
-        glassGoalText = binding.homewaterGoal;
-        exerciseDailyText = binding.homeExDaily;
-        exerciseGoalText = binding.homeExGoal;
+        homeViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Data>() {
+            @Override
+            public void onChanged(Data data) {
+                calorieDaily = data.progress.cal;
+                calorieGoal = data.set.cal;
+                glassDaily = data.progress.wat;
+                glassGoal = data.set.wat;
+                exerciseDaily = data.progress.exr;
+                exerciseGoal = data.set.exr;
+                burnedCalorie = data.progress.calburn;
+                netCalorie = (double) data.progress.cal - data.progress.calburn;
 
-        calEarnText = binding.homeEarnText;
-        calBurnText = binding.homeBurnText;
-        calNetText = binding.homeNetText;
-        setCalorieText();
+
+                calProgressBar = binding.calProgress;
+                waterProgressBar = binding.waterProgress;
+                exerciseProgressBar = binding.exerciseProgress;
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setProgressBar();
+                    }
+                });
+                thread.start();
+
+                calDailyText = binding.homeCalDaily;
+                calGoalText = binding.homeCalGoal;
+                glassDailyText = binding.homewaterDaily;
+                glassGoalText = binding.homewaterGoal;
+                exerciseDailyText = binding.homeExDaily;
+                exerciseGoalText = binding.homeExGoal;
+
+                calEarnText = binding.homeEarnText;
+                calBurnText = binding.homeBurnText;
+                calNetText = binding.homeNetText;
+                setCalorieText();
+
+            }
+        });
 
         cameraIcon = binding.camera;
         cameraIcon.setOnClickListener(new View.OnClickListener() {
@@ -122,28 +145,24 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
         return root;
     }
 
-    public void setProgressBar()
-    {
+    public void setProgressBar() {
         try {
-            caloriePercentage = (int)(calorieDaily * 100.0f) / calorieGoal;
+            caloriePercentage = (int) (calorieDaily * 100.0f) / calorieGoal;
         } catch (Exception e) {
             caloriePercentage = 0;
         }
 
         try {
-            waterPercentage = (int)(glassDaily * 100.0f) / glassGoal;
-        } catch (Exception e)
-        {
+            waterPercentage = (int) (glassDaily * 100.0f) / glassGoal;
+        } catch (Exception e) {
             waterPercentage = 0;
         }
 
         try {
-            exercisePercentage = (int)(exerciseDaily * 100.0f) / exerciseGoal;
+            exercisePercentage = (int) (exerciseDaily * 100.0f) / exerciseGoal;
         } catch (Exception e) {
             exercisePercentage = 0;
         }
@@ -153,30 +172,24 @@ public class HomeFragment extends Fragment {
         setProgressText();
     }
 
-    public void setProgressText()
-    {
+    public void setProgressText() {
         textSetter(calDailyText, String.valueOf(calorieDaily));
-        textSetter(calGoalText,String.valueOf(calorieGoal));
-        textSetter(glassDailyText,String.valueOf(glassDaily));
-        textSetter(glassGoalText,String.valueOf(glassGoal));
-        textSetter(exerciseDailyText,String.valueOf(exerciseDaily));
-        textSetter(exerciseGoalText,String.valueOf(exerciseGoal));
+        textSetter(calGoalText, String.valueOf(calorieGoal));
+        textSetter(glassDailyText, String.valueOf(glassDaily));
+        textSetter(glassGoalText, String.valueOf(glassGoal));
+        textSetter(exerciseDailyText, String.valueOf(exerciseDaily));
+        textSetter(exerciseGoalText, String.valueOf(exerciseGoal));
     }
 
-    public void setCalorieText()
-    {
-        textSetter(calEarnText, calEarnText.getText().toString() + " " + String.valueOf((double)calorieDaily));
-        textSetter(calBurnText,calBurnText.getText().toString() + " " + String.valueOf(burnedCalorie));
-        if(netCalorie > 0)
-        {
-            textSetter(calNetText,calNetText.getText().toString() + " " + "+" + String.valueOf(netCalorie));
-        }
-        else
-        {
-            textSetter(calNetText,calNetText.getText().toString() + " " + String.valueOf(netCalorie));
+    public void setCalorieText() {
+        textSetter(calEarnText, calEarnText.getText().toString() + " " + (double) calorieDaily);
+        textSetter(calBurnText, calBurnText.getText().toString() + " " + burnedCalorie);
+        if (netCalorie > 0) {
+            textSetter(calNetText, calNetText.getText().toString() + " " + "+" + netCalorie);
+        } else {
+            textSetter(calNetText, calNetText.getText().toString() + " " + netCalorie);
         }
     }
-
 
 
 }

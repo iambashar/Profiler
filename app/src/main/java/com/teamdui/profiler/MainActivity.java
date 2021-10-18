@@ -22,6 +22,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,9 +39,7 @@ import com.teamdui.profiler.ui.History.date;
 import com.teamdui.profiler.ui.History.set;
 import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
-import com.teamdui.profiler.ui.home.HomeFragment;
 import com.teamdui.profiler.ui.login.LoginActivity;
-import com.teamdui.profiler.ui.profile.Profile;
 import com.teamdui.profiler.ui.profile.ProfileData;
 
 import org.jetbrains.annotations.NotNull;
@@ -86,12 +86,6 @@ public class MainActivity extends AppCompatActivity {
     public static View headerView;
     public static volatile String fullName;
     public static date dailydata;
-    public static volatile ProfileData profile;
-    public static volatile Boolean dbFetchFirstTime = false;
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -99,12 +93,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
         mAuth = FirebaseAuth.getInstance();
-
         FirebaseUser user = mAuth.getCurrentUser();
 
         final String dbUrl = "https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -113,14 +102,20 @@ public class MainActivity extends AppCompatActivity {
         LocalDate todayDate = LocalDate.now();
         date = todayDate.toString();
 
-
         myRef = FirebaseDatabase.getInstance(dbUrl).getReference("userid");
-
         myRef.keepSynced(true);
 
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setVariables();
+                dbUpdate();
+            }
+        });
+        thread.start();
 
-        dbUpdate();
-        setVariables();
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         bottomNavView = findViewById(R.id.nav_view);
         sideNavView = findViewById(R.id.side_nav_view);
@@ -129,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
         urlRef = FirebaseDatabase.getInstance(dbUrl).getReference("url");
         urlRef.keepSynced(true);
-
         urlRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -225,71 +219,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setVariables() {
-        try {
-            myRef.child(uid).child("profile").addValueEventListener(new ValueEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        profile = snapshot.getValue(ProfileData.class);
-                        fullName = profile.fname + profile.lname;
-                        bytesProfileImage = Base64.getDecoder().decode(profile.Image);
-                        TextView name = headerView.findViewById(R.id.fullName);
-                        name.setText(fullName);
-                        CircleImageView profileImage = headerView.findViewById(R.id.profileImg);
-                        profileImage.setImageBitmap(BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length));
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception e) {
-
-        }
-
-        try {
-            myRef.child(uid).child("date").child(date).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        dailydata = snapshot.getValue(date.class);
-                        calorieDaily = dailydata.progress.cal;
-                        calorieGoal = dailydata.set.cal;
-                        glassDaily = dailydata.progress.wat;
-                        glassGoal = dailydata.set.wat;
-                        exerciseDaily = dailydata.progress.exr;
-                        exerciseGoal = dailydata.set.exr;
-                        dbFetchFirstTime = true;
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception e) {
-
-        }
-        try {
-            myRef.child(uid).child("calburn").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                        burnedCalorie = Double.parseDouble(String.valueOf(snapshot.getValue()));
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception e) {
-            burnedCalorie = 0;
-        }
 
         try {
             myRef.child(uid).child("Meal").addValueEventListener(new ValueEventListener() {

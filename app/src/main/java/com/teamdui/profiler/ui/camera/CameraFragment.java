@@ -48,7 +48,7 @@ import java.util.List;
 
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-public class CameraFragment extends Fragment{
+public class CameraFragment extends Fragment {
 
     private CameraViewModel cameraViewModel;
     private FragmentCameraBinding binding;
@@ -58,10 +58,10 @@ public class CameraFragment extends Fragment{
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
     static {
-        ORIENTATIONS.append(Surface.ROTATION_0,90);
-        ORIENTATIONS.append(Surface.ROTATION_90,0);
-        ORIENTATIONS.append(Surface.ROTATION_180,270);
-        ORIENTATIONS.append(Surface.ROTATION_270,180);
+        ORIENTATIONS.append(Surface.ROTATION_0, 90);
+        ORIENTATIONS.append(Surface.ROTATION_90, 0);
+        ORIENTATIONS.append(Surface.ROTATION_180, 270);
+        ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
 
     private String cameraId;
@@ -95,15 +95,14 @@ public class CameraFragment extends Fragment{
                     e.printStackTrace();
                 }
 
-                while (bytes == null)
-                {
+                while (bytes == null) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                if  (MainActivity.uri != null)
+                if (MainActivity.uri != null)
                     Toast.makeText(getContext(), MainActivity.uri, Toast.LENGTH_SHORT).show();
                 Bundle arg = new Bundle();
                 arg.putByteArray("img", bytes);
@@ -171,7 +170,7 @@ public class CameraFragment extends Fragment{
         @Override
         public void onError(CameraDevice camera, int error) {
             cameraDevice.close();
-            cameraDevice = null;;
+            cameraDevice = null;
         }
     };
 
@@ -202,11 +201,12 @@ public class CameraFragment extends Fragment{
             }
         }, null);
     }
+
     private void updatePreview() throws CameraAccessException {
         if (cameraDevice == null)
             return;
 
-        captureBuilder.set (CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
+        captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
 
         cameraCaptureSession.setRepeatingRequest(captureBuilder.build(), null, mBackgroundHandler);
     }
@@ -221,9 +221,8 @@ public class CameraFragment extends Fragment{
         imageDimensions = map.getOutputSizes(SurfaceTexture.class)[0];
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(requireActivity(), new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE} ,101);
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
             return;
         }
 
@@ -252,7 +251,7 @@ public class CameraFragment extends Fragment{
         int width = 1125;
         int height = 1500;
 
-        if (jpegSize != null && jpegSize.length > 0){
+        if (jpegSize != null && jpegSize.length > 0) {
             width = jpegSize[0].getWidth();
             height = jpegSize[0].getHeight();
         }
@@ -281,9 +280,9 @@ public class CameraFragment extends Fragment{
             @Override
             public void onImageAvailable(ImageReader reader) {
                 Image image = reader.acquireLatestImage();
-                    ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                    bytes = new byte[buffer.capacity()];
-                    buffer.get(bytes);
+                ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                bytes = new byte[buffer.capacity()];
+                buffer.get(bytes);
 
 //                OutputStream output = null;
 //                try {
@@ -303,7 +302,7 @@ public class CameraFragment extends Fragment{
 
         final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
             @Override
-            public void onCaptureCompleted(CameraCaptureSession session,CaptureRequest request,TotalCaptureResult result) {
+            public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                 super.onCaptureCompleted(session, request, result);
                 try {
                     createCameraPreview();
@@ -344,7 +343,7 @@ public class CameraFragment extends Fragment{
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
-        } else{
+        } else {
             textureView.setSurfaceTextureListener(textureListener);
         }
     }

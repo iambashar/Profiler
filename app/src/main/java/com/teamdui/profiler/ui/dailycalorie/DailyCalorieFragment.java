@@ -20,14 +20,13 @@ import com.teamdui.profiler.databinding.FragmentDailycalorieBinding;
 
 import static com.teamdui.profiler.MainActivity.calorieDaily;
 import static com.teamdui.profiler.MainActivity.calorieGoal;
+import static com.teamdui.profiler.MainActivity.date;
 import static com.teamdui.profiler.MainActivity.exerciseDaily;
 import static com.teamdui.profiler.MainActivity.exerciseGoal;
-
 import static com.teamdui.profiler.MainActivity.glassDaily;
 import static com.teamdui.profiler.MainActivity.glassGoal;
 import static com.teamdui.profiler.MainActivity.myRef;
 import static com.teamdui.profiler.MainActivity.uid;
-import static com.teamdui.profiler.MainActivity.date;
 
 public class DailyCalorieFragment extends Fragment {
 
@@ -67,7 +66,7 @@ public class DailyCalorieFragment extends Fragment {
         });
 
 
-        addWaterbtn  = binding.addWater;
+        addWaterbtn = binding.addWater;
         deleteWaterbtn = binding.deleteWater;
         addWaterbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +76,7 @@ public class DailyCalorieFragment extends Fragment {
                 mlDaily = glassDaily * waterFactor;
                 isSaved = true;
                 setWaterText();
-                if(glassDaily == 0)
-                {
+                if (glassDaily == 0) {
                     binding.waterInputGlass.getText().clear();
                     binding.waterInputMl.getText().clear();
                 }
@@ -91,8 +89,7 @@ public class DailyCalorieFragment extends Fragment {
             public void onClick(View v) {
                 glassDaily--;
                 myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(glassDaily);
-                if(glassDaily < 0)
-                {
+                if (glassDaily < 0) {
                     glassDaily = 0;
                 }
                 mlDaily = glassDaily * waterFactor;
@@ -112,7 +109,6 @@ public class DailyCalorieFragment extends Fragment {
         });
 
 
-
         waterGlassInput = binding.waterInputGlass;
         waterMlInput = binding.waterInputMl;
         waterGlassInput.setText(Integer.toString(glassDaily));
@@ -124,22 +120,16 @@ public class DailyCalorieFragment extends Fragment {
                 hideKeyboard(v);
 
                 int noOfGlass = glassDaily;
-                if(!waterGlassInput.getText().toString().isEmpty())
-                {
+                if (!waterGlassInput.getText().toString().isEmpty()) {
                     glassDaily = Integer.parseInt(waterGlassInput.getText().toString());
-                }
-                else
-                {
+                } else {
                     glassDaily = 0;
                 }
                 setUpperText();
                 mlDaily = glassDaily * waterFactor;
-                if(noOfGlass < glassDaily)
-                {
+                if (noOfGlass < glassDaily) {
                     setGlassVisibility();
-                }
-                else if(noOfGlass > glassDaily)
-                {
+                } else if (noOfGlass > glassDaily) {
                     setGlassInvisibility();
                 }
                 myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(glassDaily);
@@ -151,22 +141,16 @@ public class DailyCalorieFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 hideKeyboard(v);
                 int noOfGlass = glassDaily;
-                if(!waterMlInput.getText().toString().isEmpty())
-                {
+                if (!waterMlInput.getText().toString().isEmpty()) {
                     mlDaily = Integer.parseInt(waterMlInput.getText().toString());
-                }
-                else
-                {
+                } else {
                     mlDaily = 0;
                 }
                 glassDaily = (int) Math.ceil((double) mlDaily / waterFactor);
                 setUpperText();
-                if(noOfGlass < glassDaily)
-                {
+                if (noOfGlass < glassDaily) {
                     setGlassVisibility();
-                }
-                else if(noOfGlass > glassDaily)
-                {
+                } else if (noOfGlass > glassDaily) {
                     setGlassInvisibility();
                 }
                 myRef.child(uid).child("date").child(date).child("progress").child("wat").setValue(glassDaily);
@@ -176,98 +160,79 @@ public class DailyCalorieFragment extends Fragment {
         return root;
     }
 
-    public void setGlassVisibility()
-    {
+    public void setGlassVisibility() {
         Integer gd = glassDaily;
         binding.waterInputGlass.setText(gd.toString());
         binding.waterInputMl.setText(mlDaily.toString());
         isSaved = true;
 
-        if(glassDaily == 0)
-        {
+        if (glassDaily == 0) {
             binding.waterInputMl.getText().clear();
             binding.waterInputGlass.getText().clear();
             isSaved = false;
         }
-        switch (glassDaily)
-        {
-            case 16:
-            {
+        switch (glassDaily) {
+            case 16: {
                 ImageView glass = binding.glass16;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 15:
-            {
+            case 15: {
                 ImageView glass = binding.glass15;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 14:
-            {
+            case 14: {
                 ImageView glass = binding.glass14;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 13:
-            {
+            case 13: {
                 ImageView glass = binding.glass13;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 12:
-            {
+            case 12: {
                 ImageView glass = binding.glass12;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 11:
-            {
+            case 11: {
                 ImageView glass = binding.glass11;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 10:
-            {
+            case 10: {
                 ImageView glass = binding.glass10;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 9:
-            {
+            case 9: {
                 ImageView glass = binding.glass9;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 8:
-            {
+            case 8: {
                 ImageView glass = binding.glass8;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 7:
-            {
+            case 7: {
                 ImageView glass = binding.glass7;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 6:
-            {
+            case 6: {
                 ImageView glass = binding.glass6;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 5:
-            {
+            case 5: {
                 ImageView glass = binding.glass5;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 4:
-            {
+            case 4: {
                 ImageView glass = binding.glass4;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 3:
-            {
+            case 3: {
                 ImageView glass = binding.glass3;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 2:
-            {
+            case 2: {
                 ImageView glass = binding.glass2;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 1:
-            {
+            case 1: {
                 ImageView glass = binding.glass1;
                 glass.setVisibility(getView().VISIBLE);
             }
@@ -275,96 +240,77 @@ public class DailyCalorieFragment extends Fragment {
         }
     }
 
-    public void setGlassInvisibility()
-    {
-        binding.waterInputGlass.setText(((Integer)glassDaily).toString());
+    public void setGlassInvisibility() {
+        binding.waterInputGlass.setText(((Integer) glassDaily).toString());
         binding.waterInputMl.setText(mlDaily.toString());
         isSaved = true;
-        if(glassDaily == 0)
-        {
+        if (glassDaily == 0) {
             binding.waterInputMl.getText().clear();
             binding.waterInputGlass.getText().clear();
             isSaved = false;
         }
-        switch (glassDaily)
-        {
-            case 0:
-            {
+        switch (glassDaily) {
+            case 0: {
                 ImageView glass = binding.glass1;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 1:
-            {
+            case 1: {
                 ImageView glass = binding.glass2;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 2:
-            {
+            case 2: {
                 ImageView glass = binding.glass3;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 3:
-            {
+            case 3: {
                 ImageView glass = binding.glass4;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 4:
-            {
+            case 4: {
                 ImageView glass = binding.glass5;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 5:
-            {
+            case 5: {
                 ImageView glass = binding.glass6;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 6:
-            {
+            case 6: {
                 ImageView glass = binding.glass7;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 7:
-            {
+            case 7: {
                 ImageView glass = binding.glass8;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 8:
-            {
+            case 8: {
                 ImageView glass = binding.glass9;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 9:
-            {
+            case 9: {
                 ImageView glass = binding.glass10;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 10:
-            {
+            case 10: {
                 ImageView glass = binding.glass11;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 11:
-            {
+            case 11: {
                 ImageView glass = binding.glass12;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 12:
-            {
+            case 12: {
                 ImageView glass = binding.glass13;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 13:
-            {
+            case 13: {
                 ImageView glass = binding.glass14;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 14:
-            {
+            case 14: {
                 ImageView glass = binding.glass15;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 15:
-            {
+            case 15: {
                 ImageView glass = binding.glass16;
                 glass.setVisibility(getView().INVISIBLE);
             }
@@ -372,24 +318,23 @@ public class DailyCalorieFragment extends Fragment {
         }
     }
 
-    public void setWaterText()
-    {
-        waterGlassInput.setText(((Integer)glassDaily).toString());
+    public void setWaterText() {
+        waterGlassInput.setText(((Integer) glassDaily).toString());
         waterMlInput.setText(mlDaily.toString());
     }
+
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void setUpperText()
-    {
+    public void setUpperText() {
         TextView calorieText = binding.calorieEarn;
         TextView waterText = binding.waterTaken;
         TextView exerciseText = binding.exerciseDone;
-        calorieText.setText("Total calorie earned(cal): " + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
-        waterText.setText("Water taken(glasses): " + String.valueOf(glassDaily) + "/" + String.valueOf(glassGoal));
-        exerciseText.setText("Exercise done(min): "+ String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
+        calorieText.setText("Total calorie earned(cal): " + calorieDaily + "/" + calorieGoal);
+        waterText.setText("Water taken(glasses): " + glassDaily + "/" + glassGoal);
+        exerciseText.setText("Exercise done(min): " + exerciseDaily + "/" + exerciseGoal);
     }
 
 }

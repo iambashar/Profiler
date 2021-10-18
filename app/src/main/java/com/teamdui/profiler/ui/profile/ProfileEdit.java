@@ -14,8 +14,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -23,6 +23,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.gms.common.util.IOUtils;
 import com.teamdui.profiler.databinding.ProfileEditFragmentBinding;
 
@@ -79,43 +80,29 @@ public class ProfileEdit extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(ProfileData data) {
-                if(data.fname == null)
-                {
+                if (data.fname == null) {
                     fName.getText().clear();
-                }
-                else
-                {
+                } else {
                     fName.setText(data.fname);
                 }
-                if(data.lname == null)
-                {
+                if (data.lname == null) {
                     lName.getText().clear();
-                }
-                else
-                {
+                } else {
                     lName.setText(data.lname);
                 }
-                if(data.heightFeet == 0)
-                {
+                if (data.heightFeet == 0) {
                     heightFeet.getText().clear();
-                }
-                else
-                {
+                } else {
                     heightFeet.setText(Integer.toString(data.heightFeet));
                 }
-                if(data.heightInches == 0)
-                {
+                if (data.heightInches == 0) {
                     heightInch.getText().clear();
-                }
-                else
-                {
+                } else {
                     heightInch.setText(Integer.toString(data.heightInches));
                 }
-                if(data.weight == 0)
-                {
+                if (data.weight == 0) {
                     weight.getText().clear();
-                }
-                else {
+                } else {
                     weight.setText(Double.toString(data.weight));
                 }
                 String base64 = data.Image;
@@ -141,7 +128,7 @@ public class ProfileEdit extends Fragment {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(v.getContext(), date,  myCalendar
+                new DatePickerDialog(v.getContext(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -155,20 +142,17 @@ public class ProfileEdit extends Fragment {
                 myRef.child(uid).child("profile").child("lname").setValue(lName.getText().toString());
                 try {
                     myRef.child(uid).child("profile").child("heightFeet").setValue(Integer.parseInt(heightFeet.getText().toString()));
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     myRef.child(uid).child("profile").child("heightFeet").setValue(0);
                 }
                 try {
                     myRef.child(uid).child("profile").child("heightInches").setValue(Integer.parseInt(heightInch.getText().toString()));
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     myRef.child(uid).child("profile").child("heightInches").setValue(0);
                 }
                 try {
                     myRef.child(uid).child("profile").child("weight").setValue(Double.parseDouble(weight.getText().toString()));
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     myRef.child(uid).child("profile").child("weight").setValue(0);
                 }
 
@@ -177,7 +161,7 @@ public class ProfileEdit extends Fragment {
                 myRef.child(uid).child("profile").child("dob").child("year").setValue(dobDate.getYear());
                 try {
                     myRef.child(uid).child("profile").child("Image").setValue(Base64.getEncoder().encodeToString(bytesProfileImage));
-                }catch (Exception e){
+                } catch (Exception e) {
                     myRef.child(uid).child("profile").child("Image").setValue("");
                 }
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
@@ -226,6 +210,7 @@ public class ProfileEdit extends Fragment {
         intent.setType("image/*");
         startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -249,7 +234,7 @@ public class ProfileEdit extends Fragment {
 
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

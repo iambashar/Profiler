@@ -31,8 +31,8 @@ public class BMIFragment extends Fragment {
     public EditText weightInput;
     public EditText heightInputFeet;
     public EditText heightInputInch;
-    public RadioGroup  weightRadio;
-    public RadioGroup  heightRadio;
+    public RadioGroup weightRadio;
+    public RadioGroup heightRadio;
     public RadioButton weightRadioButtonKG;
     public RadioButton weightRadioButtonPound;
     public RadioButton heightRadioButtonFeet;
@@ -72,56 +72,49 @@ public class BMIFragment extends Fragment {
         getBMIbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(weightInput.getText().toString() .isEmpty()|| (heightRadioButtonFeet.isChecked() &&
-                        (heightInputFeet.getText().toString().isEmpty()&& heightInputInch.getText().toString().isEmpty()))
-                   || (heightRadioButtonMeter.isChecked() && heightRadioButtonFeet.getText().toString().isEmpty()))
-                        {
+                if (weightInput.getText().toString().isEmpty() || (heightRadioButtonFeet.isChecked() &&
+                        (heightInputFeet.getText().toString().isEmpty() && heightInputInch.getText().toString().isEmpty()))
+                        || (heightRadioButtonMeter.isChecked() && heightRadioButtonFeet.getText().toString().isEmpty())) {
                     rangeText.setText(R.string.giveinput);
                     rangeText.setTextColor(Color.parseColor("#FF8303"));
-                }
-                else
-                {
+                } else {
                     float weight = Float.parseFloat(weightInput.getText().toString());
                     float height = 1, feet, inch;
 
-                    if (kg && ft){
+                    if (kg && ft) {
                         if (heightInputFeet.getText().toString().isEmpty()) {
                             feet = 0;
-                        }
-                        else {
+                        } else {
                             feet = Float.parseFloat(heightInputFeet.getText().toString());
                         }
                         if (heightInputInch.getText().toString().isEmpty()) {
                             inch = 0;
-                        }
-                        else {
+                        } else {
                             inch = Float.parseFloat(heightInputInch.getText().toString());
                         }
                         height = (float) ((feet * 12.0 + inch) * 0.0254);
-                    }else if (kg && met){
+                    } else if (kg && met) {
                         height = Float.parseFloat(heightInputFeet.getText().toString());
-                    }else if (lb && ft){
+                    } else if (lb && ft) {
                         weight = (float) (weight * 0.453592);
                         if (heightInputFeet.getText().toString().isEmpty()) {
                             feet = 0;
-                        }
-                        else {
+                        } else {
                             feet = Float.parseFloat(heightInputFeet.getText().toString());
                         }
                         if (heightInputInch.getText().toString().isEmpty()) {
                             inch = 0;
-                        }
-                        else {
+                        } else {
                             inch = Float.parseFloat(heightInputInch.getText().toString());
                         }
                         height = (float) ((feet * 12.0 + inch) * 0.0254);
-                    }else if (lb && met){
+                    } else if (lb && met) {
                         weight = (float) (weight * 0.453592);
                         height = Float.parseFloat(heightInputFeet.getText().toString());
                     }
 
                     bmi = GetBMI(weight, height);
-                    BMIText.setText("BMI: " + String.valueOf(bmi));
+                    BMIText.setText("BMI: " + bmi);
                     resetbtn.setVisibility(View.VISIBLE);
                     getBMIbtn.setVisibility(View.INVISIBLE);
                     rangeText.setTextColor(Color.parseColor("#FF8303"));
@@ -132,21 +125,21 @@ public class BMIFragment extends Fragment {
         weightInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
         heightInputFeet.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
         heightInputInch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
@@ -155,9 +148,9 @@ public class BMIFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 kg = weightRadioButtonKG.isChecked();
                 lb = weightRadioButtonPound.isChecked();
-                if (kg){
+                if (kg) {
                     weightInput.setHint("kg");
-                }else if (lb){
+                } else if (lb) {
                     weightInput.setHint("lb");
                 }
             }
@@ -167,10 +160,10 @@ public class BMIFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 ft = heightRadioButtonFeet.isChecked();
                 met = heightRadioButtonMeter.isChecked();
-                if (met){
+                if (met) {
                     heightInputInch.setVisibility(View.INVISIBLE);
                     heightInputFeet.setHint("meter");
-                }else if (ft){
+                } else if (ft) {
                     heightInputInch.setVisibility(View.VISIBLE);
                     heightInputFeet.setHint("feet");
                     heightInputInch.setHint("inch");
@@ -197,40 +190,31 @@ public class BMIFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     @SuppressLint("ResourceAsColor")
-    public void showRange()
-    {
-        if(bmi < 18.5)
-        {
+    public void showRange() {
+        if (bmi < 18.5) {
             rangeText.setText("Underweight!!");
             binding.underweight.setTextColor(Color.parseColor("#ffffff"));
             binding.underweight.setTextSize(22);
-        }
-        else if(bmi >= 18.5 && bmi <= 24.99)
-        {
+        } else if (bmi >= 18.5 && bmi <= 24.99) {
             rangeText.setText("Healthy Weight..");
             binding.healthyWeight.setTextColor(Color.parseColor("#ffffff"));
             binding.healthyWeight.setTextSize(22);
-        }
-        else if(bmi >= 25 && bmi <= 29.99)
-        {
+        } else if (bmi >= 25 && bmi <= 29.99) {
             rangeText.setText("Overweight..");
             binding.overweight.setTextColor(Color.parseColor("#ffffff"));
             binding.overweight.setTextSize(22);
-        }
-         else if(bmi >= 30 )
-        {
+        } else if (bmi >= 30) {
             rangeText.setText("Obesity!!");
             binding.obesity.setTextColor(Color.parseColor("#ffffff"));
             binding.obesity.setTextSize(22);
-        }
-         else
-        {
+        } else {
             rangeText.setText("Wrong Weight/Height");
         }
     }
-    public void resetBMI()
-    {
+
+    public void resetBMI() {
         weightInput.getText().clear();
         heightInputFeet.getText().clear();
         heightInputInch.getText().clear();
@@ -248,8 +232,7 @@ public class BMIFragment extends Fragment {
         binding.overweight.setTextSize(18);
     }
 
-    public static float GetBMI(float weightInKg, float heightInMeters)
-    {
+    public static float GetBMI(float weightInKg, float heightInMeters) {
         float bmi = weightInKg / (heightInMeters * heightInMeters);
         bmi = Math.round((bmi * 100));
         bmi = bmi / 100;

@@ -42,8 +42,8 @@ public class DailyMealFragment extends Fragment {
     public static ArrayList<Food> foodList;
     AdapterFood adapterFood;
 
-    public DailyMealFragment(){
-        if (foodList == null){
+    public DailyMealFragment() {
+        if (foodList == null) {
             foodList = new ArrayList<>();
         }
     }
@@ -58,20 +58,19 @@ public class DailyMealFragment extends Fragment {
         foodRecyclerView = binding.foodList;
         addbtn = binding.addButton;
 
-        calorieUpperText.setText(((Integer)calorieDaily).toString());
+        calorieUpperText.setText(((Integer) calorieDaily).toString());
 
         initRecyclerView();
 
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkIfTextFilled())
-                {
+                if (checkIfTextFilled()) {
                     food = binding.foodText.getText().toString();
                     calorie = binding.calorieText.getText().toString();
                     calorieDaily = calorieDaily + Integer.parseInt(calorie);
                     myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(calorieDaily);
-                    calorieUpperText.setText(((Integer)calorieDaily).toString());
+                    calorieUpperText.setText(((Integer) calorieDaily).toString());
                     hideKeyboard(v);
                     initFoodList(food, calorie);
                     initRecyclerView();
@@ -125,26 +124,22 @@ public class DailyMealFragment extends Fragment {
         return root;
     }
 
-    public void reduceCalorie(String toReduce)
-    {
+    public void reduceCalorie(String toReduce) {
         toReduce = toReduce.replace(" cal", "");
         calorieDaily = calorieDaily - Integer.parseInt(toReduce);
         myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(calorieDaily);
-        calorieUpperText.setText(((Integer)calorieDaily).toString());
+        calorieUpperText.setText(((Integer) calorieDaily).toString());
     }
 
-    public boolean checkIfTextFilled()
-    {
-        if(binding.calorieText.getText().toString().isEmpty() || binding.foodText.getText().toString().isEmpty())
-        {
+    public boolean checkIfTextFilled() {
+        if (binding.calorieText.getText().toString().isEmpty() || binding.foodText.getText().toString().isEmpty()) {
             Toast.makeText(this.getContext(), "Food Name and Calorie must be Filled", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
 
-    public void initRecyclerView()
-    {
+    public void initRecyclerView() {
         adapterFood = new AdapterFood(foodList);
         foodLayoutManager = new LinearLayoutManager(this.getContext());
         foodLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -153,10 +148,9 @@ public class DailyMealFragment extends Fragment {
         adapterFood.notifyDataSetChanged();
     }
 
-    public void initFoodList(String food, String calorie)
-    {
+    public void initFoodList(String food, String calorie) {
         String key = myRef.child(uid).child("date").child(date).child("Meal").push().getKey();
-        if (foodList == null){
+        if (foodList == null) {
             foodList = new ArrayList<>();
         }
         foodList.add(new Food(food, calorie, R.drawable.ic_minus, key));
@@ -167,7 +161,7 @@ public class DailyMealFragment extends Fragment {
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 

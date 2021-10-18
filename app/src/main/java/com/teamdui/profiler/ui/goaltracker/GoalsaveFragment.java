@@ -56,8 +56,7 @@ public class GoalsaveFragment extends Fragment {
 
     public final int waterFactor = 150;
 
-    public GoalsaveFragment()
-    {
+    public GoalsaveFragment() {
 
     }
 
@@ -78,15 +77,13 @@ public class GoalsaveFragment extends Fragment {
         calorieSlider.setProgress(finalCalorieGoal);
         calorieEditText.setText(String.valueOf(finalCalorieGoal), TextView.BufferType.EDITABLE);
 
-        if(finalCalorieGoal > 3000)
-        {
+        if (finalCalorieGoal > 3000) {
             calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
             calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
             //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
         }
-        if(finalCalorieGoal < 3000)
-        {
+        if (finalCalorieGoal < 3000) {
             calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
             calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
         }
@@ -97,15 +94,13 @@ public class GoalsaveFragment extends Fragment {
                 calorieGoal = progress;
                 calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
 
-                if(calorieGoal >= 3000)
-                {
+                if (calorieGoal >= 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
                     calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
                     //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
                 }
-                if(calorieGoal < 3000)
-                {
+                if (calorieGoal < 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
                     calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
                 }
@@ -128,15 +123,13 @@ public class GoalsaveFragment extends Fragment {
                 int cal = Integer.valueOf(calorieEditText.getText().toString());
                 calorieSlider.setProgress(cal);
                 hideKeyboard(v);
-                if(cal >= 3000)
-                {
+                if (cal >= 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
                     calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
                     //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
                 }
-                if(cal < 3000)
-                {
+                if (cal < 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
                     calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
                 }
@@ -160,13 +153,11 @@ public class GoalsaveFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 glassGoal--;
-                if(glassGoal == 0)
-                {
+                if (glassGoal == 0) {
                     binding.waterInputGlass.getText().clear();
                     binding.waterInputMl.getText().clear();
                 }
-                if(glassGoal < 0)
-                {
+                if (glassGoal < 0) {
                     glassGoal = 0;
                 }
                 setGlassInvisibility();
@@ -183,23 +174,17 @@ public class GoalsaveFragment extends Fragment {
                 String waterText = waterEditText.getText().toString();
                 waterEditTextml.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
                 int noOfGlass;
-                if(isWaterModified)
-                {
+                if (isWaterModified) {
                     noOfGlass = Integer.parseInt(waterText);
-                }
-                else
-                {
+                } else {
                     noOfGlass = 0;
                 }
                 hideKeyboard(v);
                 isWaterModified = true;
-                if(noOfGlass > glassGoal)
-                {
+                if (noOfGlass > glassGoal) {
                     glassGoal = noOfGlass;
                     setGlassVisibility();
-                }
-                else if(noOfGlass < glassGoal)
-                {
+                } else if (noOfGlass < glassGoal) {
                     glassGoal = noOfGlass;
                     setGlassInvisibility();
                 }
@@ -212,30 +197,23 @@ public class GoalsaveFragment extends Fragment {
                 int y;
                 hideKeyboard(v);
                 int noOfGlass;
-                if(isWaterModified)
-                {
+                if (isWaterModified) {
                     y = Integer.parseInt(waterText);
                     noOfGlass = (int) Math.ceil((double) y / waterFactor);
-                }
-                else
-                {
+                } else {
                     noOfGlass = 0;
                 }
                 isWaterModified = true;
-                if(noOfGlass > glassGoal)
-                {
+                if (noOfGlass > glassGoal) {
                     glassGoal = noOfGlass;
                     setGlassVisibility();
-                }
-                else if(noOfGlass < glassGoal)
-                {
+                } else if (noOfGlass < glassGoal) {
                     glassGoal = noOfGlass;
                     setGlassInvisibility();
                 }
             }
         });
-        if(glassGoal == 0)
-        {
+        if (glassGoal == 0) {
             binding.waterInputGlass.getText().clear();
             binding.waterInputMl.getText().clear();
         }
@@ -252,20 +230,14 @@ public class GoalsaveFragment extends Fragment {
                 hideKeyboard(v);
                 int hour = 0;
                 int minute = 0;
-                if (hourInput.getText().toString().length() == 0)
-                {
+                if (hourInput.getText().toString().length() == 0) {
                     hour = 0;
-                }
-                else
-                {
+                } else {
                     hour = Integer.parseInt(hourInput.getText().toString());
                 }
-                if(minuteInput.getText().toString().length() == 0)
-                {
+                if (minuteInput.getText().toString().length() == 0) {
                     minute = 0;
-                }
-                else
-                {
+                } else {
                     minute = Integer.parseInt(minuteInput.getText().toString());
                 }
                 exerciseGoal = hour * 60 + minute;
@@ -278,20 +250,14 @@ public class GoalsaveFragment extends Fragment {
                 hideKeyboard(v);
                 int hour = 0;
                 int minute = 0;
-                if (hourInput.getText().toString().length() == 0)
-                {
+                if (hourInput.getText().toString().length() == 0) {
                     hour = 0;
-                }
-                else
-                {
+                } else {
                     hour = Integer.parseInt(hourInput.getText().toString());
                 }
-                if(minuteInput.getText().toString().length() == 0)
-                {
+                if (minuteInput.getText().toString().length() == 0) {
                     minute = 0;
-                }
-                else
-                {
+                } else {
                     minute = Integer.parseInt(minuteInput.getText().toString());
                 }
                 exerciseGoal = hour * 60 + minute;
@@ -338,183 +304,147 @@ public class GoalsaveFragment extends Fragment {
         binding = null;
     }
 
-    public void setGlassVisibility()
-    {
+    public void setGlassVisibility() {
         waterEditText = binding.waterInputGlass;
         waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
         binding.waterInputMl.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
-        switch (glassGoal)
-        {
-            case 16:
-            {
+        switch (glassGoal) {
+            case 16: {
                 ImageView glass = binding.glass16;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 15:
-            {
+            case 15: {
                 ImageView glass = binding.glass15;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 14:
-            {
+            case 14: {
                 ImageView glass = binding.glass14;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 13:
-            {
+            case 13: {
                 ImageView glass = binding.glass13;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 12:
-            {
+            case 12: {
                 ImageView glass = binding.glass12;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 11:
-            {
+            case 11: {
                 ImageView glass = binding.glass11;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 10:
-            {
+            case 10: {
                 ImageView glass = binding.glass10;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 9:
-            {
+            case 9: {
                 ImageView glass = binding.glass9;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 8:
-            {
+            case 8: {
                 ImageView glass = binding.glass8;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 7:
-            {
+            case 7: {
                 ImageView glass = binding.glass7;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 6:
-            {
+            case 6: {
                 ImageView glass = binding.glass6;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 5:
-            {
+            case 5: {
                 ImageView glass = binding.glass5;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 4:
-            {
+            case 4: {
                 ImageView glass = binding.glass4;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 3:
-            {
+            case 3: {
                 ImageView glass = binding.glass3;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 2:
-            {
+            case 2: {
                 ImageView glass = binding.glass2;
                 glass.setVisibility(getView().VISIBLE);
             }
-            case 1:
-            {
+            case 1: {
                 ImageView glass = binding.glass1;
                 glass.setVisibility(getView().VISIBLE);
             }
         }
     }
 
-    public void setGlassInvisibility()
-    {
+    public void setGlassInvisibility() {
         waterEditText = binding.waterInputGlass;
         waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
         binding.waterInputMl.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
 
-        switch (glassGoal)
-        {
-            case 0:
-            {
+        switch (glassGoal) {
+            case 0: {
                 ImageView glass = binding.glass1;
                 glass.setVisibility(getView().INVISIBLE);
                 binding.waterInputMl.getText().clear();
                 binding.waterInputGlass.getText().clear();
             }
-            case 1:
-            {
+            case 1: {
                 ImageView glass = binding.glass2;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 2:
-            {
+            case 2: {
                 ImageView glass = binding.glass3;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 3:
-            {
+            case 3: {
                 ImageView glass = binding.glass4;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 4:
-            {
+            case 4: {
                 ImageView glass = binding.glass5;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 5:
-            {
+            case 5: {
                 ImageView glass = binding.glass6;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 6:
-            {
+            case 6: {
                 ImageView glass = binding.glass7;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 7:
-            {
+            case 7: {
                 ImageView glass = binding.glass8;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 8:
-            {
+            case 8: {
                 ImageView glass = binding.glass9;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 9:
-            {
+            case 9: {
                 ImageView glass = binding.glass10;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 10:
-            {
+            case 10: {
                 ImageView glass = binding.glass11;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 11:
-            {
+            case 11: {
                 ImageView glass = binding.glass12;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 12:
-            {
+            case 12: {
                 ImageView glass = binding.glass13;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 13:
-            {
+            case 13: {
                 ImageView glass = binding.glass14;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 14:
-            {
+            case 14: {
                 ImageView glass = binding.glass15;
                 glass.setVisibility(getView().INVISIBLE);
             }
-            case 15:
-            {
+            case 15: {
                 ImageView glass = binding.glass16;
                 glass.setVisibility(getView().INVISIBLE);
             }
@@ -522,60 +452,48 @@ public class GoalsaveFragment extends Fragment {
         }
     }
 
-    public void saveGoals()
-    {
-        String caloriestr = "Total calorie earned(cal): "+ String.valueOf(calorieDaily) + "/" + String.valueOf(finalCalorieGoal);
+    public void saveGoals() {
+        String caloriestr = "Total calorie earned(cal): " + calorieDaily + "/" + finalCalorieGoal;
         binding.calorieEarn.setText(caloriestr);
 
-        String waterstr = "Water taken(glasses): " +String.valueOf(glassDaily) + "/" +  String.valueOf(finalGlassGoal) ;
+        String waterstr = "Water taken(glasses): " + glassDaily + "/" + finalGlassGoal;
         binding.waterTaken.setText(waterstr);
 
 
         calculateExercise();
         String exercisestr = binding.exerciseDone.getText().toString();
 
-        exercisestr = "Exercise done(min): " + String.valueOf(exerciseDaily) + "/" + String.valueOf(finalExerciseGoal) ;
+        exercisestr = "Exercise done(min): " + exerciseDaily + "/" + finalExerciseGoal;
         binding.exerciseDone.setText(exercisestr);
         binding.minText.setText(String.valueOf(finalExerciseGoal));
         Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
     }
-    public void calculateExercise()
-    {
-        if(hourInput.getText().toString().length() == 0 && minuteInput.getText().toString().length() == 0)
-        {
+
+    public void calculateExercise() {
+        if (hourInput.getText().toString().length() == 0 && minuteInput.getText().toString().length() == 0) {
             isSaved = false;
         }
-        if(isSaved)
-        {
+        if (isSaved) {
             int hour = 0;
             int minute = 0;
-            if (hourInput.getText().toString().length() == 0)
-            {
+            if (hourInput.getText().toString().length() == 0) {
                 hour = 0;
-            }
-            else
-            {
+            } else {
                 hour = Integer.parseInt(hourInput.getText().toString());
             }
-            if(minuteInput.getText().toString().length() == 0)
-            {
+            if (minuteInput.getText().toString().length() == 0) {
                 minute = 0;
-            }
-            else
-            {
+            } else {
                 minute = Integer.parseInt(minuteInput.getText().toString());
             }
             exerciseGoal = hour * 60 + minute;
-        }
-        else
-        {
+        } else {
             binding.minText.setText(String.valueOf(exerciseGoal));
         }
 
     }
 
-    public void resetGoal()
-    {
+    public void resetGoal() {
         calorieGoal = 0;
         glassGoal = 0;
         exerciseGoal = 0;
@@ -592,17 +510,17 @@ public class GoalsaveFragment extends Fragment {
         binding.hourInput.getText().clear();
         binding.minuteInput.getText().clear();
 
-        String caloriestr = "Total calorie earned(cal): " + String.valueOf(calorieDaily) + "/0";
+        String caloriestr = "Total calorie earned(cal): " + calorieDaily + "/0";
         binding.calorieEarn.setText(caloriestr);
-        String waterstr = "Water taken(glasses): " + String.valueOf(glassDaily) + "/0";
+        String waterstr = "Water taken(glasses): " + glassDaily + "/0";
         binding.waterTaken.setText(waterstr);
-        String exercisestr = "Exercise Done(min): " + String.valueOf(exerciseDaily) + "/0";
+        String exercisestr = "Exercise Done(min): " + exerciseDaily + "/0";
         binding.exerciseDone.setText(exercisestr);
     }
 
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

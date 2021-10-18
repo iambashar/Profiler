@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class CameraViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public CameraViewModel() {
         mText = new MutableLiveData<>();

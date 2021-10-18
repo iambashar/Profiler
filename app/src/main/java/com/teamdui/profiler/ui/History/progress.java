@@ -4,7 +4,7 @@ public class progress {
     public int cal;
     public int wat;
     public int exr;
-    public int calburn;
+    public double calburn;
 
     public progress() {
         cal = 0;

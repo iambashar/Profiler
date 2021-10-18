@@ -50,8 +50,7 @@ public class Profile extends Fragment {
                 fullName = data.fname + " " + data.lname;
                 binding.fullNameText.setText(fullName);
                 int age = Integer.parseInt(Year.now().toString()) - data.dob.getYear();
-                if(age == 1900)
-                {
+                if (age == 1900) {
                     age = 0;
                 }
                 binding.ageValue.setText(Integer.toString(age));
@@ -59,29 +58,22 @@ public class Profile extends Fragment {
                 binding.heightValue.setText(height);
                 binding.weightValue.setText(Double.toString(data.weight));
                 double heightMetres = (data.heightFeet * 12 + data.heightInches) * 2.54 / 100;
-                String bmi2 = String.format("%.2f", data.weight/(heightMetres*heightMetres));
+                String bmi2 = String.format("%.2f", data.weight / (heightMetres * heightMetres));
                 binding.bmiValue.setText(bmi2);
                 String base64 = data.Image;
                 bytesProfileImage = Base64.getDecoder().decode(base64);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytesProfileImage, 0, bytesProfileImage.length);
                 binding.profileImg.setImageBitmap(bitmap);
-                double bmi = data.weight/(heightMetres*heightMetres);
-                String bmiText = String.format("%.2f", data.weight/(heightMetres*heightMetres));
+                double bmi = data.weight / (heightMetres * heightMetres);
+                String bmiText = String.format("%.2f", data.weight / (heightMetres * heightMetres));
                 String bmiRange = "";
-                if(bmi < 18.5)
-                {
+                if (bmi < 18.5) {
                     bmiRange = " (Underweight)";
-                }
-                else if(bmi >= 18.5 && bmi <= 24.99)
-                {
+                } else if (bmi >= 18.5 && bmi <= 24.99) {
                     bmiRange = " (Healthy Weight)";
-                }
-                else if(bmi >= 25 && bmi <= 29.99)
-                {
+                } else if (bmi >= 25 && bmi <= 29.99) {
                     bmiRange = " (Overweight)";
-                }
-                else if(bmi >= 30 )
-                {
+                } else if (bmi >= 30) {
                     bmiRange = " (Obesity)";
                 }
                 binding.bmiValue.setText(bmiText + bmiRange);

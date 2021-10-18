@@ -87,33 +87,30 @@ public class GoaltrackerFragment extends Fragment {
         binding = null;
     }
 
-    public void setGoalText()
-    {
+    public void setGoalText() {
         String calorieText = binding.calorieEarninTracker.getText().toString();
-        textSetter(binding.calorieEarninTracker,calorieText + String.valueOf(calorieDaily) + "/" + String.valueOf(calorieGoal));
+        textSetter(binding.calorieEarninTracker, calorieText + calorieDaily + "/" + calorieGoal);
         String waterText = binding.waterTakeninTracker.getText().toString();
-        textSetter(binding.waterTakeninTracker,waterText + String.valueOf(glassDaily) + "/" + String.valueOf(glassGoal));
+        textSetter(binding.waterTakeninTracker, waterText + glassDaily + "/" + glassGoal);
         String exerciseText = binding.exerciseDoneinTracker.getText().toString();
-        textSetter(binding.exerciseDoneinTracker,exerciseText + String.valueOf(exerciseDaily) + "/" + String.valueOf(exerciseGoal));
+        textSetter(binding.exerciseDoneinTracker, exerciseText + exerciseDaily + "/" + exerciseGoal);
     }
 
-    public void setProgressBar()
-    {
+    public void setProgressBar() {
         try {
-            caloriePercentage = (int)(calorieDaily * 100.0f) / calorieGoal;
+            caloriePercentage = (int) (calorieDaily * 100.0f) / calorieGoal;
         } catch (Exception e) {
             caloriePercentage = 0;
         }
 
         try {
-            waterPercentage = (int)(glassDaily * 100.0f) / glassGoal;
-        } catch (Exception e)
-        {
+            waterPercentage = (int) (glassDaily * 100.0f) / glassGoal;
+        } catch (Exception e) {
             waterPercentage = 0;
         }
 
         try {
-            exercisePercentage = (int)(exerciseDaily * 100.0f) / exerciseGoal;
+            exercisePercentage = (int) (exerciseDaily * 100.0f) / exerciseGoal;
         } catch (Exception e) {
             exercisePercentage = 0;
         }
@@ -124,10 +121,9 @@ public class GoaltrackerFragment extends Fragment {
         setPercentText();
     }
 
-    public void setPercentText()
-    {
-        textSetter(caloriePercentText,String.valueOf(caloriePercentage) + "%");
-        textSetter(waterPercentText,String.valueOf(waterPercentage) + "%");
-        textSetter(exercisePercentText,String.valueOf(exercisePercentage) + "%");
+    public void setPercentText() {
+        textSetter(caloriePercentText, caloriePercentage + "%");
+        textSetter(waterPercentText, waterPercentage + "%");
+        textSetter(exercisePercentText, exercisePercentage + "%");
     }
 }

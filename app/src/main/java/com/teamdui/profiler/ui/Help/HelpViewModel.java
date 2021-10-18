@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel;
 
 public class HelpViewModel extends ViewModel {
     private MutableLiveData<String> mText;
+
     // TODO: Implement the ViewModel
-    public  HelpViewModel() {
+    public HelpViewModel() {
 
     }
+
     public LiveData<String> getText() {
         return mText;
     }

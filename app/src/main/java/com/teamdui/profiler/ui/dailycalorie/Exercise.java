@@ -7,12 +7,11 @@ public class Exercise {
     double burnHour;
     String key;
 
-    public Exercise(){
+    public Exercise() {
 
     }
 
-    public Exercise(String catName, String timeEach, int deleteIcon, double burnHour, String key)
-    {
+    public Exercise(String catName, String timeEach, int deleteIcon, double burnHour, String key) {
         this.catName = catName;
         this.timeEach = timeEach;
         this.deleteIcon = deleteIcon;
@@ -36,7 +35,7 @@ public class Exercise {
         return burnHour;
     }
 
-    public  String getKey() {
+    public String getKey() {
         return key;
     }
 }
