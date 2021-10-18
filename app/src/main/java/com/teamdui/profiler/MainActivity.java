@@ -39,6 +39,7 @@ import com.teamdui.profiler.ui.history.date;
 import com.teamdui.profiler.ui.history.set;
 import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
+import com.teamdui.profiler.ui.home.Data;
 import com.teamdui.profiler.ui.login.LoginActivity;
 import com.teamdui.profiler.ui.profile.ProfileData;
 
@@ -300,8 +301,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (flag) {
-                        date data = new date();
-                        data.date= date;
+                        Data data = new Data();
                         data.progress.cal = 0;
                         data.progress.exr = 0;
                         data.progress.wat = 0;
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
                         data.set.cal = scal;
                         data.set.exr = sexr;
                         data.set.wat = swat;
-                        myRef.child(uid).child("date").setValue(data);
+                        myRef.child(uid).child("date").child(date).setValue(data);
                         myRef.child(uid).child("calburn").setValue(0);
                         myRef.child(uid).child("Meal").removeValue();
                         myRef.child(uid).child("Exercise").removeValue();
