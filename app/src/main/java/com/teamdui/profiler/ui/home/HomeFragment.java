@@ -23,6 +23,7 @@ import com.teamdui.profiler.databinding.HomeFragmentBinding;
 import com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment;
 import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
+import com.teamdui.profiler.ui.history.date;
 import com.teamdui.profiler.ui.profile.ProfileData;
 
 import java.util.Base64;
@@ -96,9 +97,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        homeViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Data>() {
+        homeViewModel.getData().observe(getViewLifecycleOwner(), new Observer<date>() {
             @Override
-            public void onChanged(Data data) {
+            public void onChanged(date data) {
                 calorieDaily = data.progress.cal;
                 calorieGoal = data.set.cal;
                 glassDaily = data.progress.wat;

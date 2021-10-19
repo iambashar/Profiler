@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.teamdui.profiler.MainActivity;
+import com.teamdui.profiler.ui.history.date;
 import com.teamdui.profiler.ui.profile.ProfileData;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +18,7 @@ import static com.teamdui.profiler.MainActivity.date;
 import static com.teamdui.profiler.MainActivity.uid;
 
 public class HomeViewModel extends ViewModel {
-    private final MutableLiveData<Data> mData;
+    private final MutableLiveData<date> mData;
     private final MutableLiveData<ProfileData> mData2;
 
     public HomeViewModel() {
@@ -41,7 +42,7 @@ public class HomeViewModel extends ViewModel {
         MainActivity.myRef.child(uid).child("date").child(date).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                mData.setValue(snapshot.exists() ? snapshot.getValue(Data.class) : new Data());
+                mData.setValue(snapshot.exists() ? snapshot.getValue(com.teamdui.profiler.ui.history.date.class) : new date());
             }
 
             @Override
@@ -51,7 +52,7 @@ public class HomeViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<Data> getData() {
+    public MutableLiveData<date> getData() {
         return mData;
     }
 

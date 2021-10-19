@@ -39,15 +39,12 @@ import com.teamdui.profiler.ui.history.date;
 import com.teamdui.profiler.ui.history.set;
 import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
-import com.teamdui.profiler.ui.home.Data;
 import com.teamdui.profiler.ui.login.LoginActivity;
-import com.teamdui.profiler.ui.profile.ProfileData;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -301,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (flag) {
-                        Data data = new Data();
+                        date data = new date();
                         data.progress.cal = 0;
                         data.progress.exr = 0;
                         data.progress.wat = 0;

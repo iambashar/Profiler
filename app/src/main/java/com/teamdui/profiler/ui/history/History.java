@@ -46,8 +46,10 @@ public class History extends Fragment {
         View root = binding.getRoot();
 
         recRecyclerView = binding.historyList;
+        String days = "0";
 
-        mViewModel.getRawData().observe(getViewLifecycleOwner(), new Observer<ArrayList<rec>>() {
+        if (days == "7"){
+        mViewModel.getRawData7().observe(getViewLifecycleOwner(), new Observer<ArrayList<rec>>() {
             @Override
             public void onChanged(ArrayList<rec> recs) {
                 records = new adapterRecord(recs);
@@ -57,7 +59,33 @@ public class History extends Fragment {
                 recRecyclerView.setAdapter(records);
                 records.notifyDataSetChanged();
             }
-        });
+        });}
+        else if (days == "30"){
+            mViewModel.getRawData30().observe(getViewLifecycleOwner(), new Observer<ArrayList<rec>>() {
+                @Override
+                public void onChanged(ArrayList<rec> recs) {
+                    records = new adapterRecord(recs);
+                    recLayoutManager = new LinearLayoutManager(getContext());
+                    recLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                    recRecyclerView.setLayoutManager(recLayoutManager);
+                    recRecyclerView.setAdapter(records);
+                    records.notifyDataSetChanged();
+                }
+            });
+        }
+        else{
+            mViewModel.getRawData180().observe(getViewLifecycleOwner(), new Observer<ArrayList<rec>>() {
+                @Override
+                public void onChanged(ArrayList<rec> recs) {
+                    records = new adapterRecord(recs);
+                    recLayoutManager = new LinearLayoutManager(getContext());
+                    recLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                    recRecyclerView.setLayoutManager(recLayoutManager);
+                    recRecyclerView.setAdapter(records);
+                    records.notifyDataSetChanged();
+                }
+            });
+        }
 
         return root;
     }
