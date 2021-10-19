@@ -15,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dropdownRange"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -29,16 +28,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".15"
-            app:layout_constraintHorizontal_bias=".35">
-
-
-
+            app:layout_constraintVertical_bias=".3"
+            app:layout_constraintHorizontal_bias=".25">
             <AutoCompleteTextView
                 android:id="@+id/historyRangeDropDown"
-                android:layout_width="200dp"
+                android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:background="@drawable/spinner"
+                android:gravity="center_vertical|center"
                 android:enabled="false"
                 android:textColor="@color/navyBlue"
                 android:textSize="15dp"
@@ -47,6 +44,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/downloadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/download_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".3"
+            app:layout_constraintHorizontal_bias=".8"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -60,16 +69,99 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/texts"
         app:layout_constraintVertical_bias="0.2">
-        <ScrollView
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/history_header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@id/historyScroll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            android:background="@drawable/historyborder"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Date"
+                android:textSize="16dp"
+                android:layout_marginTop="2sp"
+                android:background="@color/navyBlue"
+                android:textColor="@color/white"
+                android:gravity="center_vertical|center"
+                android:layout_marginRight="2sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/calorieEarnText"/>
+
+            <TextView
+                android:id="@+id/calorieEarnText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Earned Calorie"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:layout_marginTop="2sp"
+                android:background="@color/navyBlue"
+                android:gravity="center_vertical|center"
+                android:layout_marginRight="2sp"
+                app:layout_constraintEnd_toStartOf="@id/calorieBurnText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/dateText"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/calorieBurnText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Burned Calorie"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:layout_marginTop="2sp"
+                android:background="@color/navyBlue"
+                android:gravity="center_vertical|center"
+                android:layout_marginRight="2sp"
+                app:layout_constraintEnd_toStartOf="@id/netCalorieText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/calorieEarnText"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/netCalorieText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Net \n Calorie"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="2sp"
+                android:background="@color/navyBlue"
+                android:gravity="center_vertical|center"
+                android:layout_marginRight="2sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/calorieBurnText"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:id="@+id/historyScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="5dp"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/history_header"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/historyList"
                 android:layout_width="match_parent"
@@ -85,9 +177,5 @@
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

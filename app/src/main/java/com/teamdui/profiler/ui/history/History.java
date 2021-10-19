@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ public class History extends Fragment {
 
     adapterRecord records;
     LinearLayoutManager recLayoutManager;
+    ImageView downloadButton;
     RecyclerView recRecyclerView;
     AutoCompleteTextView autoCompleteTextView;
     @Override
@@ -54,6 +56,7 @@ public class History extends Fragment {
         String ranges[] = getResources().getStringArray(R.array.history_dropdown);
         ArrayAdapter arrayAdapter = new ArrayAdapter(this.getContext(), R.layout.history_dropdown, ranges);
         autoCompleteTextView.setAdapter(arrayAdapter);
+        downloadButton = binding.downloadButton;
 
         ((AutoCompleteTextView) binding.dropdownRange.getEditText()).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,9 +65,6 @@ public class History extends Fragment {
                 binding.dropdownRange.setHint("");
                 autoCompleteTextView.clearFocus();
                 showRecords(position);
-
-                //TODO: Button to save table as csv
-                //Call the method savefileascsv
             }
         });
 
@@ -83,7 +83,13 @@ public class History extends Fragment {
                     recRecyclerView.setLayoutManager(recLayoutManager);
                     recRecyclerView.setAdapter(records);
                     records.notifyDataSetChanged();
-                    savefileascsv(recs);
+
+                    downloadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            savefileascsv(recs);
+                        }
+                    });
                 }
             });}
         else if (idx == 1){
@@ -96,6 +102,13 @@ public class History extends Fragment {
                     recRecyclerView.setLayoutManager(recLayoutManager);
                     recRecyclerView.setAdapter(records);
                     records.notifyDataSetChanged();
+
+                    downloadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            savefileascsv(recs);
+                        }
+                    });
                 }
             });
         }
@@ -109,6 +122,13 @@ public class History extends Fragment {
                     recRecyclerView.setLayoutManager(recLayoutManager);
                     recRecyclerView.setAdapter(records);
                     records.notifyDataSetChanged();
+
+                    downloadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            savefileascsv(recs);
+                        }
+                    });
                 }
             });
         }
@@ -133,7 +153,7 @@ public class History extends Fragment {
                 outputStream.write((r.cal-r.calburn + "\n").getBytes());
             }
             outputStream.close();
-            Toast.makeText(getContext(), "Records are saved in \"Documents/" + ts + ".csv\"", Toast.LENGTH_LONG);
+            Toast.makeText(getContext(), "Records are saved in \"Documents/Profiler-" + ts + ".csv\"", Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             e.printStackTrace();
