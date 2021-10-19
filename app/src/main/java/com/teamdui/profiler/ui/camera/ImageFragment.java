@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
@@ -152,6 +153,7 @@ public class ImageFragment extends Fragment {
                 classes.add(jsonArray.get(i).toString());
             }
         } catch (IOException e) {
+            Toast.makeText(getContext(), "Calorie Calculator API server in not running", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();

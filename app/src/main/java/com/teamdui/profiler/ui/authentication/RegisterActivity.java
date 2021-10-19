@@ -1,5 +1,6 @@
-package com.teamdui.profiler.ui.register;
+package com.teamdui.profiler.ui.authentication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +32,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityRegisterBinding;
-import com.teamdui.profiler.ui.login.LoginActivity;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
@@ -188,19 +189,30 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     emailText.setError(null);
                 }
+                hideKeyboard(v);
             }
         });
 
         passwordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!ValidatePassword(passwordText.getText())) {
+                if (!ValidatePassword(passwordText.getText()) && passwordText.length() !=0) {
                     passwordText.setError("Must be at least " + minPasswordLength + " characters with at least 1 capital 1 small and 1 number");
                 }
+                hideKeyboard(v);
             }
         });
 
-
+        confirmPasswordText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (passwordText.getText().toString().compareTo(confirmPasswordText.getText().toString()) != 0
+                        && confirmPasswordText.length() != 0){
+                    confirmPasswordText.setError("Passwords don't match!");
+                }
+                hideKeyboard(v);
+            }
+        });
     }
 
     private void SendVerificationEmail(FirebaseUser user) {
@@ -234,5 +246,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void BackToLoginPage() {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

@@ -37,7 +37,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentCameraBinding;
 
@@ -102,8 +101,6 @@ public class CameraFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-                if (MainActivity.uri != null)
-                    Toast.makeText(getContext(), MainActivity.uri, Toast.LENGTH_SHORT).show();
                 Bundle arg = new Bundle();
                 arg.putByteArray("img", bytes);
                 Navigation.findNavController(root).navigate(R.id.action_navigation_camera_to_navigation_image, arg);

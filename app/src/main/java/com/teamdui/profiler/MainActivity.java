@@ -1,13 +1,11 @@
 package com.teamdui.profiler;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -22,8 +20,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,11 +31,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.teamdui.profiler.databinding.ActivityMainBinding;
-import com.teamdui.profiler.ui.history.date;
-import com.teamdui.profiler.ui.history.set;
+import com.teamdui.profiler.ui.authentication.LoginActivity;
 import com.teamdui.profiler.ui.dailycalorie.Exercise;
 import com.teamdui.profiler.ui.dailycalorie.Food;
-import com.teamdui.profiler.ui.login.LoginActivity;
+import com.teamdui.profiler.ui.history.date;
+import com.teamdui.profiler.ui.history.set;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,8 +43,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment.exerciseList;
 import static com.teamdui.profiler.ui.dailycalorie.DailyMealFragment.foodList;
@@ -293,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     boolean flag = true;
                     for (DataSnapshot du : snapshot.getChildren()) {
-                        if (date.contentEquals(du.getKey().toString())) {
+                        if (date.contentEquals(du.getKey())) {
                             flag = false;
                         }
                     }

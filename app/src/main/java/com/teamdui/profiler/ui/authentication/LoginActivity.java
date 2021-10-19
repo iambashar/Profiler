@@ -1,4 +1,4 @@
-package com.teamdui.profiler.ui.login;
+package com.teamdui.profiler.ui.authentication;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -44,7 +44,6 @@ import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
 import com.teamdui.profiler.ui.forgotpass.ForgotPasswordActivity;
-import com.teamdui.profiler.ui.register.RegisterActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -383,6 +382,11 @@ public class LoginActivity extends Activity {
         forgotPasswordLink.setClickable(value);
         continueWithoutLink.setClickable(value);
         googleSignInButton.setClickable(value);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

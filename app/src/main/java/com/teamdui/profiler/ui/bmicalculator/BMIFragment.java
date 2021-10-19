@@ -15,9 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.teamdui.profiler.R;
@@ -115,9 +113,8 @@ public class BMIFragment extends Fragment {
 
                     bmi = GetBMI(weight, height);
                     BMIText.setText("BMI: " + bmi);
-                    resetbtn.setVisibility(View.VISIBLE);
-                    getBMIbtn.setVisibility(View.INVISIBLE);
                     rangeText.setTextColor(Color.parseColor("#FF8303"));
+                    resetBMI();
                     showRange();
                 }
             }
@@ -170,18 +167,7 @@ public class BMIFragment extends Fragment {
                 }
             }
         });
-        resetbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetBMI();
-            }
-        });
-        bmiViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
 
-            }
-        });
         return root;
     }
 
@@ -215,13 +201,6 @@ public class BMIFragment extends Fragment {
     }
 
     public void resetBMI() {
-        weightInput.getText().clear();
-        heightInputFeet.getText().clear();
-        heightInputInch.getText().clear();
-        getBMIbtn.setVisibility(View.VISIBLE);
-        resetbtn.setVisibility(View.INVISIBLE);
-        BMIText.setText("");
-        rangeText.setText("");
         binding.underweight.setTextColor(Color.parseColor("#A6A2A2"));
         binding.healthyWeight.setTextColor(Color.parseColor("#A6A2A2"));
         binding.overweight.setTextColor(Color.parseColor("#A6A2A2"));

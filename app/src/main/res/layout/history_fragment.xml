@@ -18,7 +18,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dropdownRange"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:background="@drawable/spinner"
             android:backgroundTint="@color/white"
@@ -29,16 +29,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias=".3"
+            android:gravity="center_vertical|center"
             app:layout_constraintHorizontal_bias=".25">
             <AutoCompleteTextView
                 android:id="@+id/historyRangeDropDown"
-                android:layout_width="170dp"
-                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/spinner"
                 android:gravity="center_vertical|center"
                 android:enabled="false"
                 android:textColor="@color/navyBlue"
-                android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

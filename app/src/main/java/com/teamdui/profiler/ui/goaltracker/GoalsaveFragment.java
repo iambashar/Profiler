@@ -36,18 +36,18 @@ public class GoalsaveFragment extends Fragment {
 
     private SeekBar calorieSlider;
     private EditText calorieEditText;
-    public static int finalCalorieGoal = 0;
 
     private ImageView addWaterButton;
     private ImageView deleteWaterButton;
     private EditText waterEditText;
     private EditText waterEditTextml;
-    public static int finalGlassGoal = 0;
+    private int initialCalorieGoal = 0;
+    private int initialGlassGoal = 0;
+    private int initialExerciseGoal = 0;
 
     private EditText hourInput;
     private EditText minuteInput;
     private TextView totalMinute;
-    public static int finalExerciseGoal = 0;
     public static boolean isSaved = false;
     public static boolean isWaterModified = false;
 
@@ -66,24 +66,24 @@ public class GoalsaveFragment extends Fragment {
 
         binding = FragmentGoalsaveBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        finalCalorieGoal = calorieGoal;
-        finalGlassGoal = glassGoal;
-        finalExerciseGoal = exerciseGoal;
-
         //to set calorie goal
+
+        initialCalorieGoal = calorieGoal;
+        initialGlassGoal = glassGoal;
+        initialExerciseGoal = exerciseGoal;
+
         calorieSlider = binding.calorieSlideBar;
         calorieEditText = binding.calorieInput;
-        calorieSlider.setProgress(finalCalorieGoal);
-        calorieEditText.setText(String.valueOf(finalCalorieGoal), TextView.BufferType.EDITABLE);
+        calorieSlider.setProgress(calorieGoal);
+        calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
 
-        if (finalCalorieGoal > 3000) {
+        if (calorieGoal > 3000) {
             calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
             calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
             //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
         }
-        if (finalCalorieGoal < 3000) {
+        if (calorieGoal < 3000) {
             calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
             calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
         }
@@ -91,16 +91,16 @@ public class GoalsaveFragment extends Fragment {
         calorieSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                calorieGoal = progress;
-                calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
+                initialCalorieGoal = progress;
+                calorieEditText.setText(String.valueOf(initialCalorieGoal), TextView.BufferType.EDITABLE);
 
-                if (calorieGoal >= 3000) {
+                if (initialCalorieGoal >= 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
                     calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
                     //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
 
                 }
-                if (calorieGoal < 3000) {
+                if (initialCalorieGoal < 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
                     calorieSlider.getThumb().setTint(Color.rgb(112, 112, 112));
                 }
@@ -126,8 +126,6 @@ public class GoalsaveFragment extends Fragment {
                 if (cal >= 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(255, 131, 3));
                     calorieSlider.getThumb().setTint(Color.rgb(255, 131, 3));
-                    //Toast.makeText(getActivity().getApplicationContext(), "High Calorie", Toast.LENGTH_LONG).show();
-
                 }
                 if (cal < 3000) {
                     calorieSlider.getProgressDrawable().setTint(Color.rgb(112, 112, 112));
@@ -138,12 +136,11 @@ public class GoalsaveFragment extends Fragment {
 
         //to set water goal
         addWaterButton = binding.addWater;
-        glassGoal = finalGlassGoal;
         setGlassVisibility();
         addWaterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                glassGoal++;
+                initialGlassGoal++;
                 setGlassVisibility();
             }
         });
@@ -152,13 +149,13 @@ public class GoalsaveFragment extends Fragment {
         deleteWaterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                glassGoal--;
-                if (glassGoal == 0) {
+                initialGlassGoal--;
+                if (initialGlassGoal == 0) {
                     binding.waterInputGlass.getText().clear();
                     binding.waterInputMl.getText().clear();
                 }
-                if (glassGoal < 0) {
-                    glassGoal = 0;
+                if (initialGlassGoal < 0) {
+                    initialGlassGoal = 0;
                 }
                 setGlassInvisibility();
             }
@@ -166,13 +163,13 @@ public class GoalsaveFragment extends Fragment {
 
         waterEditText = binding.waterInputGlass;
         waterEditTextml = binding.waterInputMl;
-        waterEditText.setText(String.valueOf(finalGlassGoal), TextView.BufferType.EDITABLE);
-        waterEditTextml.setText(String.valueOf(finalGlassGoal * waterFactor), TextView.BufferType.EDITABLE);
+        waterEditText.setText(String.valueOf(initialGlassGoal), TextView.BufferType.EDITABLE);
+        waterEditTextml.setText(String.valueOf(initialGlassGoal * waterFactor), TextView.BufferType.EDITABLE);
         waterEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 String waterText = waterEditText.getText().toString();
-                waterEditTextml.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
+                waterEditTextml.setText(String.valueOf(initialGlassGoal * waterFactor), TextView.BufferType.EDITABLE);
                 int noOfGlass;
                 if (isWaterModified) {
                     noOfGlass = Integer.parseInt(waterText);
@@ -181,11 +178,11 @@ public class GoalsaveFragment extends Fragment {
                 }
                 hideKeyboard(v);
                 isWaterModified = true;
-                if (noOfGlass > glassGoal) {
-                    glassGoal = noOfGlass;
+                if (noOfGlass > initialGlassGoal) {
+                    initialGlassGoal = noOfGlass;
                     setGlassVisibility();
-                } else if (noOfGlass < glassGoal) {
-                    glassGoal = noOfGlass;
+                } else if (noOfGlass < initialGlassGoal) {
+                    initialGlassGoal = noOfGlass;
                     setGlassInvisibility();
                 }
             }
@@ -204,16 +201,16 @@ public class GoalsaveFragment extends Fragment {
                     noOfGlass = 0;
                 }
                 isWaterModified = true;
-                if (noOfGlass > glassGoal) {
-                    glassGoal = noOfGlass;
+                if (noOfGlass > initialGlassGoal) {
+                    initialGlassGoal = noOfGlass;
                     setGlassVisibility();
-                } else if (noOfGlass < glassGoal) {
-                    glassGoal = noOfGlass;
+                } else if (noOfGlass < initialGlassGoal) {
+                    initialGlassGoal = noOfGlass;
                     setGlassInvisibility();
                 }
             }
         });
-        if (glassGoal == 0) {
+        if (initialGlassGoal == 0) {
             binding.waterInputGlass.getText().clear();
             binding.waterInputMl.getText().clear();
         }
@@ -223,7 +220,7 @@ public class GoalsaveFragment extends Fragment {
         minuteInput = binding.minuteInput;
         totalMinute = binding.minText;
         isSaved = false;
-        totalMinute.setText(String.valueOf(finalExerciseGoal));
+        totalMinute.setText(String.valueOf(initialExerciseGoal));
         hourInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -240,8 +237,8 @@ public class GoalsaveFragment extends Fragment {
                 } else {
                     minute = Integer.parseInt(minuteInput.getText().toString());
                 }
-                exerciseGoal = hour * 60 + minute;
-                totalMinute.setText(String.valueOf(exerciseGoal));
+                initialExerciseGoal = hour * 60 + minute;
+                totalMinute.setText(String.valueOf(initialExerciseGoal));
             }
         });
         minuteInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -260,8 +257,8 @@ public class GoalsaveFragment extends Fragment {
                 } else {
                     minute = Integer.parseInt(minuteInput.getText().toString());
                 }
-                exerciseGoal = hour * 60 + minute;
-                totalMinute.setText(String.valueOf(exerciseGoal));
+                initialExerciseGoal = hour * 60 + minute;
+                totalMinute.setText(String.valueOf(initialExerciseGoal));
             }
         });
 
@@ -272,10 +269,9 @@ public class GoalsaveFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isSaved = true;
-                finalCalorieGoal = calorieGoal;
-                finalGlassGoal = glassGoal;
-                finalExerciseGoal = exerciseGoal;
-
+                calorieGoal = initialCalorieGoal;
+                exerciseGoal = initialExerciseGoal;
+                glassGoal = initialGlassGoal;
                 myRef.child(uid).child("date").child(date).child("set").child("cal").setValue(calorieGoal);
                 myRef.child(uid).child("date").child(date).child("set").child("exr").setValue(exerciseGoal);
                 myRef.child(uid).child("date").child(date).child("set").child("wat").setValue(glassGoal);
@@ -307,9 +303,9 @@ public class GoalsaveFragment extends Fragment {
 
     public void setGlassVisibility() {
         waterEditText = binding.waterInputGlass;
-        waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
-        binding.waterInputMl.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
-        switch (glassGoal) {
+        waterEditText.setText(String.valueOf(initialGlassGoal), TextView.BufferType.EDITABLE);
+        binding.waterInputMl.setText(String.valueOf(initialGlassGoal * waterFactor), TextView.BufferType.EDITABLE);
+        switch (initialGlassGoal) {
             case 16: {
                 ImageView glass = binding.glass16;
                 glass.setVisibility(getView().VISIBLE);
@@ -379,10 +375,10 @@ public class GoalsaveFragment extends Fragment {
 
     public void setGlassInvisibility() {
         waterEditText = binding.waterInputGlass;
-        waterEditText.setText(String.valueOf(glassGoal), TextView.BufferType.EDITABLE);
-        binding.waterInputMl.setText(String.valueOf(glassGoal * waterFactor), TextView.BufferType.EDITABLE);
+        waterEditText.setText(String.valueOf(initialGlassGoal), TextView.BufferType.EDITABLE);
+        binding.waterInputMl.setText(String.valueOf(initialGlassGoal * waterFactor), TextView.BufferType.EDITABLE);
 
-        switch (glassGoal) {
+        switch (initialGlassGoal) {
             case 0: {
                 ImageView glass = binding.glass1;
                 glass.setVisibility(getView().INVISIBLE);
@@ -454,19 +450,17 @@ public class GoalsaveFragment extends Fragment {
     }
 
     public void saveGoals() {
-        String caloriestr = "Total calorie earned(cal): " + calorieDaily + "/" + finalCalorieGoal;
+        String caloriestr = "Total calorie earned(cal): " + calorieDaily + "/" + calorieGoal;
         binding.calorieEarn.setText(caloriestr);
 
-        String waterstr = "Water taken(glasses): " + glassDaily + "/" + finalGlassGoal;
+        String waterstr = "Water taken(glasses): " + glassDaily + "/" + glassGoal;
         binding.waterTaken.setText(waterstr);
 
 
         calculateExercise();
-        String exercisestr = binding.exerciseDone.getText().toString();
-
-        exercisestr = "Exercise done(min): " + exerciseDaily + "/" + finalExerciseGoal;
+        String exercisestr = "Exercise done(min): " + exerciseDaily + "/" + exerciseGoal;
         binding.exerciseDone.setText(exercisestr);
-        binding.minText.setText(String.valueOf(finalExerciseGoal));
+        binding.minText.setText(String.valueOf(exerciseGoal));
     }
 
     public void calculateExercise() {
@@ -497,9 +491,6 @@ public class GoalsaveFragment extends Fragment {
         calorieGoal = 0;
         glassGoal = 0;
         exerciseGoal = 0;
-        finalCalorieGoal = 0;
-        finalGlassGoal = 0;
-        finalExerciseGoal = 0;
         calorieSlider.setProgress(calorieGoal);
         calorieEditText.setText(String.valueOf(calorieGoal), TextView.BufferType.EDITABLE);
         binding.waterInputMl.getText().clear();

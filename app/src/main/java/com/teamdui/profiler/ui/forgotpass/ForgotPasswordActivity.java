@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.teamdui.profiler.databinding.ActivityForgotPasswordBinding;
-import com.teamdui.profiler.ui.login.LoginActivity;
+import com.teamdui.profiler.ui.authentication.LoginActivity;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
