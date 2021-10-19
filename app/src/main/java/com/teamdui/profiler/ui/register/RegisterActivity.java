@@ -183,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!ValidateEmail(emailText.getText())) {
+                if (!ValidateEmail(emailText.getText()) && emailText.length() != 0) {
                     emailText.setError("Invalid Email");
                 } else {
                     emailText.setError(null);

@@ -142,6 +142,7 @@
         android:layout_height="wrap_content"
         android:text="or continue without an account"
         android:textSize="15dp"
+        android:textColor="@color/navyBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
