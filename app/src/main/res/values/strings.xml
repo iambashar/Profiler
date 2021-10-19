@@ -50,6 +50,12 @@
         <item>Cycling</item>
     </string-array>
 
+    <string-array name="history_dropdown">
+        <item>7 days</item>
+        <item>1 month</item>
+        <item>6 months</item>
+    </string-array>
+
     <string name="google_web_client_id">567034059592-2f7iasp3srgum77j8t2o2iplugq953q2.apps.googleusercontent.com</string>
 
 </resources>

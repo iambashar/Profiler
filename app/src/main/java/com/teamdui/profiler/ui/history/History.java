@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +38,7 @@ public class History extends Fragment {
     adapterRecord records;
     LinearLayoutManager recLayoutManager;
     RecyclerView recRecyclerView;
-
+    AutoCompleteTextView autoCompleteTextView;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -46,21 +49,43 @@ public class History extends Fragment {
         View root = binding.getRoot();
 
         recRecyclerView = binding.historyList;
-        String days = "0";
 
-        if (days == "7"){
-        mViewModel.getRawData7().observe(getViewLifecycleOwner(), new Observer<ArrayList<rec>>() {
+        autoCompleteTextView = binding.historyRangeDropDown;
+        String ranges[] = getResources().getStringArray(R.array.history_dropdown);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this.getContext(), R.layout.history_dropdown, ranges);
+        autoCompleteTextView.setAdapter(arrayAdapter);
+
+        ((AutoCompleteTextView) binding.dropdownRange.getEditText()).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onChanged(ArrayList<rec> recs) {
-                records = new adapterRecord(recs);
-                recLayoutManager = new LinearLayoutManager(getContext());
-                recLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                recRecyclerView.setLayoutManager(recLayoutManager);
-                recRecyclerView.setAdapter(records);
-                records.notifyDataSetChanged();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String selectedValue = (String) arrayAdapter.getItem(position);
+                binding.historyRangeDropDown.setText(selectedValue);
+                binding.dropdownRange.setHint("");
+                autoCompleteTextView.clearFocus();
+                showRecords(position);
             }
-        });}
-        else if (days == "30"){
+        });
+
+
+
+        return root;
+    }
+
+    public void showRecords(int idx)
+    {
+        if (idx == 0){
+            mViewModel.getRawData7().observe(getViewLifecycleOwner(), new Observer<ArrayList<rec>>() {
+                @Override
+                public void onChanged(ArrayList<rec> recs) {
+                    records = new adapterRecord(recs);
+                    recLayoutManager = new LinearLayoutManager(getContext());
+                    recLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                    recRecyclerView.setLayoutManager(recLayoutManager);
+                    recRecyclerView.setAdapter(records);
+                    records.notifyDataSetChanged();
+                }
+            });}
+        else if (idx == 1){
             mViewModel.getRawData30().observe(getViewLifecycleOwner(), new Observer<ArrayList<rec>>() {
                 @Override
                 public void onChanged(ArrayList<rec> recs) {
@@ -86,7 +111,5 @@ public class History extends Fragment {
                 }
             });
         }
-
-        return root;
     }
 }
