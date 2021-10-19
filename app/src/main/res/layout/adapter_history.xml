@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:padding ="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
     android:layout_alignParentBottom="true"
     android:gravity="center"
     android:orientation="horizontal">
 
-
-
     <TextView
         android:id="@+id/dateText"
-        android:layout_width="100sp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
         android:text="ga"
         android:textSize="16dp"
@@ -25,12 +25,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".7" />
+        app:layout_constraintEnd_toStartOf="@id/calorieEarnText"/>
 
     <TextView
         android:id="@+id/calorieEarnText"
-        android:layout_width="80sp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
         android:text="ga"
         android:textSize="16dp"
@@ -38,15 +37,14 @@
         android:background="#80FF8303"
         android:textAlignment="center"
         android:layout_marginRight="2sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/calorieBurnText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias=".05" />
+        app:layout_constraintStart_toEndOf="@id/dateText"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/calorieBurnText"
-        android:layout_width="80sp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
         android:text="ga"
         android:textSize="16dp"
@@ -54,15 +52,14 @@
         android:background="#80FF8303"
         android:textAlignment="center"
         android:layout_marginRight="2sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/netCalorieText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias=".05"  />
+        app:layout_constraintStart_toEndOf="@+id/calorieEarnText"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/netCalorieText"
-        android:layout_width="80sp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
         android:text="ga"
         android:textSize="16dp"
@@ -72,12 +69,8 @@
         android:layout_marginRight="2sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias=".05"  />
+        app:layout_constraintStart_toEndOf="@id/calorieBurnText"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

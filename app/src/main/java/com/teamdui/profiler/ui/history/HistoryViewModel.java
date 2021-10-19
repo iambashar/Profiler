@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +46,7 @@ public class HistoryViewModel extends ViewModel {
                         raw.add(new rec(dataPoint.progress.cal, dataPoint.progress.calburn, myDataSnapshot.getKey()));
                     }
 
-                    for (rec r: raw) {
+                    for (rec r : raw) {
                         if (r.date.compareTo(LocalDate.now().plusDays(7).toString()) < 0) {
                             raw7.add(r);
                         }
@@ -75,9 +74,11 @@ public class HistoryViewModel extends ViewModel {
     public LiveData<ArrayList<rec>> getRawData7() {
         return rawData7;
     }
+
     public LiveData<ArrayList<rec>> getRawData30() {
         return rawData30;
     }
+
     public LiveData<ArrayList<rec>> getRawData180() {
         return rawData180;
     }

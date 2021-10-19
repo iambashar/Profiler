@@ -280,6 +280,7 @@ public class GoalsaveFragment extends Fragment {
                 myRef.child(uid).child("date").child(date).child("set").child("exr").setValue(exerciseGoal);
                 myRef.child(uid).child("date").child(date).child("set").child("wat").setValue(glassGoal);
                 saveGoals();
+                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -466,7 +467,6 @@ public class GoalsaveFragment extends Fragment {
         exercisestr = "Exercise done(min): " + exerciseDaily + "/" + finalExerciseGoal;
         binding.exerciseDone.setText(exercisestr);
         binding.minText.setText(String.valueOf(finalExerciseGoal));
-        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
     }
 
     public void calculateExercise() {
