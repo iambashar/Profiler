@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,6 +97,28 @@ public class LoginActivity extends Activity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        ImageView showPass = binding.showPassButton;
+        showPass.setImageResource(R.drawable.ic_hide_pwd);
+        showPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.editTextTextPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance()))
+                {
+                    binding.editTextTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    showPass.setImageResource(R.drawable.ic_show_pwd);
+                    int position = binding.editTextTextPassword.getText().toString().length();
+                    binding.editTextTextPassword.setSelection(position);
+                }
+                else
+                {
+                    binding.editTextTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    showPass.setImageResource(R.drawable.ic_hide_pwd);
+                    int position = binding.editTextTextPassword.getText().toString().length();
+                    binding.editTextTextPassword.setSelection(position);
+                }
+            }
+        });
 
 
         mAuth = FirebaseAuth.getInstance();

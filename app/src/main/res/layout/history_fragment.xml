@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dropdownRange"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -28,7 +29,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".1">
+            app:layout_constraintVertical_bias=".15"
+            app:layout_constraintHorizontal_bias=".35">
+
+
 
             <AutoCompleteTextView
                 android:id="@+id/historyRangeDropDown"

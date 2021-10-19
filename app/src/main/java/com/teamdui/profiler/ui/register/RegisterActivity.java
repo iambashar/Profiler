@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +69,50 @@ public class RegisterActivity extends AppCompatActivity {
         backButton = binding.backButton;
 
         passwordRegex = getString(R.string.password_regex);
+
+        ImageView showPass = binding.showPassButton;
+        showPass.setImageResource(R.drawable.ic_hide_pwd);
+        showPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.registerPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance()))
+                {
+                    binding.registerPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    showPass.setImageResource(R.drawable.ic_show_pwd);
+                    int position = binding.registerPassword.getText().toString().length();
+                    binding.registerPassword.setSelection(position);
+                }
+                else
+                {
+                    binding.registerPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    showPass.setImageResource(R.drawable.ic_hide_pwd);
+                    int position = binding.registerPassword.getText().toString().length();
+                    binding.registerPassword.setSelection(position);
+                }
+            }
+        });
+
+        ImageView showPassConfirm = binding.showPassConfirmButton;
+        showPassConfirm.setImageResource(R.drawable.ic_hide_pwd);
+        showPassConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.confirmPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance()))
+                {
+                    binding.confirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    showPassConfirm.setImageResource(R.drawable.ic_show_pwd);
+                    int position = binding.confirmPassword.getText().toString().length();
+                    binding.confirmPassword.setSelection(position);
+                }
+                else
+                {
+                    binding.confirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    showPassConfirm.setImageResource(R.drawable.ic_hide_pwd);
+                    int position = binding.confirmPassword.getText().toString().length();
+                    binding.confirmPassword.setSelection(position);
+                }
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 

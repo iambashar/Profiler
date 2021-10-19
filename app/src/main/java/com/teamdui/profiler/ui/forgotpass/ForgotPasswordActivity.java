@@ -23,7 +23,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private EditText emailText;
     private Button sendEmailButton;
-    private Button backButton;
+    private TextView backButton;
     private TextView instructionText;
     private FirebaseAuth mAuth;
     private String userEmail;

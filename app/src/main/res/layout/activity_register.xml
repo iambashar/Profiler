@@ -90,6 +90,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.548"/>
+    <ImageView
+        android:id="@+id/showPassButton"
+        android:layout_width="30dp"
+        android:layout_height="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".548"
+        app:layout_constraintHorizontal_bias=".75"/>
 
     <EditText
         android:id="@+id/confirmPassword"
@@ -105,7 +115,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".6"/>
+        app:layout_constraintVertical_bias="0.62"/>
+    <ImageView
+        android:id="@+id/showPassConfirmButton"
+        android:layout_width="30dp"
+        android:layout_height="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".635"
+        app:layout_constraintHorizontal_bias=".75"/>
 
     <ProgressBar
         android:id="@+id/registerProgress"

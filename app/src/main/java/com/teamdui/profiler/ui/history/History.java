@@ -59,7 +59,6 @@ public class History extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedValue = (String) arrayAdapter.getItem(position);
-                binding.historyRangeDropDown.setText(selectedValue);
                 binding.dropdownRange.setHint("");
                 autoCompleteTextView.clearFocus();
                 showRecords(position);

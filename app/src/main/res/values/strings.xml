@@ -38,7 +38,7 @@
     <string name="password_regex">^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$</string>
 
     <!-- Forgot Password-->
-    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string name="password_reset_instruction">Type your email below to get a reset link.</string>
     <string name="send_email">Send</string>
 
