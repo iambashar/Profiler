@@ -3,20 +3,14 @@ package com.teamdui.profiler.ui.history;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.teamdui.profiler.R;
-import com.teamdui.profiler.ui.dailycalorie.AdapterFood;
 
 import java.util.List;
-
-import static com.teamdui.profiler.MainActivity.myRef;
-import static com.teamdui.profiler.MainActivity.uid;
 
 public class adapterRecord extends RecyclerView.Adapter<adapterRecord.ViewHolder> {
 

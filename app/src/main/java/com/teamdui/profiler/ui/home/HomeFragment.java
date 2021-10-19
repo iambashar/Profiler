@@ -26,6 +26,7 @@ import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
 import com.teamdui.profiler.ui.history.date;
 import com.teamdui.profiler.ui.profile.ProfileData;
 
+import java.text.DecimalFormat;
 import java.util.Base64;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -70,6 +71,7 @@ public class HomeFragment extends Fragment {
     public TextView calBurnText;
     public TextView calNetText;
     private ImageView cameraIcon;
+    DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -184,6 +186,8 @@ public class HomeFragment extends Fragment {
 
     public void setCalorieText() {
         textSetter(calEarnText, calEarnText.getText().toString() + " " + (double) calorieDaily);
+        burnedCalorie = Double.valueOf(df.format(burnedCalorie));
+        netCalorie = Double.valueOf(df.format(netCalorie));
         textSetter(calBurnText, calBurnText.getText().toString() + " " + burnedCalorie);
         if (netCalorie > 0) {
             textSetter(calNetText, calNetText.getText().toString() + " " + "+" + netCalorie);
