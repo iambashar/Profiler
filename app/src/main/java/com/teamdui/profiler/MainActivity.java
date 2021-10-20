@@ -300,7 +300,6 @@ public class MainActivity extends AppCompatActivity {
                         data.set.exr = sexr;
                         data.set.wat = swat;
                         myRef.child(uid).child("date").child(date).setValue(data);
-                        myRef.child(uid).child("calburn").setValue(0);
                         myRef.child(uid).child("Meal").removeValue();
                         myRef.child(uid).child("Exercise").removeValue();
                     }
