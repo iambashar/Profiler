@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Profiler</string>
+    <string name="title_home">Home</string>
     <string name="title_dailycalorie">Daily Calorie</string>
     <string name="title_goaltracker">Goal Tracker</string>
     <string name="title_bmi">BMI Calculator</string>
@@ -22,9 +23,39 @@
     <string name="calorie_calculator">Calorie Calculator</string>
 
     <string name="logout_button_text">LOGOUT</string>
-<!-- Login form -->
+    <!-- Login form -->
     <string name="login_button_text">LOGIN</string>
-
     <string name="email_hint">example@gmail.com</string>
-    <string name="password_hint">password</string>
+    <string name="password_hint">ex. Abc123Xyz</string>
+    <string name="giveinput">You must input weight and height..</string>
+
+    <!-- Register form -->
+    <string name="register_title">Register Here:</string>
+    <string name="register_email">Email</string>
+    <string name="register_password">Password</string>
+    <string name="register_confirm_password">Confirm Password</string>
+    <string name="register_button">Register</string>
+    <string name="password_regex">^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$</string>
+
+    <!-- Forgot Password-->
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="password_reset_instruction">Type your email below to get a reset link.</string>
+    <string name="send_email">Send</string>
+
+
+    <string-array name="exercise_dropdown">
+        <item>Walking</item>
+        <item>Running</item>
+        <item>Swimming</item>
+        <item>Cycling</item>
+    </string-array>
+
+    <string-array name="history_dropdown">
+        <item>7 days</item>
+        <item>1 month</item>
+        <item>6 months</item>
+    </string-array>
+
+    <string name="google_web_client_id">567034059592-2f7iasp3srgum77j8t2o2iplugq953q2.apps.googleusercontent.com</string>
+
 </resources>

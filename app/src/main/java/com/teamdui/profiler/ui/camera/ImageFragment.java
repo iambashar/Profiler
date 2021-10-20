@@ -2,7 +2,6 @@ package com.teamdui.profiler.ui.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
@@ -10,12 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.teamdui.profiler.MainActivity;
+import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.FragmentImageBinding;
+import com.teamdui.profiler.ui.dailycalorie.DailyMealFragment;
+import com.teamdui.profiler.ui.dailycalorie.Food;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,16 +36,30 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static com.teamdui.profiler.MainActivity.calorieDaily;
+import static com.teamdui.profiler.MainActivity.date;
+import static com.teamdui.profiler.MainActivity.myRef;
+import static com.teamdui.profiler.MainActivity.uid;
 
 public class ImageFragment extends Fragment {
 
     ImageView imageView;
-    TextView textView;
     private FragmentImageBinding binding;
     private ImageViewModel imageViewModel;
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+    ArrayList<String> classes = new ArrayList<String>();
+    ArrayList<String> calories = new ArrayList<String>();
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
+    RecyclerView foodRecyclerView;
+    LinearLayoutManager foodLayoutManager;
+    AdapterCalorie adapterCalorie;
+    AppCompatButton addButton;
+    public Integer calorieDailyImage = 0;
+    public static TextView calorieUpperTextImage;
+    public DailyMealFragment dailyMealFragment = new DailyMealFragment();
+    public static ArrayList<Food> foodListImage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,8 +69,12 @@ public class ImageFragment extends Fragment {
         binding = FragmentImageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        foodListImage = new ArrayList<>();
         imageView = binding.hgview;
-        textView = binding.calorieinfo;
+        foodRecyclerView = binding.calorieList;
+        addButton = binding.addCalorieButton;
+        calorieUpperTextImage = binding.calorieUpperText;
+        calorieUpperTextImage.setText(((Integer) calorieDaily).toString());
 
         byte[] bytes = getArguments().getByteArray("img");
 
@@ -63,12 +87,13 @@ public class ImageFragment extends Fragment {
         String attachmentFileName = "file.bmp";
         String crlf = "\r\n";
         String twoHyphens = "--";
-        String boundary =  "*****";
+        String boundary = "*****";
 
         HttpURLConnection conn = null;
+
         URL url;
         try {
-            url = new URL("http://acd55c2dee48.ngrok.io/predict"); //changed every time
+            url = new URL(MainActivity.uri);
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,7 +109,7 @@ public class ImageFragment extends Fragment {
         conn.setRequestProperty("Connection", "Keep-Alive");
         conn.setRequestProperty("Cache-Control", "no-cache");
         conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-        conn.setRequestProperty("Accept","application/json");
+        conn.setRequestProperty("Accept", "application/json");
         DataOutputStream request = null;
         try {
             request = new DataOutputStream(conn.getOutputStream());
@@ -93,8 +118,7 @@ public class ImageFragment extends Fragment {
                     attachmentName + "\";filename=\"" +
                     attachmentFileName + "\"" + crlf);
             request.writeBytes(crlf);
-            while (bytes == null)
-            {
+            while (bytes == null) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -111,39 +135,67 @@ public class ImageFragment extends Fragment {
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
-                sb.append(line+"\n");
+                sb.append(line + "\n");
             }
             br.close();
 
             JSONObject js = new JSONObject(sb.toString());
             JSONArray jsonArray = js.getJSONArray("calorie");
             int len = jsonArray.length();
-            ArrayList<String> calories = new ArrayList<String>();
-            for (int i=0;i<len;i++) {
+
+            for (int i = 0; i < len; i++) {
                 calories.add(jsonArray.get(i).toString());
             }
 
             jsonArray = js.getJSONArray("class_name");
-            ArrayList<String> classes = new ArrayList<String>();
-            for (int i=0;i<len;i++) {
+
+            for (int i = 0; i < len; i++) {
                 classes.add(jsonArray.get(i).toString());
             }
-
-            String show = "";
-            for (int i=0; i<len; i++) {
-                show += "           " + classes.get(i) + " : " + calories.get(i) + " calorie\n";
-            }
-            textView.setText("Food Info: \n" + show);
         } catch (IOException e) {
+            Toast.makeText(getContext(), "Calorie Calculator API server in not running", Toast.LENGTH_LONG).show();
             e.printStackTrace();
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-
         conn.disconnect();
+
+        for (int i = 0; i < classes.size(); i++) {
+            calorieDailyImage = calorieDailyImage + Integer.valueOf(calories.get(i));
+            initFoodList(classes.get(i), calories.get(i));
+            initRecyclerView();
+        }
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calorieDaily += calorieDailyImage;
+                myRef.child(uid).child("date").child(date).child("progress").child("cal").setValue(calorieDaily);
+                calorieUpperTextImage.setText(((Integer) calorieDaily).toString());
+                for (int i = 0; i < classes.size(); i++) {
+                    dailyMealFragment.initFoodList(classes.get(i), calories.get(i));
+                }
+            }
+        });
+
         return root;
     }
 
+    public void initFoodList(String food, String calorie) {
+        foodListImage.add(new Food(food, calorie, R.drawable.ic_minus, "df"));
+    }
 
+    public void initRecyclerView() {
+        adapterCalorie = new AdapterCalorie(foodListImage);
+        foodLayoutManager = new LinearLayoutManager(this.getContext());
+        foodLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        foodRecyclerView.setLayoutManager(foodLayoutManager);
+        foodRecyclerView.setAdapter(adapterCalorie);
+        adapterCalorie.notifyDataSetChanged();
+    }
 
+    public void reduceCalorie(String toReduce) {
+        toReduce = toReduce.replace(" cal", "");
+        calorieDailyImage = calorieDailyImage - Integer.parseInt(toReduce);
+    }
 }

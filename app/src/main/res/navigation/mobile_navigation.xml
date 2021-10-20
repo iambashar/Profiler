@@ -3,13 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_dailycalorie">
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.teamdui.profiler.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/home_fragment" />
+    <action
+        android:id="@+id/action_navigation_home_to_navigation_camera"
+        app:destination="@id/navigation_camera" />
 
     <fragment
         android:id="@+id/navigation_dailycalorie"
         android:name="com.teamdui.profiler.ui.dailycalorie.DailyCalorieFragment"
         android:label="@string/title_dailycalorie"
         tools:layout="@layout/fragment_dailycalorie" />
+    <action
+        android:id="@+id/action_navigation_dailycalorie_to_navigation_dailymeal"
+        app:destination="@id/navigation_dailymeal" />
+
+    <fragment
+        android:id="@+id/navigation_dailymeal"
+        android:name="com.teamdui.profiler.ui.dailycalorie.DailyMealFragment"
+        android:label="Daily Meal"
+        tools:layout="@layout/fragment_daily_meal"/>
+    <action
+        android:id="@+id/action_navigation_dailymeal_to_navigation_camera"
+        app:destination="@id/navigation_camera" />
+
+    <fragment
+        android:id="@+id/navigation_dailyexercise"
+        android:name="com.teamdui.profiler.ui.dailycalorie.DailyExerciseFragment"
+        android:label="Daily Exercise"
+        tools:layout="@layout/fragment_daily_exercise"/>
+    <action
+        android:id="@+id/action_navigation_dailycalorie_to_navigation_dailyexercise"
+        app:destination="@id/navigation_dailyexercise" />
 
     <fragment
         android:id="@+id/navigation_goaltracker"
@@ -33,7 +63,7 @@
     <fragment
         android:id="@+id/navigation_camera"
         android:name="com.teamdui.profiler.ui.camera.CameraFragment"
-        android:label="@string/camera"
+        android:label="@string/calorie_calculator"
         tools:layout="@layout/fragment_camera"  >
         <action
             android:id="@+id/action_navigation_camera_to_navigation_image"
@@ -48,5 +78,35 @@
         <action
             android:id="@+id/action_navigation_image_to_navigation_camera"
             app:destination="@id/navigation_camera" />
+        <action
+            android:id="@+id/navigation_image_to_dailymeal"
+            app:destination="@id/navigation_dailymeal" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_Profile"
+        android:name="com.teamdui.profiler.ui.profile.Profile"
+        android:label="Profile"
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_nav_Profile_to_profileEdit"
+            app:destination="@id/profileEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_help"
+        android:name="com.teamdui.profiler.ui.Help.Help"
+        android:label="Help"
+        tools:layout="@layout/help_fragment" />
+    <fragment
+        android:id="@+id/profileEdit"
+        android:name="com.teamdui.profiler.ui.profile.ProfileEdit"
+        android:label="Edit Profile"
+        tools:layout="@layout/profile_edit_fragment" />
+
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.teamdui.profiler.ui.history.History"
+        android:label="History"
+        tools:layout="@layout/history_fragment"
+        />
+
 </navigation>

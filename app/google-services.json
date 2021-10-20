@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "567034059592",
+    "firebase_url": "https://profiler-280f7-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "profiler-280f7",
     "storage_bucket": "profiler-280f7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:567034059592:android:8406e0921cf03b7a21317d",
+        "mobilesdk_app_id": "1:567034059592:android:cb7508d7adc7029721317d",
         "android_client_info": {
           "package_name": "com.teamdui.profiler"
         }

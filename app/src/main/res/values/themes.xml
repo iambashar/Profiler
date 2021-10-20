@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Base application theme. -->
-    <style name="Theme.Profiler" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Profiler" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/whitebg</item>
         <item name="colorPrimaryVariant">@color/teal</item>
@@ -9,20 +9,11 @@
         <item name="colorSecondary">@color/navyBlue</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:windowBackground">@drawable/bakground</item>
+        <item name="android:windowBackground">@drawable/bg</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:fontFamily">@font/bitter</item>
         <!-- Customize your theme here. -->
     </style>
 
-
-    <style name="Theme.Profiler.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">false</item>
-    </style>
-
-    <style name="Theme.Profiler.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Profiler.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

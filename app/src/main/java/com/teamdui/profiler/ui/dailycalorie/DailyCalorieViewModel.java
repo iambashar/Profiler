@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class DailyCalorieViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public DailyCalorieViewModel() {
         mText = new MutableLiveData<>();
