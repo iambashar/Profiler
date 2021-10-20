@@ -40,6 +40,9 @@ A <a href="https://colab.research.google.com/drive/17rbwDlBppi2ap8uwZKGchekwcDtH
 ### Profile
 <img src="img/Profile.jpg" style="width:25%"> <img src="img/Edit_Profile.jpg" style="width:25%">
 
+### History
+<img src="img/History1.jpg" style="width:25%"> <img src="img/History2.jpg" style="width:25%"> <img src="img/History3.jpg" style="width:25%">
+
 ### Documentation
 <img src="img/Help1.jpg" style="width:25%"> <img src="img/Help2.jpg" style="width:25%">
 
