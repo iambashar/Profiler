@@ -185,14 +185,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void setCalorieText() {
-        textSetter(calEarnText, calEarnText.getText().toString() + " " + (double) calorieDaily);
+        textSetter(calEarnText, "Total Calorie Earned: " + (double) calorieDaily);
         burnedCalorie = Double.valueOf(df.format(burnedCalorie));
         netCalorie = Double.valueOf(df.format(netCalorie));
-        textSetter(calBurnText, calBurnText.getText().toString() + " " + burnedCalorie);
+        textSetter(calBurnText, "Total Calorie Burned: " + burnedCalorie);
         if (netCalorie > 0) {
-            textSetter(calNetText, calNetText.getText().toString() + " " + "+" + netCalorie);
+            textSetter(calNetText, "Net Calorie:  " + "+" + netCalorie);
         } else {
-            textSetter(calNetText, calNetText.getText().toString() + " " + netCalorie);
+            textSetter(calNetText, "Net Calorie:  " + netCalorie);
         }
     }
 

@@ -25,17 +25,22 @@ public class HistoryViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<rec>> rawData = new MutableLiveData<>();
     ArrayList<rec> raw = new ArrayList<>();
 
-    private final MutableLiveData<ArrayList<rec>> rawData7 = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<rec>> rawData7;
     ArrayList<rec> raw7 = new ArrayList<>();
 
-    private final MutableLiveData<ArrayList<rec>> rawData30 = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<rec>> rawData30;
     ArrayList<rec> raw30 = new ArrayList<>();
-    private final MutableLiveData<ArrayList<rec>> rawData180 = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<rec>> rawData180;
     ArrayList<rec> raw180 = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public HistoryViewModel() {
-
+        raw7.clear();
+        raw30.clear();
+        raw180.clear();
+        rawData7 = new MutableLiveData<>();
+        rawData30 = new MutableLiveData<>();
+        rawData180 = new MutableLiveData<>();
         myRef.child(uid).child("date").addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override

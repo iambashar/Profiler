@@ -33,12 +33,11 @@ public class adapterRecord extends RecyclerView.Adapter<adapterRecord.ViewHolder
         int calEarn = recList.get(position).cal;
         double calBurn = recList.get(position).calburn;
         String date = recList.get(position).date;
+        date = date.substring(8,10)+"/"+date.substring(5,7)+"/"+date.substring(0,4);
         holder.dateView.setText(date);
         holder.calEarnView.setText(Integer.toString(calEarn));
         holder.calBurnView.setText(Integer.toString((int) calBurn));
-        holder.netCalView.setText(Integer.toString(calEarn - (int) calBurn));
-
-
+        holder.netCalView.setText( ((calEarn - (int) calBurn) > 0 ? "+" : "") + Integer.toString(calEarn - (int) calBurn));
     }
 
     @Override

@@ -13,7 +13,8 @@
         android:layout_height="210dp"
         android:paddingLeft="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dropdownRange"
@@ -30,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias=".3"
             android:gravity="center_vertical|center"
-            app:layout_constraintHorizontal_bias=".25">
+            app:layout_constraintHorizontal_bias=".2">
             <AutoCompleteTextView
                 android:id="@+id/historyRangeDropDown"
                 android:layout_width="match_parent"
@@ -54,8 +55,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".3"
-            app:layout_constraintHorizontal_bias=".8"/>
+            app:layout_constraintVertical_bias=".25"
+            app:layout_constraintHorizontal_bias=".82"/>
+
+        <TextView
+            android:id="@+id/downloadascsv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Download as CSV"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.43" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
