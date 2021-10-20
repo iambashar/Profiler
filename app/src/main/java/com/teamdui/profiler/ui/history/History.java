@@ -1,5 +1,7 @@
 package com.teamdui.profiler.ui.history;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -50,10 +53,9 @@ public class History extends Fragment {
         View root = binding.getRoot();
 
         recRecyclerView = binding.historyList;
-        String days = "7";
 
         autoCompleteTextView = binding.historyRangeDropDown;
-        String ranges[] = getResources().getStringArray(R.array.history_dropdown);
+        String[] ranges = getResources().getStringArray(R.array.history_dropdown);
         ArrayAdapter arrayAdapter = new ArrayAdapter(this.getContext(), R.layout.history_dropdown, ranges);
         autoCompleteTextView.setAdapter(arrayAdapter);
         downloadButton = binding.downloadButton;
@@ -135,6 +137,12 @@ public class History extends Fragment {
     }
 
     public void savefileascsv(ArrayList<rec> recs){
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+            return;
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss", Locale.getDefault());
         String ts = sdf.format(new Date());
         File file = new File(Environment.getExternalStorageDirectory() + "/Documents" + File.separator  + "/" + "Profiler-" + ts + ".csv");

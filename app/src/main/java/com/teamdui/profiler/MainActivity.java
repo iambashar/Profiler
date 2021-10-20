@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     public static volatile byte[] bytesProfileImage;
     public static View headerView;
     public static volatile String fullName;
-    public static date dailydata;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
