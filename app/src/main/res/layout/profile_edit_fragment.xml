@@ -12,8 +12,6 @@
         android:id="@+id/profileImg"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_alignParentTop="true"
-        android:elevation="5dp"
         android:src="@drawable/ic_profileimg_blank"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,33 +130,32 @@
 
     <EditText
         android:id="@+id/profileHeightFeet"
-        android:layout_width="85dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="9"
-        android:inputType="numberDecimal"
         android:hint="feet"
+        android:inputType="numberDecimal"
         android:textColorHint="@color/shallow_ash"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".6"
-        app:layout_constraintHorizontal_bias=".5"/>
+        app:layout_constraintEnd_toStartOf="@+id/profileHeightInch"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/profileEditLname"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".6" />
 
     <EditText
         android:id="@+id/profileHeightInch"
-        android:layout_width="86dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="9"
-        android:inputType="numberDecimal"
+        android:layout_marginLeft="5dp"
         android:hint="inch"
+        android:inputType="numberDecimal"
         android:textColorHint="@color/shallow_ash"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".6"
-        app:layout_constraintHorizontal_bias=".858" />
+        app:layout_constraintEnd_toEndOf="@+id/profileEditLname"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/profileHeightFeet"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".6" />
 
     <EditText
         android:id="@+id/profileEditLname"

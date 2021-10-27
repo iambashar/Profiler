@@ -44,6 +44,8 @@ import com.teamdui.profiler.MainActivity;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityLoginBinding;
 import com.teamdui.profiler.ui.forgotpass.ForgotPasswordActivity;
+import com.teamdui.profiler.ui.history.date;
+import com.teamdui.profiler.ui.profile.ProfileData;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -311,14 +313,29 @@ public class LoginActivity extends Activity {
                                         Log.d("USER DATA CREATE:", "USER ALREADY HAS DATA");
 
                                     } else {
-                                        databaseReference.child(userId).child("date").child(date).child("set").child("cal").setValue(0);
-                                        databaseReference.child(userId).child("date").child(date).child("set").child("exr").setValue(0);
-                                        databaseReference.child(userId).child("date").child(date).child("set").child("wat").setValue(0);
-                                        databaseReference.child(userId).child("calburn").setValue(0);
+                                        com.teamdui.profiler.ui.history.date data = new date();
+                                        data.progress.cal = 0;
+                                        data.progress.exr = 0;
+                                        data.progress.wat = 0;
+                                        data.progress.calburn = 0;
+                                        data.set.cal = 0;
+                                        data.set.exr = 0;
+                                        data.set.wat = 0;
+                                        databaseReference.child(userId).child("date").child(date).setValue(data);
 
-                                        databaseReference.child(userId).child("date").child(date).child("progress").child("cal").setValue(0);
-                                        databaseReference.child(userId).child("date").child(date).child("progress").child("exr").setValue(0);
-                                        databaseReference.child(userId).child("date").child(date).child("progress").child("wat").setValue(0);
+                                        ProfileData pd= new ProfileData();
+
+                                        pd.fname = "Anonymous ";
+                                        pd.lname = "User";
+                                        pd.Image = getString(R.string.propic);
+                                        pd.weight= 0;
+                                        pd.heightInches = 0;
+                                        pd.heightFeet = 0;
+                                        databaseReference.child(userId).child("profile").setValue(pd);
+                                        databaseReference.child(userId).child("profile").child("dob").removeValue();
+                                        databaseReference.child(userId).child("profile").child("dob").child("date").setValue(10);
+                                        databaseReference.child(userId).child("profile").child("dob").child("month").setValue(10);
+                                        databaseReference.child(userId).child("profile").child("dob").child("year").setValue(1900);
                                         Log.d("USER DATA CREATE:", "CREATE NEW USER DATA");
                                     }
                                 }

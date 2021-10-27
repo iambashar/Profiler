@@ -52,15 +52,15 @@ public class HistoryViewModel extends ViewModel {
                     }
 
                     for (rec r : raw) {
-                        if ((r.date.compareTo(LocalDate.now().toString()) >= 0) &&
+                        if ((r.date.compareTo(LocalDate.now().toString()) <= 0) &&
                                 (r.date.compareTo(LocalDate.now().plusDays(7).toString()) < 0)) {
                             raw7.add(r);
                         }
-                        if ((r.date.compareTo(LocalDate.now().toString()) >= 0) &&
+                        if ((r.date.compareTo(LocalDate.now().toString()) <= 0) &&
                                 (r.date.compareTo(LocalDate.now().plusDays(30).toString()) < 0)) {
                             raw30.add(r);
                         }
-                        if ((r.date.compareTo(LocalDate.now().toString()) >= 0) &&
+                        if ((r.date.compareTo(LocalDate.now().toString()) <= 0) &&
                                 (r.date.compareTo(LocalDate.now().plusDays(180).toString()) < 0)) {
                             raw180.add(r);
                         }

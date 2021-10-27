@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamdui.profiler.R;
 import com.teamdui.profiler.databinding.ActivityRegisterBinding;
+import com.teamdui.profiler.ui.history.date;
+import com.teamdui.profiler.ui.profile.ProfileData;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
@@ -159,18 +161,33 @@ public class RegisterActivity extends AppCompatActivity {
                             String uid2 = uid1.getUid();
                             LocalDate todayDate = LocalDate.now();
                             String date = todayDate.toString();
-                            myRef2.child(uid2).child("date").child(date).child("set").child("cal").setValue(0);
-                            myRef2.child(uid2).child("date").child(date).child("set").child("exr").setValue(0);
-                            myRef2.child(uid2).child("date").child(date).child("set").child("wat").setValue(0);
-                            myRef2.child(uid2).child("calburn").setValue(0);
+                            date data = new date();
+                            data.progress.cal = 0;
+                            data.progress.exr = 0;
+                            data.progress.wat = 0;
+                            data.progress.calburn = 0;
+                            data.set.cal = 0;
+                            data.set.exr = 0;
+                            data.set.wat = 0;
+                            myRef2.child(uid2).child("date").child(date).setValue(data);
 
-                            myRef2.child(uid2).child("date").child(date).child("progress").child("cal").setValue(0);
-                            myRef2.child(uid2).child("date").child(date).child("progress").child("exr").setValue(0);
-                            myRef2.child(uid2).child("date").child(date).child("progress").child("wat").setValue(0);
-                            myRef2.child(uid2).child("date").child(date).child("progress").child("calburn").setValue(0);
+                            ProfileData pd= new ProfileData();
+
+                            pd.fname = "Anonymous ";
+                            pd.lname = "User";
+
+                            pd.Image = getString(R.string.propic);
+                            pd.weight= 0;
+                            pd.heightInches = 0;
+                            pd.heightFeet = 0;
+                            myRef2.child(uid2).child("profile").setValue(pd);
+                            myRef2.child(uid2).child("profile").child("dob").removeValue();
+                            myRef2.child(uid2).child("profile").child("dob").child("date").setValue(10);
+                            myRef2.child(uid2).child("profile").child("dob").child("month").setValue(10);
+                            myRef2.child(uid2).child("profile").child("dob").child("year").setValue(1900);
                             Toast.makeText(getApplicationContext(), "Registration Success!", Toast.LENGTH_SHORT).show();
                             SendVerificationEmail(uid1);
-                            //BackToLoginPage();
+
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "User already exists / Registration Failed!", Toast.LENGTH_SHORT).show();

@@ -155,7 +155,8 @@ public class History extends Fragment {
             outputStream.write(("Burned Calorie,").getBytes());
             outputStream.write(("Net Calorie\n").getBytes());
             for(rec r: recs) {
-                outputStream.write((r.date+ ",").getBytes());
+                String date2 = r.date.substring(8,10)+"/"+r.date.substring(5,7)+"/"+r.date.substring(0,4);
+                outputStream.write((date2+ ",").getBytes());
                 outputStream.write((r.cal + ",").getBytes());
                 outputStream.write((r.calburn + ",").getBytes());
                 outputStream.write((r.cal-r.calburn + "\n").getBytes());
